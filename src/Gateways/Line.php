@@ -1,9 +1,9 @@
 <?php
 
-namespace anerg\OAuth2\Gateways;
+namespace tinymeng\OAuth2\Gateways;
 
-use anerg\OAuth2\Connector\Gateway;
-use anerg\OAuth2\Helper\Str;
+use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\Str;
 
 class Line extends Gateway
 {

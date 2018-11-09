@@ -1,5 +1,5 @@
 <?php
-namespace anerg\OAuth2\Helper;
+namespace tinymeng\OAuth2\Helper;
 
 class Str
 {

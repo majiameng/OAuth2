@@ -6,10 +6,10 @@
  * @author Coeus <r.anerg@gmail.com>
  */
 
-namespace anerg\OAuth2;
+namespace tinymeng\OAuth2;
 
-use anerg\OAuth2\Connector\GatewayInterface;
-use anerg\OAuth2\Helper\Str;
+use tinymeng\OAuth2\Connector\GatewayInterface;
+use tinymeng\OAuth2\Helper\Str;
 
 abstract class OAuth
 {

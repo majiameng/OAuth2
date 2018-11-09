@@ -1,7 +1,7 @@
 <?php
-namespace anerg\OAuth2\Connector;
+namespace tinymeng\OAuth2\Connector;
 
-use anerg\OAuth2\Connector\GatewayInterface;
+use tinymeng\OAuth2\Connector\GatewayInterface;
 
 /**
  * 所有第三方登录必须继承的抽象类

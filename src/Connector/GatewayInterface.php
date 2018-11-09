@@ -1,5 +1,5 @@
 <?php
-namespace anerg\OAuth2\Connector;
+namespace tinymeng\OAuth2\Connector;
 
 /**
  * 所有第三方登录必须支持的接口方法

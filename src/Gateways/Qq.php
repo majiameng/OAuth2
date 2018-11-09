@@ -1,8 +1,8 @@
 <?php
 
-namespace anerg\OAuth2\Gateways;
+namespace tinymeng\OAuth2\Gateways;
 
-use anerg\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Connector\Gateway;
 
 class Qq extends Gateway
 {
