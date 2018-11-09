@@ -1,0 +1,25 @@
+{
+    "name": "tinymeng/oauth",
+    "description": "weixin weibo qq alipay twitter google line facebook sns oauth",
+    "type": "library",
+    "keywords": [
+        "tinymeng", "oauth-login","login","php","qq-login","wx-login","sina-login","github-login","alipay-login"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "JiaMeng Ma",
+            "email": "666@majiameng.com",
+            "homepage": "https://www.majiameng.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "tinymeng/tools": "^1.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "tinymeng\\oauth\\": "src"
+        }
+    }
+}
