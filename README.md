@@ -1,12 +1,12 @@
+# Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login and so on
+
 # 通用第三方登录说明文档
-
-
-2.0版本全新发布，目前支持的登录平台包括：
 
 * 微信
 * QQ
 * 微博
 * 支付宝
+* GitHub
 * Facebook
 * Twitter
 * Line
@@ -15,10 +15,10 @@
 ### 安装
 
 ```
-composer require anerg2046/sns_auth
+composer require tinymeng/oauth
 ```
 
-> 类库使用的命名空间为`\\anerg\\OAuth2`
+> 类库使用的命名空间为`\\tinymeng\\oauth`
 
 ### 目录结构
 
@@ -50,25 +50,39 @@ composer require anerg2046/sns_auth
 在接口文件中，定义了4个方法，是每个第三方基类都必须实现的，用于相关的第三方登录操作和获取数据。方法名如下：
 
 ```php
+
     /**
-     * 得到跳转地址
+     * Description:  得到跳转地址
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
     public function getRedirectUrl();
 
     /**
-     * 获取当前授权用户的openid标识
+     * Description:  获取当前授权用户的openid标识
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
     public function openid();
 
     /**
-     * 获取格式化后的用户信息
+     * Description:  获取格式化后的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
-    public function userinfo();
+    public function userInfo();
 
     /**
-     * 获取原始接口返回的用户信息
+     * Description:  获取原始接口返回的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
-    public function userinfoRaw();
+    public function userInfoRaw();
+    
 ```
 
 微信有一个额外的方法，用于获取代理请求的地址
@@ -180,18 +194,35 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
 
 #### 1.微信
 
+> 微信会返回特有的unionid字段
+
 ```
-'app_id'     => 'wxbc4113c******',
-'app_secret' => '4749970d284217d0a**********',
-'scope'      => 'snsapi_userinfo',//如果需要静默授权，这里改成snsapi_base，扫码登录系统会自动改为snsapi_login
+'weixin'=>[
+    'pc'=>[
+        'app_id' => 'wx52e2b2464*****',
+        'app_secret' => 'd5dad705a1159d*********',
+        'callback' => 'http://i.959.cn/qq-login.php',
+        'scope'      => 'snsapi_login',//扫码登录
+    ],
+    'mobile'=>[
+        'app_id' => 'wx6ca7410f825c8b65',
+        'app_secret' => '30a206b87b7689b19f11f20eff353666',
+        'callback' => 'http://i.959.cn/qq-login.php',
+        'scope'      => 'snsapi_userinfo',//静默授权=>snsapi_base;获取用户信息=>snsapi_userinfo
+    ],
+]
 ```
 
 #### 2.QQ
 
 ```
-'app_id'        => '1013****',
-'app_secret'    => '67c52bc284b32e7**********',
-'scope'         => 'get_user_info',
+'qq'=>[
+    'app_id'        => '101426434',
+    'app_secret'    => '8a2b322610d7a0d32d776bde8faf4cd6',
+    'scope'         => 'get_user_info',
+    'callback' => 'http://majiameng.com/login/qq',
+    'withUnionid' => true //已申请unioid打通
+]
 ```
 QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4%BB%8B%E7%BB%8D
 只需要配置参数`$config['withUnionid'] = true`，默认不会请求获取Unionid
@@ -258,8 +289,3 @@ Array
     [avatar] => https://lh6.googleusercontent.com/-iLps1iAjL8Q/AAAAAAAAAAI/AAAAAAAAAAA/Bu5l0EIquF0/photo.jpg
 )
 ```
-
-> 微信会返回特有的unionid字段
-
-### 其他
-使用中如果有什么问题，请提交issue，我会及时查看

@@ -30,16 +30,16 @@ class Google extends Gateway
      */
     public function openid()
     {
-        $userinfo = $this->userinfoRaw();
+        $userinfo = $this->userInfoRaw();
         return $userinfo['id'];
     }
 
     /**
      * 获取格式化后的用户信息
      */
-    public function userinfo()
+    public function userInfo()
     {
-        $rsp      = $this->userinfoRaw();
+        $rsp      = $this->userInfoRaw();
         $userinfo = [
             'openid'  => $rsp['id'],
             'channel' => 'google',
@@ -53,7 +53,7 @@ class Google extends Gateway
     /**
      * 获取原始接口返回的用户信息
      */
-    public function userinfoRaw()
+    public function userInfoRaw()
     {
         $this->getToken();
 

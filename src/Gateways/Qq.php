@@ -3,6 +3,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\ConstCode;
 
 class Qq extends Gateway
 {
@@ -11,7 +12,10 @@ class Qq extends Gateway
     protected $AccessTokenURL = 'https://graph.qq.com/oauth2.0/token';
 
     /**
-     * 得到跳转地址
+     * Description:  得到跳转地址
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return string
      */
     public function getRedirectUrl()
     {
@@ -27,7 +31,10 @@ class Qq extends Gateway
     }
 
     /**
-     * 获取当前授权用户的openid标识
+     * Description:  获取当前授权用户的openid标识
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
     public function openid()
     {
@@ -36,45 +43,53 @@ class Qq extends Gateway
         if (!isset($this->token['openid']) || !$this->token['openid']) {
             $userID                 = $this->getOpenID();
             $this->token['openid']  = $userID['openid'];
-            $this->token['unionid'] = isset($userID['unionid']) ?: '';
+            $this->token['unionid'] = isset($userID['unionid']) ? $userID['unionid'] : '';
         }
 
         return $this->token['openid'];
     }
 
     /**
-     * 获取格式化后的用户信息
+     * Description:  获取格式化后的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return array
      */
-    public function userinfo()
+    public function userInfo()
     {
-        $rsp = $this->userinfoRaw();
+        $result = $this->userInfoRaw();
 
-        $userinfo = [
-            'openid'  => $this->openid(),
-            'unionid' => isset($this->token['unionid']) ? $this->token['unionid'] : '',
-            'channel' => 'qq',
-            'nick'    => $rsp['nickname'],
-            'gender'  => $rsp['gender'] == "男" ? 'm' : 'f',
-            'avatar'  => $rsp['figureurl_qq_2'] ? $rsp['figureurl_qq_2'] : $rsp['figureurl_qq_1'],
+        $userInfo = [
+            'open_id' => $this->openid(),
+            'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
+            'channel' => ConstCode::TYPE_QQ,
+            'nickname'=> $result['nickname'],
+            'gender'  => $result['gender'] == "男" ? ConstCode::GENDER_MAN  : ConstCode::GENDER_WOMEN,
+            'avatar'  => $result['figureurl_qq_2'] ? $result['figureurl_qq_2'] : $result['figureurl_qq_1'],
+            'birthday'=> date('Y-m-d',strtotime($result['year'])),
         ];
-        return $userinfo;
+        return $userInfo;
     }
 
     /**
-     * 获取原始接口返回的用户信息
+     * Description:  获取原始接口返回的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return array
      */
-    public function userinfoRaw()
+    public function userInfoRaw()
     {
         return $this->call('user/get_user_info');
     }
 
     /**
-     * 发起请求
-     *
-     * @param string $api
+     * Description:  发起请求
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $api
      * @param array $params
      * @param string $method
-     * @return array
+     * @return mixed
      */
     private function call($api, $params = [], $method = 'GET')
     {
@@ -91,8 +106,12 @@ class Qq extends Gateway
     }
 
     /**
-     * 解析access_token方法请求后的返回值
-     * @param string $token 获取access_token的方法的返回值
+     * Description:  解析access_token方法请求后的返回值
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $token
+     * @return mixed
+     * @throws \Exception
      */
     protected function parseToken($token)
     {
@@ -105,17 +124,19 @@ class Qq extends Gateway
     }
 
     /**
-     * 通过接口获取openid
-     *
-     * @return string
+     * Description:  通过接口获取openid
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed|string
+     * @throws \Exception
      */
     private function getOpenID()
     {
         $client = new \GuzzleHttp\Client();
 
         $query = ['access_token' => $this->token['access_token']];
-        // 如果要获取unionid，先去申请：http://wiki.connect.qq.com/%E5%BC%80%E5%8F%91%E8%80%85%E5%8F%8D%E9%A6%88
-        if (isset($this->config['withUnionid']) && $this->config['withUnionid'] === true) {
+        /** 如果要获取unionid，先去申请：http://wiki.connect.qq.com/开发者反馈 */
+        if (isset($this->config['is_unioid']) && $this->config['is_unioid'] === true) {
             $query['unionid'] = 1;
         }
 

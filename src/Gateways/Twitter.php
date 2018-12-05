@@ -25,16 +25,16 @@ class Twitter extends Gateway
      */
     public function openid()
     {
-        $data = $this->userinfoRaw();
+        $data = $this->userInfoRaw();
         return $data['id_str'];
     }
 
     /**
      * 获取格式化后的用户信息
      */
-    public function userinfo()
+    public function userInfo()
     {
-        $data = $this->userinfoRaw();
+        $data = $this->userInfoRaw();
 
         $return = [
             'openid'  => $data['id_str'],
@@ -49,7 +49,7 @@ class Twitter extends Gateway
     /**
      * 获取原始接口返回的用户信息
      */
-    public function userinfoRaw()
+    public function userInfoRaw()
     {
         if (!$this->token) {
             $this->token = $this->getAccessToken();

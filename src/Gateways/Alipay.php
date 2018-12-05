@@ -3,6 +3,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
 class Alipay extends Gateway
@@ -44,15 +45,16 @@ class Alipay extends Gateway
     /**
      * 获取格式化后的用户信息
      */
-    public function userinfo()
+    public function userInfo()
     {
         $rsp = $this->userinfoRaw();
 
         $userinfo = [
-            'openid'  => $this->token['openid'],
-            'channel' => 'alipay',
-            'nick'    => $rsp['nick_name'],
-            'gender'  => strtolower($rsp['gender']),
+            'open_id'  => $this->token['access_token'],
+            'union_id'  => $this->token['openid'],
+            'channel' => ConstCode::TYPE_ALIPAY,
+            'nickname'    => $rsp['nick_name'],
+            'gender'  => strtolower($rsp['gender']) == 'm' ? ConstCode::GENDER_MAN : ConstCode::GENDER_WOMEN,
             'avatar'  => $rsp['avatar'],
         ];
         return $userinfo;
@@ -61,7 +63,7 @@ class Alipay extends Gateway
     /**
      * 获取原始接口返回的用户信息
      */
-    public function userinfoRaw()
+    public function userInfoRaw()
     {
         $this->getToken();
 

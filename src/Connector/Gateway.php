@@ -1,8 +1,6 @@
 <?php
 namespace tinymeng\OAuth2\Connector;
 
-use tinymeng\OAuth2\Connector\GatewayInterface;
-
 /**
  * 所有第三方登录必须继承的抽象类
  */
@@ -38,6 +36,11 @@ abstract class Gateway implements GatewayInterface
      */
     protected $checkState = false;
 
+    /**
+     * Gateway constructor.
+     * @param null $config
+     * @throws \Exception
+     */
     public function __construct($config = null)
     {
         if (!$config) {
@@ -58,10 +61,11 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
-     * 设置授权页面样式
-     *
-     * @param string $display
-     * @return self
+     * Description:  设置授权页面样式
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $display
+     * @return $this
      */
     public function setDisplay($display)
     {
@@ -70,9 +74,10 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
-     * 强制验证回跳地址中的state参数
-     *
-     * @return self
+     * Description:  强制验证回跳地址中的state参数
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return $this
      */
     public function mustCheckState()
     {
@@ -81,9 +86,10 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
-     * 执行GET请求操作
-     *
-     * @param string $url
+     * Description:  执行GET请求操作
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $url
      * @param array $params
      * @param array $headers
      * @return string
@@ -127,9 +133,11 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
-     * 获取AccessToken
-     *
+     * Description:  获取AccessToken
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      * @return string
+     * @throws \Exception
      */
     protected function getAccessToken()
     {
@@ -143,9 +151,9 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
-     * 获取token信息
-     *
-     * @return void
+     * Description:  获取token信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      */
     protected function getToken()
     {

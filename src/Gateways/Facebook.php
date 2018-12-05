@@ -31,16 +31,16 @@ class Facebook extends Gateway
      */
     public function openid()
     {
-        $userinfo = $this->userinfo();
+        $userinfo = $this->userInfo();
         return $userinfo['openid'];
     }
 
     /**
      * 获取格式化后的用户信息
      */
-    public function userinfo()
+    public function userInfo()
     {
-        $rsp = $this->userinfoRaw();
+        $rsp = $this->userInfoRaw();
 
         $userinfo = [
             'openid'  => $rsp['id'],
@@ -55,7 +55,7 @@ class Facebook extends Gateway
     /**
      * 获取原始接口返回的用户信息
      */
-    public function userinfoRaw()
+    public function userInfoRaw()
     {
         $this->getToken();
         $fields = isset($this->config['fields']) ? $this->config['fields'] : 'id,name,gender,picture.width(400)';

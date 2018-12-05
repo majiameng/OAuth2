@@ -3,14 +3,19 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\ConstCode;
 
 class Weixin extends Gateway
 {
     const API_BASE            = 'https://api.weixin.qq.com/sns/';
     protected $AuthorizeURL   = 'https://open.weixin.qq.com/connect/qrconnect';
     protected $AccessTokenURL = 'https://api.weixin.qq.com/sns/oauth2/access_token';
+
     /**
-     * 得到跳转地址
+     * Description:  得到跳转地址
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return string
      */
     public function getRedirectUrl()
     {
@@ -26,7 +31,10 @@ class Weixin extends Gateway
     }
 
     /**
-     * 获取中转代理地址
+     * Description:  获取中转代理地址
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return string
      */
     public function getProxyURL()
     {
@@ -41,7 +49,11 @@ class Weixin extends Gateway
     }
 
     /**
-     * 获取当前授权用户的openid标识
+     * Description:  获取当前授权用户的openid标识
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
+     * @throws \Exception
      */
     public function openid()
     {
@@ -55,27 +67,33 @@ class Weixin extends Gateway
     }
 
     /**
-     * 获取格式化后的用户信息
+     * Description:  获取格式化后的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return array
      */
-    public function userinfo()
+    public function userInfo()
     {
         $rsp = $this->userinfoRaw();
 
         $userinfo = [
-            'openid'  => $this->openid(),
-            'unionid' => isset($this->token['unionid']) ? $this->token['unionid'] : '',
-            'channel' => 'weixin',
-            'nick'    => $rsp['nickname'],
-            'gender'  => $this->getGender($rsp['sex']),
+            'open_id' => $this->openid(),
+            'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
+            'channel' => ConstCode::TYPE_WECHAT,
+            'nickname'=> $rsp['nickname'],
+            'gender'  => $rsp['sex'],
             'avatar'  => $rsp['headimgurl'],
         ];
         return $userinfo;
     }
 
     /**
-     * 获取原始接口返回的用户信息
+     * Description:  获取原始接口返回的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return array
      */
-    public function userinfoRaw()
+    public function userInfoRaw()
     {
         $this->getToken();
 
@@ -83,12 +101,13 @@ class Weixin extends Gateway
     }
 
     /**
-     * 发起请求
-     *
-     * @param string $api
+     * Description:  发起请求
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $api
      * @param array $params
      * @param string $method
-     * @return array
+     * @return mixed
      */
     private function call($api, $params = [], $method = 'GET')
     {
@@ -103,9 +122,9 @@ class Weixin extends Gateway
     }
 
     /**
-     * 根据第三方授权页面样式切换跳转地址
-     *
-     * @return void
+     * Description:  根据第三方授权页面样式切换跳转地址
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      */
     private function switchAccessTokenURL()
     {
@@ -118,8 +137,9 @@ class Weixin extends Gateway
     }
 
     /**
-     * 默认的AccessToken请求参数
-     *
+     * Description:  默认的AccessToken请求参数
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      * @return array
      */
     protected function accessTokenParams()
@@ -134,8 +154,12 @@ class Weixin extends Gateway
     }
 
     /**
-     * 解析access_token方法请求后的返回值
+     * Description:  解析access_token方法请求后的返回值
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      * @param string $token 获取access_token的方法的返回值
+     * @return mixed
+     * @throws \Exception
      */
     protected function parseToken($token)
     {
@@ -147,25 +171,4 @@ class Weixin extends Gateway
         }
     }
 
-    /**
-     * 格式化性别
-     *
-     * @param string $gender
-     * @return string
-     */
-    private function getGender($gender)
-    {
-        $return = null;
-        switch ($gender) {
-            case 1:
-                $return = 'm';
-                break;
-            case 2:
-                $return = 'f';
-                break;
-            default:
-                $return = 'n';
-        }
-        return $return;
-    }
 }

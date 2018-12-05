@@ -8,22 +8,34 @@ interface GatewayInterface
 {
 
     /**
-     * 得到跳转地址
+     * Description:  得到跳转地址
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
     public function getRedirectUrl();
 
     /**
-     * 获取当前授权用户的openid标识
+     * Description:  获取当前授权用户的openid标识
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
     public function openid();
 
     /**
-     * 获取格式化后的用户信息
+     * Description:  获取格式化后的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
-    public function userinfo();
+    public function userInfo();
 
     /**
-     * 获取原始接口返回的用户信息
+     * Description:  获取原始接口返回的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
-    public function userinfoRaw();
+    public function userInfoRaw();
 }
