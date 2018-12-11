@@ -205,8 +205,8 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
         'scope'      => 'snsapi_login',//扫码登录
     ],
     'mobile'=>[
-        'app_id' => 'wx6ca7410f825c8b65',
-        'app_secret' => '30a206b87b7689b19f11f20eff353666',
+        'app_id' => 'wx6ca7410f8******',
+        'app_secret' => '30a206b87b7689b19f11******',
         'callback' => 'http://i.959.cn/qq-login.php',
         'scope'      => 'snsapi_userinfo',//静默授权=>snsapi_base;获取用户信息=>snsapi_userinfo
     ],
@@ -217,8 +217,8 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
 
 ```
 'qq'=>[
-    'app_id'        => '101426434',
-    'app_secret'    => '8a2b322610d7a0d32d776bde8faf4cd6',
+    'app_id'        => '1014*****',
+    'app_secret'    => '8a2b322610d7a0d****',
     'scope'         => 'get_user_info',
     'callback' => 'http://majiameng.com/login/qq',
     'withUnionid' => true //已申请unioid打通
