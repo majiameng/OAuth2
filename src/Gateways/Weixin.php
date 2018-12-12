@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * 网站应用微信登录开发 https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=
+ * 1.PC登录:微信开放平台创建'网站应用'
+ * 2.Mobile登录:微信公众号(服务号/企业号)
+ * 3.APP登录:微信开放平台创建'移动应用'
+ *
+ * 注: scope值
+ *      1、以snsapi_base为scope发起的网页授权，是用来获取进入页面的用户的openid的，并且是静默授权并自动跳转到回调页的。用户感知的就是直接进入了回调页（往往是业务页面）
+ *      2、以snsapi_userinfo为scope发起的网页授权，是用来获取用户的基本信息的。但这种授权需要用户手动同意，并且由于用户同意过，所以无须关注，就可在授权后获取该用户的基本信息。(H5页面微信授权获取用户,注册成为用户id,可以做点赞关注等功能)
+ *      3、用户管理类接口中的“获取用户基本信息接口”，是在用户和公众号产生消息交互或关注后事件推送后，才能根据用户OpenID来获取用户基本信息。这个接口，包括其他微信接口，都是需要该用户（即openid）关注了公众号后，才能调用成功的。
+ * 如想打通unionid的话需要将公众号绑定到同一个微信开放平台
+ */
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
@@ -74,17 +85,17 @@ class Weixin extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->userinfoRaw();
+        $result = $this->getUserInfo();
 
-        $userinfo = [
+        $userInfo = [
             'open_id' => $this->openid(),
             'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
             'channel' => ConstCode::TYPE_WECHAT,
-            'nickname'=> $rsp['nickname'],
-            'gender'  => $rsp['sex'],
-            'avatar'  => $rsp['headimgurl'],
+            'nickname'=> $result['nickname'],
+            'gender'  => $result['sex'],
+            'avatar'  => $result['headimgurl'],
         ];
-        return $userinfo;
+        return $userInfo;
     }
 
     /**
@@ -93,31 +104,18 @@ class Weixin extends Gateway
      * Updater:
      * @return array
      */
-    public function userInfoRaw()
+    public function getUserInfo()
     {
+        /** 获取token信息 */
         $this->getToken();
 
-        return $this->call('userinfo');
-    }
-
-    /**
-     * Description:  发起请求
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
-     * @param $api
-     * @param array $params
-     * @param string $method
-     * @return mixed
-     */
-    private function call($api, $params = [], $method = 'GET')
-    {
-        $method = strtoupper($method);
-
-        $params['access_token'] = $this->token['access_token'];
-        $params['openid']       = $this->openid();
-        $params['lang']         = 'zh_CN';
-
-        $data = $this->$method(self::API_BASE . $api, $params);
+        /** 获取用户信息 */
+        $params = [
+            'access_token'=>$this->token['access_token'],
+            'openid'=>$this->openid(),
+            'lang'=>'zh_CN',
+        ];
+        $data = $this->get(self::API_BASE . 'userinfo', $params);
         return json_decode($data, true);
     }
 
@@ -128,6 +126,11 @@ class Weixin extends Gateway
      */
     private function switchAccessTokenURL()
     {
+        /**
+         *  第三方使用网站应用授权登录前请注意已获取相应网页授权作用域
+         *  Pc网站应用 https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+         *  微信内网站应用: https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URL&response_type=code&scope=SCOPE&state=1#wechat_redirect
+         */
         if ($this->display == 'mobile') {
             $this->AuthorizeURL = 'https://open.weixin.qq.com/connect/oauth2/authorize';
         } else {
@@ -137,7 +140,7 @@ class Weixin extends Gateway
     }
 
     /**
-     * Description:  默认的AccessToken请求参数
+     * Description:  重写 获取的AccessToken请求参数
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return array

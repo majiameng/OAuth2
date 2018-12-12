@@ -40,7 +40,7 @@ class Facebook extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->userInfoRaw();
+        $rsp = $this->getUserInfo();
 
         $userinfo = [
             'openid'  => $rsp['id'],
@@ -55,7 +55,7 @@ class Facebook extends Gateway
     /**
      * 获取原始接口返回的用户信息
      */
-    public function userInfoRaw()
+    public function getUserInfo()
     {
         $this->getToken();
         $fields = isset($this->config['fields']) ? $this->config['fields'] : 'id,name,gender,picture.width(400)';
@@ -84,7 +84,9 @@ class Facebook extends Gateway
     }
 
     /**
-     * Facebook的AccessToken请求参数
+     * Description:  重写 获取的AccessToken请求参数
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      * @return array
      */
     protected function accessTokenParams()

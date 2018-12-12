@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Google Api 控制台 https://console.developers.google.com
+ * Oauth开发文档:
+ *      https://developers.google.com/identity/protocols/OAuth2?csw=1
+ *      https://developers.google.com/identity/protocols/OAuth2WebServer
+ * 1.创建项目->并创建凭证
+ */
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
@@ -30,7 +36,7 @@ class Google extends Gateway
      */
     public function openid()
     {
-        $userinfo = $this->userInfoRaw();
+        $userinfo = $this->getUserInfo();
         return $userinfo['id'];
     }
 
@@ -39,7 +45,7 @@ class Google extends Gateway
      */
     public function userInfo()
     {
-        $rsp      = $this->userInfoRaw();
+        $rsp      = $this->getUserInfo();
         $userinfo = [
             'openid'  => $rsp['id'],
             'channel' => 'google',
@@ -53,7 +59,7 @@ class Google extends Gateway
     /**
      * 获取原始接口返回的用户信息
      */
-    public function userInfoRaw()
+    public function getUserInfo()
     {
         $this->getToken();
 

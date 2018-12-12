@@ -37,5 +37,5 @@ interface GatewayInterface
      * Updater:
      * @return mixed
      */
-    public function userInfoRaw();
+    public function getUserInfo();
 }

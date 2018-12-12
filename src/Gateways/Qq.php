@@ -1,7 +1,12 @@
 <?php
-
+/**
+ * QQ互联  https://connect.qq.com/index.html
+ * api接口文档
+ *      http://wiki.connect.qq.com/开发攻略_server-side
+ * 注:
+ *      1.如果要获取unionid，先去申请：http://wiki.connect.qq.com/开发者反馈
+*/
 namespace tinymeng\OAuth2\Gateways;
-
 use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 
@@ -31,25 +36,6 @@ class Qq extends Gateway
     }
 
     /**
-     * Description:  获取当前授权用户的openid标识
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
-     * @return mixed
-     */
-    public function openid()
-    {
-        $this->getToken();
-
-        if (!isset($this->token['openid']) || !$this->token['openid']) {
-            $userID                 = $this->getOpenID();
-            $this->token['openid']  = $userID['openid'];
-            $this->token['unionid'] = isset($userID['unionid']) ? $userID['unionid'] : '';
-        }
-
-        return $this->token['openid'];
-    }
-
-    /**
      * Description:  获取格式化后的用户信息
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
@@ -57,7 +43,7 @@ class Qq extends Gateway
      */
     public function userInfo()
     {
-        $result = $this->userInfoRaw();
+        $result = $this->getUserInfo();
 
         $userInfo = [
             'open_id' => $this->openid(),
@@ -77,32 +63,34 @@ class Qq extends Gateway
      * Updater:
      * @return array
      */
-    public function userInfoRaw()
+    public function getUserInfo()
     {
-        return $this->call('user/get_user_info');
+        /** 获取用户信息 */
+        $params = [
+            'openid'=>$this->openid(),
+            'oauth_consumer_key'=>$this->config['app_id'],
+            'access_token'=>$this->token['access_token'],
+            'format'=>'json',
+        ];
+        $data = $this->get(self::API_BASE . 'user/get_user_info', $params);
+        return json_decode($data, true);
     }
 
     /**
-     * Description:  发起请求
+     * Description:  获取当前授权用户的openid标识
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @param $api
-     * @param array $params
-     * @param string $method
      * @return mixed
      */
-    private function call($api, $params = [], $method = 'GET')
+    public function openid()
     {
-        $method = strtoupper($method);
-
-        $params['openid']             = $this->openid();
-        $params['oauth_consumer_key'] = $this->config['app_id'];
-        $params['access_token']       = $this->token['access_token'];
-        $params['format']             = 'json';
-
-        $data = $this->$method(self::API_BASE . $api, $params);
-
-        return json_decode($data, true);
+        $this->getToken();
+        if (!isset($this->token['openid']) || !$this->token['openid']) {
+            $userID                 = $this->getOpenID();
+            $this->token['openid']  = $userID['openid'];
+            $this->token['unionid'] = isset($userID['unionid']) ? $userID['unionid'] : '';
+        }
+        return $this->token['openid'];
     }
 
     /**
@@ -130,18 +118,16 @@ class Qq extends Gateway
      * @return mixed|string
      * @throws \Exception
      */
-    private function getOpenID()
-    {
-        $client = new \GuzzleHttp\Client();
-
-        $query = ['access_token' => $this->token['access_token']];
+    private function getOpenID(){
+        $query = [
+            'access_token' => $this->token['access_token']
+        ];
         /** 如果要获取unionid，先去申请：http://wiki.connect.qq.com/开发者反馈 */
         if (isset($this->config['is_unioid']) && $this->config['is_unioid'] === true) {
             $query['unionid'] = 1;
         }
 
-        $response = $client->request('GET', self::API_BASE . 'oauth2.0/me', ['query' => $query]);
-        $data     = $response->getBody()->getContents();
+        $data = $this->get(self::API_BASE . 'oauth2.0/me',$query);
         $data     = json_decode(trim(substr($data, 9), " );\n"), true);
         if (isset($data['openid'])) {
             return $data;

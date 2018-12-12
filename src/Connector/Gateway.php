@@ -55,6 +55,7 @@ abstract class Gateway implements GatewayInterface
             'grant_type'    => 'authorization_code',
             'proxy'         => '',
             'state'         => '',
+            'is_sandbox'    => false,//是否是沙箱环境
         ];
         $this->config    = array_merge($_config, $config);
         $this->timestamp = time();
@@ -86,42 +87,12 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
-     * Description:  执行GET请求操作
+     * Description:  默认获取AccessToken请求参数
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @param $url
-     * @param array $params
-     * @param array $headers
-     * @return string
-     */
-    protected function GET($url, $params = [], $headers = [])
-    {
-        $client   = new \GuzzleHttp\Client();
-        $response = $client->request('GET', $url, ['proxy' => $this->config['proxy'], 'headers' => $headers, 'query' => $params]);
-        return $response->getBody()->getContents();
-    }
-
-    /**
-     * 执行POST请求操作
-     *
-     * @param string $url
-     * @param array $params
-     * @param array $headers
-     * @return string
-     */
-    protected function POST($url, $params = [], $headers = [])
-    {
-        $client   = new \GuzzleHttp\Client();
-        $response = $client->request('POST', $url, ['proxy' => $this->config['proxy'], 'headers' => $headers, 'form_params' => $params, 'http_errors' => false]);
-        return $response->getBody()->getContents();
-    }
-
-    /**
-     * 默认的AccessToken请求参数
      * @return array
      */
-    protected function accessTokenParams()
-    {
+    protected function accessTokenParams(){
         $params = [
             'client_id'     => $this->config['app_id'],
             'client_secret' => $this->config['app_secret'],
@@ -136,31 +107,55 @@ abstract class Gateway implements GatewayInterface
      * Description:  获取AccessToken
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @return string
-     * @throws \Exception
      */
-    protected function getAccessToken()
-    {
-        if ($this->checkState === true) {
-            if (!isset($_GET['state']) || $_GET['state'] != $this->config['state']) {
-                throw new \Exception('传递的STATE参数不匹配！');
+    protected function getToken(){
+        if (empty($this->token)) {
+            /** 验证state参数 */
+            if ($this->checkState === true) {
+                if (!isset($_GET['state']) || $_GET['state'] != $this->config['state']) {
+                    throw new \Exception('传递的STATE参数不匹配！');
+                }
             }
+            /** 获取参数 */
+            $params = $this->accessTokenParams();
+            var_dump($this->AccessTokenURL, $params);
+
+            /** 获取access_token */
+            $token =  $this->POST($this->AccessTokenURL, $params);
+//            var_dump($token);
+//            die;
+
+            /** 解析token值(子类实现此方法) */
+            $this->token = $this->parseToken($token);
         }
-        $params = $this->accessTokenParams();
-        return $this->POST($this->AccessTokenURL, $params);
     }
 
     /**
-     * Description:  获取token信息
+     * Description:  执行GET请求操作
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
+     * @param $url
+     * @param array $params
+     * @param array $headers
+     * @return string
      */
-    protected function getToken()
+    protected function GET($url, $params = [], $headers = [])
     {
-        if (empty($this->token)) {
-            $token = $this->getAccessToken();
-            /** @scrutinizer ignore-call */
-            $this->token = $this->parseToken($token);
-        }
+        return \tinymeng\tools\HttpRequest::httpGet($url, $params,$headers);
+    }
+
+    /**
+     * Description:  执行POST请求操作
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $url
+     * @param array $params
+     * @param array $headers
+     * @return mixed
+     */
+    protected function POST($url, $params = [], $headers = [])
+    {
+        $headers[] = 'Accept: application/json';//GitHub需要的header
+        return \tinymeng\tools\HttpRequest::httpPost($url, $params, false,$headers);
     }
 }

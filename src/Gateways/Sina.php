@@ -57,7 +57,7 @@ class Sina extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->userInfoRaw();
+        $rsp = $this->getUserInfo();
 
         $userinfo = [
             'open_id'  => $this->token['access_token'],
@@ -76,7 +76,7 @@ class Sina extends Gateway
      * Updater:
      * @return array
      */
-    public function userInfoRaw()
+    public function getUserInfo()
     {
         $this->getToken();
 

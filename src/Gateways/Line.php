@@ -31,7 +31,7 @@ class Line extends Gateway
      */
     public function openid()
     {
-        $rsp = $this->userInfoRaw();
+        $rsp = $this->getUserInfo();
         return $rsp['userId'];
     }
 
@@ -40,7 +40,7 @@ class Line extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->userInfoRaw();
+        $rsp = $this->getUserInfo();
 
         $userinfo = [
             'openid'  => $rsp['userId'],
@@ -55,7 +55,7 @@ class Line extends Gateway
     /**
      * 获取原始接口返回的用户信息
      */
-    public function userInfoRaw()
+    public function getUserInfo()
     {
         $this->getToken();
 

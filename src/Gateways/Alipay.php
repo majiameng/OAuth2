@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * 蚂蚁金服 https://openhome.alipay.com
+ * 支付宝第三方应用授权文档
+ *    https://docs.open.alipay.com/20160728150111277227
+ * 1.设置:回调地址/加签方式(RSA(SHA256)密钥)/接口内容加密方式(AES密钥)
+ * 2.1.PC登录需要签约:	第三方应用授权/获取会员信息
+ * 2.2.APP登录需要签约:	APP支付宝登录/获取会员信息
+ */
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
@@ -14,8 +21,12 @@ class Alipay extends Gateway
     const API_BASE            = 'https://openapi.alipay.com/gateway.do';
     protected $AuthorizeURL   = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm';
     protected $AccessTokenURL = 'https://openapi.alipay.com/gateway.do';
+
     /**
-     * 得到跳转地址
+     * Description:  得到跳转地址
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return string
      */
     public function getRedirectUrl()
     {
@@ -25,11 +36,21 @@ class Alipay extends Gateway
             'scope'        => $this->config['scope'],
             'state'        => $this->config['state'],
         ];
+
+        if ($this->config['is_sandbox'] == true) {
+            //使用沙箱环境url
+            $this->AuthorizeURL = str_replace("alipay", "alipaydev", $this->AuthorizeURL);
+        }
+
         return $this->AuthorizeURL . '?' . http_build_query($params);
     }
 
     /**
-     * 获取当前授权用户的openid标识
+     * Description:  获取当前授权用户的openid标识
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
+     * @throws \Exception
      */
     public function openid()
     {
@@ -43,11 +64,14 @@ class Alipay extends Gateway
     }
 
     /**
-     * 获取格式化后的用户信息
+     * Description:  获取格式化后的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return array
      */
     public function userInfo()
     {
-        $rsp = $this->userinfoRaw();
+        $rsp = $this->getUserInfo();
 
         $userinfo = [
             'open_id'  => $this->token['access_token'],
@@ -61,47 +85,36 @@ class Alipay extends Gateway
     }
 
     /**
-     * 获取原始接口返回的用户信息
+     * Description:  获取原始接口返回的用户信息
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return mixed
      */
-    public function userInfoRaw()
+    public function getUserInfo()
     {
         $this->getToken();
 
-        $rsp = $this->call('alipay.user.info.share');
-        return $rsp['alipay_user_info_share_response'];
-    }
-
-    /**
-     * 发起请求
-     *
-     * @param string $api
-     * @param array $params
-     * @param string $method
-     * @return array
-     */
-    private function call($api, $params = [], $method = 'POST')
-    {
-        $method = strtoupper($method);
-
-        $_params = [
+        $params = [
             'app_id'     => $this->config['app_id'],
-            'method'     => $api,
+            'method'     => 'alipay.user.info.share',
             'charset'    => 'UTF-8',
             'sign_type'  => 'RSA2',
             'timestamp'  => date("Y-m-d H:i:s"),
             'version'    => '1.0',
             'auth_token' => $this->token['access_token'],
         ];
-        $params         = array_merge($_params, $params);
         $params['sign'] = $this->signature($params);
 
-        $data = $this->$method(self::API_BASE, $params);
+        $data = $this->post(self::API_BASE, $params);
         $data = mb_convert_encoding($data, 'utf-8', 'gbk');
-        return json_decode($data, true);
+        $rsp =  json_decode($data, true);
+        return $rsp['alipay_user_info_share_response'];
     }
 
     /**
-     * 默认的AccessToken请求参数
+     * Description:  重写 获取的AccessToken请求参数
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      * @return array
      */
     protected function accessTokenParams()
@@ -121,7 +134,12 @@ class Alipay extends Gateway
     }
 
     /**
-     * 支付宝签名
+     * Description:  支付宝签名
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param array $data
+     * @return string
+     * @throws \Exception
      */
     private function signature($data = [])
     {
@@ -140,10 +158,12 @@ class Alipay extends Gateway
     }
 
     /**
-     * 获取密钥
-     *
+     * Description:  获取密钥
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      * @param int $type
      * @return string
+     * @throws \Exception
      */
     private function getRsaKeyVal($type = self::RSA_PUBLIC)
     {
@@ -169,8 +189,12 @@ class Alipay extends Gateway
     }
 
     /**
-     * 解析access_token方法请求后的返回值
-     * @param string $token 获取access_token的方法的返回值
+     * Description:  解析access_token方法
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $token
+     * @return mixed
+     * @throws \Exception
      */
     protected function parseToken($token)
     {

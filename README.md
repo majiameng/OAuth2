@@ -81,7 +81,7 @@ composer require tinymeng/oauth
      * Updater:
      * @return mixed
      */
-    public function userInfoRaw();
+    public function getUserInfo();
     
 ```
 
@@ -103,8 +103,8 @@ composer require tinymeng/oauth
 
 namespace app\mobile\controller;
 
-use anerg\OAuth2\OAuth;
-use think\facade\Config;
+use tinymeng\OAuth2\OAuth;
+use think\Config;
 
 class Sns
 {
@@ -159,7 +159,7 @@ class Sns
         $snsInfo = OAuth::$name($this->config)->userinfo();
 
         //获取第三方返回的原始用户信息
-        $snsInfoRaw = OAuth::$name($this->config)->userinfoRaw();
+        $snsInfoRaw = OAuth::$name($this->config)->getUserInfo();
 
         //获取第三方openid
         $openid = OAuth::$name($this->config)->openid();

@@ -25,7 +25,7 @@ class Twitter extends Gateway
      */
     public function openid()
     {
-        $data = $this->userInfoRaw();
+        $data = $this->getUserInfo();
         return $data['id_str'];
     }
 
@@ -34,7 +34,7 @@ class Twitter extends Gateway
      */
     public function userInfo()
     {
-        $data = $this->userInfoRaw();
+        $data = $this->getUserInfo();
 
         $return = [
             'openid'  => $data['id_str'],
@@ -49,7 +49,7 @@ class Twitter extends Gateway
     /**
      * 获取原始接口返回的用户信息
      */
-    public function userInfoRaw()
+    public function getUserInfo()
     {
         if (!$this->token) {
             $this->token = $this->getAccessToken();
@@ -58,7 +58,6 @@ class Twitter extends Gateway
             } else {
                 throw new \Exception("获取Twitter ACCESS_TOKEN 出错：" . json_encode($this->token));
             }
-
         }
 
         return $this->call('1.1/account/verify_credentials.json', $this->token, 'GET', true);
@@ -143,10 +142,11 @@ class Twitter extends Gateway
         return rtrim($return, ', ');
     }
 
+
     /**
-     * 获取access token
-     * twitter不是标准的oauth2
-     *
+     * Description:  getAccessToken
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
      * @return array
      */
     protected function getAccessToken()

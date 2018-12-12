@@ -4,6 +4,8 @@
  */
 namespace tinymeng\OAuth2\Helper;
 
+use app\common\tool\Tool;
+
 class ConstCode{
 
     /** 公共状态 */
@@ -51,7 +53,7 @@ class ConstCode{
             case self::TYPE_WECHAT:
                 if($is_app === true){
                     $type = self::TYPE_WECHAT_APP;//微信App
-                }else if(Tool::isWeixin()){
+                }else if(Tool::isWeiXin()){
                     $type =  self::TYPE_WECHAT_MOBILE;//微信mobile
                 }else{
                     $type = $channel;
