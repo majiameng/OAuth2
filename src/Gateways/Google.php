@@ -62,9 +62,10 @@ class Google extends Gateway
         }
 
         $userInfo = [
-            'openid'  => $result['id'],
+            'open_id'  => $this->token['access_token'],
+            'union_id'  => $result['id'],
             'channel' => ConstCode::TYPE_GOOGLE,
-            'nick'    => $result['name'],
+            'nickname'    => $result['name'],
             'gender'  => $gender,
             'avatar'  => $result['picture'],
         ];
@@ -101,23 +102,4 @@ class Google extends Gateway
         }
     }
 
-    /**
-     * 格式化性别
-     *
-     * @param string $gender
-     * @return string
-     */
-    private function getGender($gender)
-    {
-        $return = 'n';
-        switch ($gender) {
-            case 'male':
-                $return = 'm';
-                break;
-            case 'female':
-                $return = 'f';
-                break;
-        }
-        return $return;
-    }
 }
