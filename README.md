@@ -24,15 +24,16 @@ composer require tinymeng/oauth
 
 ```
 .
-├── README.md                        说明文件
-├── composer.json                    composer文件
+├── example                          代码源文件目录
+│   └── wx_proxy.php                微信多域名代理文件
 ├── src                              代码源文件目录
 │   ├── Connector
-│   │   ├── Gateway.php              必须继承的抽象类
-│   │   └── GatewayInterface.php     必须实现的接口
+│   │   ├── Gateway.php            必须继承的抽象类
+│   │   └── GatewayInterface.php   必须实现的接口
 │   ├── Gateways
 │   │   ├── Alipay.php
 │   │   ├── Facebook.php
+│   │   ├── Github.php
 │   │   ├── Google.php
 │   │   ├── Line.php
 │   │   ├── Qq.php
@@ -40,9 +41,12 @@ composer require tinymeng/oauth
 │   │   ├── Weibo.php
 │   │   └── Weixin.php
 │   ├── Helper
-│   │   └── Str.php                  字符串辅助类
-│   └── OAuth.php                    抽象实例类
-└── wx_proxy.php                     微信多域名代理文件
+│   │   ├── ConstCode.php          公共常量
+│   │   └── Str.php                字符串辅助类
+│   └── OAuth.php                   抽象实例类
+├── composer.json                    composer文件
+├── LICENSE                          MIT License
+└── README.md                        说明文件
 ```
 
 ### 公共方法
@@ -100,95 +104,119 @@ composer require tinymeng/oauth
 
 ```php
 <?php
+namespace app\index\controller;
 
-namespace app\mobile\controller;
-
-use tinymeng\OAuth2\OAuth;
 use think\Config;
+use tinymeng\OAuth2\OAuth;
+use tinymeng\tools\Tool;
 
-class Sns
+class Login extends Common
 {
-    private $config;
+    protected $config;
 
     /**
-     * 第三方登录，执行跳转操作
-     *
-     * @param string $name 第三方渠道名称，目前可用的为：weixin,qq,weibo,alipay,facebook,twitter,line,google
+     * Description:  登录
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $name
+     * @return mixed
      */
-    public function login($name)
+    public function index($name)
     {
-        //获取配置
-        $this->config = Config::get('sns.' . $name);
-
-        //设置回跳地址
-        $this->config['callback'] = $this->makeCallback($name);
-
+        if (empty(input('get.'))) {
+            /** 登录 */
+            $result = $this->login($name);
+            $this->redirect($result);
+        }
+        /** 登录回调 */
+        $this->callback($name);
+        return $this->fetch('index');
+    }
+    
+    /**
+     * Description:  获取配置文件
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $name
+     */
+    public function getConfig($name){
         //可以设置代理服务器，一般用于调试国外平台
-        $this->config['proxy'] = 'http://127.0.0.1:1080';
-
-        /**
-         * 对于微博，如果登录界面要适用于手机，则需要设定->setDisplay('mobile')
-         *
-         * 对于微信，如果是公众号登录，则需要设定->setDisplay('mobile')，否则是WEB网站扫码登录
-         *
-         * 其他登录渠道的这个设置没有任何影响，为了统一，可以都写上
-         */
-        return redirect(OAuth::$name($this->config)->setDisplay('mobile')->getRedirectUrl());
+        //$this->config['proxy'] = 'http://127.0.0.1:1080';
+        
+        $this->config = Config::get($name);
+        if($name == 'weixin'){
+            if(!Tool::isMobile()){
+                $this->config = $this->config['pc'];//微信pc扫码登录
+            }elseif(Tool::isWeiXin()){
+                $this->config = $this->config['mobile'];//微信浏览器中打开
+            }else{
+                echo '请使用微信打开!';exit();//手机浏览器打开
+            }
+            $this->config['state'] = 'https://www.majiameng.com/login/weixin';
+        }
+    }
+    
+    /**
+     * Description:  登录链接分配，执行跳转操作
+     * Author: JiaMeng <666@majiameng.com>
+     * Updater:
+     */
+    public function login($name){
+        /** 获取配置 */
+        $this->getConfig($name);
 
         /**
          * 如果需要微信代理登录，则需要：
-         *
          * 1.将wx_proxy.php放置在微信公众号设定的回调域名某个地址，如 http://www.abc.com/proxy/wx_proxy.php
          * 2.config中加入配置参数proxy_url，地址为 http://www.abc.com/proxy/wx_proxy.php
-         *
          * 然后获取跳转地址方法是getProxyURL，如下所示
          */
-        $this->config['proxy_url'] = 'http://www.abc.com/proxy/wx_proxy.php';
-        return redirect(OAuth::$name($this->config)->setDisplay('mobile')->getProxyURL());
-    }
+        //$this->config['proxy_url'] = 'http://www.abc.com/proxy/wx_proxy.php';
 
+        $oauth = OAuth::$name($this->config);
+        if(Tool::isMobile() || Tool::isWeiXin()){
+            /**
+             * 对于微博，如果登录界面要适用于手机，则需要设定->setDisplay('mobile')
+             * 对于微信，如果是公众号登录，则需要设定->setDisplay('mobile')，否则是WEB网站扫码登录
+             * 其他登录渠道的这个设置没有任何影响，为了统一，可以都写上
+             */
+            $oauth->setDisplay('mobile');
+        }
+        return $oauth->getRedirectUrl();
+    }
+    
+    /**
+     * Description:  登录回调
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $name
+     * @return bool
+     */
     public function callback($name)
     {
-        //获取配置
-        $this->config = Config::get('sns.' . $name);
+        /** 获取配置 */
+        $this->getConfig($name);
 
-        //设置回跳地址
-        $this->config['callback'] = $this->makeCallback($name);
+        /** 获取第三方用户信息 */
+        $userInfo = OAuth::$name($this->config)->userInfo();
 
-        //获取格式化后的第三方用户信息
-        $snsInfo = OAuth::$name($this->config)->userinfo();
+        //获取登录类型
+        $userInfo['type'] = \tinymeng\OAuth2\Helper\ConstCode::getType($userInfo['channel']);
 
-        //获取第三方返回的原始用户信息
-        $snsInfoRaw = OAuth::$name($this->config)->getUserInfo();
-
-        //获取第三方openid
-        $openid = OAuth::$name($this->config)->openid();
-    }
-
-    /**
-     * 生成回跳地址
-     *
-     * @return string
-     */
-    private function makeCallback($name)
-    {
-        //注意需要生成完整的带http的地址
-        return url('/sns/callback/' . $name, '', 'html', true);
+        var_dump($userInfo);die;
+        
     }
 }
 ```
 
-2.0版本不再通过系统自动设置state，如有需要请自行处理验证，state也放入config里即可
-
+通过系统自动设置state，如有需要请自行处理验证，state也放入config里即可
 Line和Facebook强制要求传递state，如果你没有设置，则会传递随机值
-
 如果要验证state，则在获取用户信息的时候要加上`->mustCheckState()`方法。
-
 ```php
 $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
 ```
+> 注意，不是所有的平台都支持传递state，请自行阅读官方文档链接,各个文档在实现类里有说明.
 
-> 注意，不是所有的平台都支持传递state，请自行阅读官方文档
 
 ### 配置文件样例
 
@@ -289,3 +317,5 @@ Array
     [avatar] => https://lh6.googleusercontent.com/-iLps1iAjL8Q/AAAAAAAAAAI/AAAAAAAAAAA/Bu5l0EIquF0/photo.jpg
 )
 ```
+
+> 大家如果有问题要交流，就发在这里吧： [worke-socket](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
