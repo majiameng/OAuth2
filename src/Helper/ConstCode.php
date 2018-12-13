@@ -13,6 +13,7 @@ class ConstCode{
     const STATUS_NORMAL = 1;//正常
 
     /** 性别 */
+    const GENDER = 0;//未知
     const GENDER_MAN = 1;//男
     const GENDER_WOMEN = 2;//女
 

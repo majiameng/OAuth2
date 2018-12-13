@@ -118,12 +118,9 @@ abstract class Gateway implements GatewayInterface
             }
             /** 获取参数 */
             $params = $this->accessTokenParams();
-            var_dump($this->AccessTokenURL, $params);
 
             /** 获取access_token */
             $token =  $this->POST($this->AccessTokenURL, $params);
-//            var_dump($token);
-//            die;
 
             /** 解析token值(子类实现此方法) */
             $this->token = $this->parseToken($token);
@@ -156,6 +153,6 @@ abstract class Gateway implements GatewayInterface
     protected function POST($url, $params = [], $headers = [])
     {
         $headers[] = 'Accept: application/json';//GitHub需要的header
-        return \tinymeng\tools\HttpRequest::httpPost($url, $params, false,$headers);
+        return \tinymeng\tools\HttpRequest::httpPost($url, $params,$headers);
     }
 }

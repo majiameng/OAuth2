@@ -9,6 +9,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\ConstCode;
 
 class Google extends Gateway
 {
@@ -45,15 +46,29 @@ class Google extends Gateway
      */
     public function userInfo()
     {
-        $rsp      = $this->getUserInfo();
-        $userinfo = [
-            'openid'  => $rsp['id'],
-            'channel' => 'google',
-            'nick'    => $rsp['name'],
-            'gender'  => $this->getGender($rsp['gender']),
-            'avatar'  => $rsp['picture'],
+        $result = $this->getUserInfo();
+
+        /** 格式化性别 */
+        $gender = ConstCode::GENDER;
+        if(!empty($result['gender'])){
+            switch ($result['gender']) {
+                case 'male':
+                    $gender = ConstCode::GENDER_MAN;
+                    break;
+                case 'female':
+                    $gender = ConstCode::GENDER_WOMEN;
+                    break;
+            }
+        }
+
+        $userInfo = [
+            'openid'  => $result['id'],
+            'channel' => ConstCode::TYPE_GOOGLE,
+            'nick'    => $result['name'],
+            'gender'  => $gender,
+            'avatar'  => $result['picture'],
         ];
-        return $userinfo;
+        return $userInfo;
     }
 
     /**
@@ -63,29 +78,18 @@ class Google extends Gateway
     {
         $this->getToken();
 
-        return $this->call('oauth2/v2/userinfo');
-    }
-
-    /**
-     * 发起请求
-     *
-     * @param string $api
-     * @param array $params
-     * @param string $method
-     * @return array
-     */
-    private function call($api, $params = [], $method = 'GET')
-    {
-        $method  = strtoupper($method);
-        $headers = ['Authorization' => 'Bearer ' . $this->token['access_token']];
-
-        $data = $this->$method(self::API_BASE . $api, $params, $headers);
+        $headers = ['Authorization : Bearer ' . $this->token['access_token']];
+        $data = $this->get(self::API_BASE . 'oauth2/v2/userinfo', '', $headers);
         return json_decode($data, true);
     }
 
     /**
-     * 解析access_token方法请求后的返回值
-     * @param string $result 获取access_token的方法的返回值
+     * Description:  解析access_token方法请求后的返回值
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @param $token
+     * @return mixed
+     * @throws \Exception
      */
     protected function parseToken($token)
     {
