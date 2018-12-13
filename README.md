@@ -283,7 +283,7 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 Array
 (
     [openid] => 1047776979*******
-    [channel] => google
+    [channel] => 1;//登录类型请查看 \tinymeng\OAuth2\Helper\ConstCode
     [nick] => Coeus Rowe
     [gender] => m //twitter和line不会返回性别，所以这里是n，Facebook根据你的权限，可能也不会返回，所以也可能是n
     [avatar] => https://lh6.googleusercontent.com/-iLps1iAjL8Q/AAAAAAAAAAI/AAAAAAAAAAA/Bu5l0EIquF0/photo.jpg
