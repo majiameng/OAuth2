@@ -8,7 +8,6 @@ namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
-use tinymeng\tools\HttpRequest;
 
 class Github extends Gateway
 {
@@ -96,7 +95,7 @@ class Github extends Gateway
             'Authorization: token ' . $this->token['access_token'],
             'Accept: application/json'
         ];
-        $response = HttpRequest::httpGet($url, [], $headers);
+        $response = $this->get($url, [], $headers);
         $response = json_decode($response, true);
         if (!empty($data['error'])) {
             throw new \Exception($response);

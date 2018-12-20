@@ -136,7 +136,7 @@ abstract class Gateway implements GatewayInterface
      * @param array $headers
      * @return string
      */
-    protected function GET($url, $params = [], $headers = [])
+    protected function get($url, $params = [], $headers = [])
     {
         return \tinymeng\tools\HttpRequest::httpGet($url, $params,$headers);
     }
@@ -150,7 +150,7 @@ abstract class Gateway implements GatewayInterface
      * @param array $headers
      * @return mixed
      */
-    protected function POST($url, $params = [], $headers = [])
+    protected function post($url, $params = [], $headers = [])
     {
         $headers[] = 'Accept: application/json';//GitHub需要的header
         return \tinymeng\tools\HttpRequest::httpPost($url, $params,$headers);
