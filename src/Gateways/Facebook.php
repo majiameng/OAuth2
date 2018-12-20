@@ -3,6 +3,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
 class Facebook extends Gateway
@@ -44,7 +45,7 @@ class Facebook extends Gateway
 
         $userinfo = [
             'openid'  => $rsp['id'],
-            'channel' => 'facebook',
+            'channel' => ConstCode::TYPE_FACEBOOK,
             'nick'    => $rsp['name'],
             'gender'  => $this->getGender($rsp), //不一定会返回
             'avatar'  => $this->getAvatar($rsp),

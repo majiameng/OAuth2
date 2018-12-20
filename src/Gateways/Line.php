@@ -3,6 +3,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
 class Line extends Gateway
@@ -44,7 +45,7 @@ class Line extends Gateway
 
         $userinfo = [
             'openid'  => $rsp['userId'],
-            'channel' => 'line',
+            'channel' => ConstCode::TYPE_LINE,
             'nick'    => $rsp['displayName'],
             'gender'  => 'n', //line不返回性别信息
             'avatar'  => isset($rsp['pictureUrl']) ? $rsp['pictureUrl'] . '/large' : '',

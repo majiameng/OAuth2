@@ -3,6 +3,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
 class Twitter extends Gateway
@@ -38,7 +39,7 @@ class Twitter extends Gateway
 
         $return = [
             'openid'  => $data['id_str'],
-            'channel' => 'twitter',
+            'channel' => ConstCode::TYPE_TWITTER,
             'nick'    => $data['name'],
             'gender'  => 'n', //twitter不返回用户性别
             'avatar'  => $data['profile_image_url_https'],
