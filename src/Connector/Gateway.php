@@ -25,6 +25,12 @@ abstract class Gateway implements GatewayInterface
     protected $display = 'default';
 
     /**
+     * 是否是App
+     * @var bool
+     */
+    protected $isapp = false;
+
+    /**
      * 第三方Token信息
      * @var array
      */
@@ -75,6 +81,18 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
+     * Description:  设置是否是App
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     * @return $this
+     */
+    public function setIsApp()
+    {
+        $this->isapp = true;
+        return $this;
+    }
+
+    /**
      * Description:  强制验证回跳地址中的state参数
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
@@ -121,7 +139,6 @@ abstract class Gateway implements GatewayInterface
 
             /** 获取access_token */
             $token =  $this->POST($this->AccessTokenURL, $params);
-
             /** 解析token值(子类实现此方法) */
             $this->token = $this->parseToken($token);
         }

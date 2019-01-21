@@ -98,6 +98,13 @@ composer require tinymeng/oauth 1.0.0
     public function getProxyURL();
 ```
 
+```php
+    /**
+     * 回调中如果是App登录
+     */
+    $userInfo = OAuth::$name($this->config)->setIsApp()->userInfo();
+```
+
 ### 典型用法
 
 以ThinkPHP5为例
@@ -199,6 +206,10 @@ class Login extends Common
 
         /** 获取第三方用户信息 */
         $userInfo = OAuth::$name($this->config)->userInfo();
+        /**
+         * 如果是App登录
+         * $userInfo = OAuth::$name($this->config)->setIsApp()->userInfo();
+         */
 
         //获取登录类型
         $userInfo['type'] = \tinymeng\OAuth2\Helper\ConstCode::getType($userInfo['channel']);

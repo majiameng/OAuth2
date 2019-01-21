@@ -75,10 +75,22 @@ class Sina extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return array
+     * @throws \Exception
      */
     public function getUserInfo()
     {
-        $this->getToken();
+        if($this->isapp === true){//App登录
+            if(!isset($_REQUEST['access_token']) || !isset($_REQUEST['uid'])){
+                throw new \Exception("新浪微博,APP登录 需要传输access_token和uid参数! ");
+            }
+            $this->token['access_token'] = $_REQUEST['access_token'];
+            $this->token['openid'] = $_REQUEST['uid'];
+        }else{
+            /** 获取参数 */
+            $params = $this->accessTokenParams();
+            $this->AccessTokenURL = $this->AccessTokenURL. '?' . http_build_query($params);//get传参
+            $this->getToken();
+        }
 
         return $this->call('users/show.json', ['uid' => $this->openid()]);
     }

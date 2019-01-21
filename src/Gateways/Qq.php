@@ -81,10 +81,19 @@ class Qq extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
+     * @throws \Exception
      */
     public function openid()
     {
-        $this->getToken();
+        if($this->isapp === true){
+            if(!isset($_REQUEST['access_token'])){
+                throw new \Exception("腾讯QQ,APP登录 需要传输access_token参数! ");
+            }
+            $this->token['access_token'] = $_REQUEST['access_token'];
+        }else{
+            /** 获取token */
+            $this->getToken();
+        }
         if (!isset($this->token['openid']) || !$this->token['openid']) {
             $userID                 = $this->getOpenID();
             $this->token['openid']  = $userID['openid'];
