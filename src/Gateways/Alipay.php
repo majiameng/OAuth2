@@ -4,6 +4,13 @@
  * 支付宝第三方应用授权文档
  *    https://docs.open.alipay.com/20160728150111277227
  * 1.设置:回调地址/加签方式(RSA(SHA256)密钥)/接口内容加密方式(AES密钥)
+ *     应用公钥(SHA256withRsa)生成方法
+ *     1.1 在liunx 使用 openssl
+ *     1.2 OpenSSL> genrsa -out rsa_private_key.pem   2048  #生成私钥
+ *     1.3 OpenSSL> pkcs8 -topk8 -inform PEM -in rsa_private_key.pem -outform PEM -nocrypt -out rsa_private_key_pkcs8.pem #Java开发者需要将私钥转换成PKCS8格式
+ *     1.4 OpenSSL> rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem #生成公钥
+ *     1.5 OpenSSL> exit #退出OpenSSL程序
+ *     1.6 复制rsa_public_key.pem 中间那一段到支付宝填写(注: 不要复制头和尾)
  * 2.1.PC登录需要签约:	第三方应用授权/获取会员信息
  * 2.2.APP登录需要签约:	APP支付宝登录/获取会员信息
  */
