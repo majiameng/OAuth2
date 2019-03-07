@@ -260,11 +260,11 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
     'app_secret'    => '8a2b322610d7a0d****',
     'scope'         => 'get_user_info',
     'callback' => 'http://majiameng.com/login/qq',
-    'withUnionid' => true //已申请unioid打通
+    'is_unionid' => true //已申请unioid打通
 ]
 ```
 QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4%BB%8B%E7%BB%8D
-只需要配置参数`$config['withUnionid'] = true`，默认不会请求获取Unionid
+只需要配置参数`$config['is_unionid'] = true`，默认不会请求获取Unionid
 
 #### 3.微博
 
