@@ -4,7 +4,7 @@
  */
 namespace tinymeng\OAuth2\Helper;
 
-use app\common\tool\Tool;
+use tinymeng\tools\Tool;
 
 class ConstCode{
 
