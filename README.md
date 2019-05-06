@@ -15,7 +15,7 @@
 ### 安装
 
 ```
-composer require tinymeng/oauth:~1.0.0 -vvv
+composer require tinymeng/oauth:~1.0.1 -vvv
 ```
 
 > 类库使用的命名空间为`\\tinymeng\\oauth`
@@ -260,11 +260,11 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
     'app_secret'    => '8a2b322610d7a0d****',
     'scope'         => 'get_user_info',
     'callback' => 'http://majiameng.com/login/qq',
-    'is_unionid' => true //已申请unioid打通
+    'withUnionid' => true //已申请unioid打通
 ]
 ```
 QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4%BB%8B%E7%BB%8D
-只需要配置参数`$config['is_unionid'] = true`，默认不会请求获取Unionid
+只需要配置参数`$config['withUnionid'] = true`，默认不会请求获取Unionid
 
 #### 3.微博
 
@@ -274,7 +274,16 @@ QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4
 'scope'      => 'all',
 ```
 
-#### 4.支付宝
+#### 4.GitHub
+
+```
+'application_name' => '佳萌驿站',
+'app_id'      => 'a56b04a5********',
+'app_secret' => '93ae7e5b137c6228e******************',
+'callback' => 'http://majiameng.com/app/github',
+```
+
+#### 5.支付宝
 
 ```
 'app_id'      => '2016052*******',
@@ -283,7 +292,7 @@ QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4
 'pem_public'  => Env::get('ROOT_PATH') . 'pem/public.pem', // 支付宝公钥
 ```
 
-#### 5.Facebook
+#### 6.Facebook
 
 ```
 'app_id'     => '2774925********',
@@ -293,14 +302,14 @@ QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4
 
 facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,picture.width(400)'`，你可以根据需求参考官方文档自行选择要获取的用户信息
 
-#### 6.Twitter
+#### 7.Twitter
 
 ```
 'app_id'     => '3nHCxZgcK1WpYV**********',
 'app_secret' => '2byVAPayMrG8LISjopwIMcJGy***************',
 ```
 
-#### 7.Line
+#### 8.Line
 
 ```
 'app_id'     => '159******',
@@ -308,7 +317,7 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 'scope'      => 'profile',
 ```
 
-#### 8.Google
+#### 9.Google
 
 ```
 'app_id'     => '7682717*******************.apps.googleusercontent.com',

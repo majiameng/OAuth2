@@ -91,7 +91,8 @@ class Github extends Gateway
 
         $url = self::API_BASE . "user";
         $headers = [
-            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 ',
+            'User-Agent: '.$this->config['application_name'],
+            'UserModel-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 ',
             'Authorization: token ' . $this->token['access_token'],
             'Accept: application/json'
         ];
