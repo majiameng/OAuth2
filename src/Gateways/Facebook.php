@@ -1,11 +1,27 @@
 <?php
-
+/**
+ * fackbook 控制台 https://developers.facebook.com/apps/
+ * Oauth开发文档:
+ *      https://developers.facebook.com/docs/facebook-login/
+ * 1.创建项目->并创建凭证
+ * 2.补充基本信息
+ * https://developers.facebook.com/apps/你的appid/settings/basic/#add-platform-button
+ * 3.获取用户信息user_gender权限
+ * https://developers.facebook.com/apps/你的appid/app-review/permissions/
+ * 申请这个权限user_gender
+ */
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
+/**
+ * Class Facebook
+ * @package tinymeng\OAuth2\Gateways
+ * @Author: TinyMeng <666@majiameng.com>
+ * @Created: 2020/7/29
+ */
 class Facebook extends Gateway
 {
     const API_BASE            = 'https://graph.facebook.com/v3.1/';

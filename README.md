@@ -15,7 +15,7 @@
 ### 安装
 
 ```
-composer require tinymeng/oauth:~1.0.2 -vvv
+composer require tinymeng/oauth:^1.0.2 -vvv
 ```
 
 > 类库使用的命名空间为`\\tinymeng\\oauth`

@@ -108,7 +108,9 @@ class Sina extends Gateway
     {
         $method = strtoupper($method);
 
-        $params['access_token'] = $this->token['access_token'];
+        if(isset($this->token['access_token'])){
+            $params['access_token'] = $this->token['access_token'];
+        }
 
         $data = $this->$method(self::API_BASE . $api, $params);
         return json_decode($data, true);
@@ -144,5 +146,14 @@ class Sina extends Gateway
         } else {
             throw new \Exception("获取新浪微博ACCESS_TOKEN出错：{$data['error']}");
         }
+    }
+
+    /**
+     * 第三方分享到微博
+     * @param $data
+     * @return mixed
+     */
+    public function statusesShare($data){
+        return $this->call('statuses/share.json', json_encode($data),'POST');
     }
 }

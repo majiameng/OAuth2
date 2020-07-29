@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "tinymeng/tools": "^1.0.6"
+        "tinymeng/tools": "^1.1.0"
     },
     "autoload": {
         "psr-4": {
