@@ -150,7 +150,8 @@ class Login extends Common
         //可以设置代理服务器，一般用于调试国外平台
         //$this->config['proxy'] = 'http://127.0.0.1:1080';
         
-        $this->config = Config::get($name);
+        $this->config = Config::get($name);//tp的获取配置文件的方法
+//        $this->config = isset($config[$name]) ? $config[$name] : [];//$config见配置
         if($name == 'weixin'){
             if(!Tool::isMobile()){
                 $this->config = $this->config['pc'];//微信pc扫码登录
@@ -230,6 +231,27 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
 
 
 ### 配置文件样例
+
+```php
+// function getConfig($name)方法中 $config 变量
+
+$config = [
+    'qq'=>[
+        'app_id'        => '1014*****',
+        'app_secret'    => '8a2b322610d7a0d****',
+    ],
+    'weixin'=>[],    //具体看下面对应配置
+    'sina'=>[],
+    'zhifubao'=>[],
+    'github'=>[],
+    'facebook'=>[],
+    'twitter'=>[],
+    'line'=>[],
+    'google'=>[],
+]
+
+```
+
 
 #### 1.微信
 
