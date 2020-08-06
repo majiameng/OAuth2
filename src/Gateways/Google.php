@@ -65,7 +65,8 @@ class Google extends Gateway
             'open_id'  => $this->token['access_token'],
             'union_id'  => $result['id'],
             'channel' => ConstCode::TYPE_GOOGLE,
-            'nickname'    => $result['name'],
+            'nickname'    => isset($result['name']) ? $result['name'] : $result['email'],
+            'email'    => $result['email'],
             'gender'  => $gender,
             'avatar'  => $result['picture'],
         ];
