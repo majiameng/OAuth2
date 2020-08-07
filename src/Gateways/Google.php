@@ -70,6 +70,17 @@ class Google extends Gateway
             'gender'  => $gender,
             'avatar'  => $result['picture'],
         ];
+        $userInfo = [
+            'open_id'  => $this->token['access_token'],
+            'union_id'  => $result['id'],
+            'channel' => ConstCode::TYPE_GOOGLE,
+            'nickname'    => isset($result['name']) ? $result['name'] : $result['email'],
+            'gender'  => $gender,
+            'avatar'  => $result['picture'],
+        ];
+        if(isset($result['email'])){
+            $userInfo['email'] = $result['email'];
+        }
         return $userInfo;
     }
 
