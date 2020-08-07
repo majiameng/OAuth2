@@ -22,6 +22,9 @@ class Google extends Gateway
      */
     public function getRedirectUrl()
     {
+        //存储state
+        $this->saveState();
+        //登录参数
         $params = [
             'client_id'     => $this->config['app_id'],
             'redirect_uri'  => $this->config['callback'],
@@ -61,15 +64,6 @@ class Google extends Gateway
             }
         }
 
-        $userInfo = [
-            'open_id'  => $this->token['access_token'],
-            'union_id'  => $result['id'],
-            'channel' => ConstCode::TYPE_GOOGLE,
-            'nickname'    => isset($result['name']) ? $result['name'] : $result['email'],
-            'email'    => $result['email'],
-            'gender'  => $gender,
-            'avatar'  => $result['picture'],
-        ];
         $userInfo = [
             'open_id'  => $this->token['access_token'],
             'union_id'  => $result['id'],
