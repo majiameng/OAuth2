@@ -2,20 +2,22 @@
 /**
  * 第三方登陆实例抽象类
  * @author: JiaMeng <666@majiameng.com>
- * @method static \tinymeng\OAuth2\OAuth Alipay(array $config) 阿里云
- * @method static \tinymeng\OAuth2\OAuth Weixin(array $config) 微信
- * @method static \tinymeng\OAuth2\OAuth Qq.php(array $config) QQ
- * @method static \tinymeng\OAuth2\OAuth Facebook(array $config) Facebook
- * @method static \tinymeng\OAuth2\OAuth Github(array $config) Github
- * @method static \tinymeng\OAuth2\OAuth Google(array $config) Google
- * @method static \tinymeng\OAuth2\OAuth Line(array $config) Line
- * @method static \tinymeng\OAuth2\OAuth Sina(array $config) Sina
- * @method static \tinymeng\OAuth2\OAuth Twitter(array $config) Twitter
  */
 namespace tinymeng\OAuth2;
 
 use tinymeng\OAuth2\Connector\GatewayInterface;
 use tinymeng\OAuth2\Helper\Str;
+/**
+ * @method static \tinymeng\OAuth2\Gateways\Alipay Alipay(array $config) 阿里云
+ * @method static \tinymeng\OAuth2\Gateways\Weixin Weixin(array $config) 微信
+ * @method static \tinymeng\OAuth2\Gateways\Qq Qq(array $config) QQ
+ * @method static \tinymeng\OAuth2\Gateways\Facebook Facebook(array $config) Facebook
+ * @method static \tinymeng\OAuth2\Gateways\Github Github(array $config) Github
+ * @method static \tinymeng\OAuth2\Gateways\Google Google(array $config) Google
+ * @method static \tinymeng\OAuth2\Gateways\Line Line(array $config) Line
+ * @method static \tinymeng\OAuth2\Gateways\Sina Sina(array $config) Sina
+ * @method static \tinymeng\OAuth2\Gateways\Twitter Twitter(array $config) Twitter
+ */
 abstract class OAuth
 {
 

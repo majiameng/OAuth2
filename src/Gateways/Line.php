@@ -17,6 +17,9 @@ class Line extends Gateway
      */
     public function getRedirectUrl()
     {
+        //存储state
+        $this->saveState();
+        //登录参数
         $params = [
             'response_type' => $this->config['response_type'],
             'client_id'     => $this->config['app_id'],

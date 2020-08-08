@@ -15,7 +15,7 @@
 ### 安装
 
 ```
-composer require tinymeng/oauth:^1.0.2 -vvv
+composer require tinymeng/oauth:^1.0.0 -vvv
 ```
 
 > 类库使用的命名空间为`\\tinymeng\\oauth`
@@ -99,6 +99,7 @@ composer require tinymeng/oauth:^1.0.2 -vvv
 ```
 
 ```php
+    $name = "qq";
     /**
      * 回调中如果是App登录
      */
@@ -115,6 +116,7 @@ namespace app\index\controller;
 
 use think\Config;
 use tinymeng\OAuth2\OAuth;
+use tinymeng\OAuth2\Helper\Str;
 use tinymeng\tools\Tool;
 
 class Login extends Common
@@ -125,11 +127,11 @@ class Login extends Common
      * Description:  登录
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @param $name
      * @return mixed
      */
-    public function index($name)
+    public function index()
     {
+        $name="qq";//登录类型,例:qq / google
         if (empty(input('get.'))) {
             /** 登录 */
             $result = $this->login($name);
@@ -150,8 +152,7 @@ class Login extends Common
         //可以设置代理服务器，一般用于调试国外平台
         //$this->config['proxy'] = 'http://127.0.0.1:1080';
         
-        $this->config = Config::get($name);//tp的获取配置文件的方法
-//        $this->config = isset($config[$name]) ? $config[$name] : [];//$config见配置
+        $this->config = Config::get($name);
         if($name == 'weixin'){
             if(!Tool::isMobile()){
                 $this->config = $this->config['pc'];//微信pc扫码登录
@@ -160,8 +161,8 @@ class Login extends Common
             }else{
                 echo '请使用微信打开!';exit();//手机浏览器打开
             }
-            $this->config['state'] = 'https://www.majiameng.com/login/weixin';
         }
+        //$this->config['state'] = Str::random();//如需手动验证state,请开启此行并存储state值
     }
     
     /**
@@ -175,13 +176,15 @@ class Login extends Common
 
         /**
          * 如果需要微信代理登录，则需要：
-         * 1.将wx_proxy.php放置在微信公众号设定的回调域名某个地址，如 http://www.abc.com/proxy/wx_proxy.php
+         * 1.将 example/wx_proxy.php 放置在微信公众号设定的回调域名某个地址，如 http://www.abc.com/proxy/wx_proxy.php
          * 2.config中加入配置参数proxy_url，地址为 http://www.abc.com/proxy/wx_proxy.php
          * 然后获取跳转地址方法是getProxyURL，如下所示
          */
         //$this->config['proxy_url'] = 'http://www.abc.com/proxy/wx_proxy.php';
 
+        /** 初始化实例类 */
         $oauth = OAuth::$name($this->config);
+        $oauth->mustCheckState();//如需手动验证state,请关闭此行
         if(Tool::isMobile() || Tool::isWeiXin()){
             /**
              * 对于微博，如果登录界面要适用于手机，则需要设定->setDisplay('mobile')
@@ -205,8 +208,12 @@ class Login extends Common
         /** 获取配置 */
         $this->getConfig($name);
 
+        /** 初始化实例类 */
+        $oauth = OAuth::$name($this->config);
+        $oauth->mustCheckState();//如需手动验证state,请关闭此行
+
         /** 获取第三方用户信息 */
-        $userInfo = OAuth::$name($this->config)->userInfo();
+        $userInfo = $oauth->userInfo();
         /**
          * 如果是App登录
          * $userInfo = OAuth::$name($this->config)->setIsApp()->userInfo();
@@ -225,33 +232,13 @@ class Login extends Common
 Line和Facebook强制要求传递state，如果你没有设置，则会传递随机值
 如果要验证state，则在获取用户信息的时候要加上`->mustCheckState()`方法。
 ```php
+$name = "qq";
 $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
 ```
 > 注意，不是所有的平台都支持传递state，请自行阅读官方文档链接,各个文档在实现类里有说明.
 
 
 ### 配置文件样例
-
-```php
-// function getConfig($name)方法中 $config 变量
-
-$config = [
-    'qq'=>[
-        'app_id'        => '1014*****',
-        'app_secret'    => '8a2b322610d7a0d****',
-    ],
-    'weixin'=>[],    //具体看下面对应配置
-    'sina'=>[],
-    'zhifubao'=>[],
-    'github'=>[],
-    'facebook'=>[],
-    'twitter'=>[],
-    'line'=>[],
-    'google'=>[],
-]
-
-```
-
 
 #### 1.微信
 
@@ -350,7 +337,8 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 > 获取用户信息:  'scope'      => 'https://www.googleapis.com/auth/userinfo.profile',
 > 获取用户email: 'scope'      => 'https://www.googleapis.com/auth/userinfo.email',
 
-### 公共返回样例
+
+### 返回样例
 
 ```
 Array
@@ -362,7 +350,5 @@ Array
     [avatar] => http://thirdqq.qlogo.cn/qqapp/101426434/50D523803F5B51AAC01616105161C7B1/100 //头像
 )
 ```
-只有部分登录返回的结果会多一些字段
 
-
-> 大家如果有问题要交流，就发在这里吧： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
+> 大家如果有问题要交流，就发在这里吧： [worke-socket](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com

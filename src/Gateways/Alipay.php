@@ -37,6 +37,9 @@ class Alipay extends Gateway
      */
     public function getRedirectUrl()
     {
+        //存储state
+        $this->saveState();
+        //登录参数
         $params = [
             'app_id'       => $this->config['app_id'],
             'redirect_uri' => $this->config['callback'],

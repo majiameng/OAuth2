@@ -17,6 +17,9 @@ class Twitter extends Gateway
      */
     public function getRedirectUrl()
     {
+        //存储state
+        $this->saveState();
+        //登录参数
         $oauthToken = $this->call('oauth/request_token', ['oauth_callback' => $this->config['callback']], 'POST');
         return self::API_BASE . 'oauth/authenticate?oauth_token=' . $oauthToken['oauth_token'];
     }

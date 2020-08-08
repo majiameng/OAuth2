@@ -139,6 +139,9 @@ abstract class Gateway implements GatewayInterface
      */
     public function CheckState(){
         if ($this->checkState === true) {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
             if (!isset($_GET['state']) || !isset($_SESSION['tinymeng_oauth_state']) || $_GET['state'] != $_SESSION['tinymeng_oauth_state']) {
                 throw new \Exception('传递的STATE参数不匹配！');
             }
@@ -170,7 +173,7 @@ abstract class Gateway implements GatewayInterface
     protected function getToken(){
         if (empty($this->token)) {
             /** 验证state参数 */
-            $this->verificationState();
+            $this->CheckState();
 
             /** 获取参数 */
             $params = $this->accessTokenParams();

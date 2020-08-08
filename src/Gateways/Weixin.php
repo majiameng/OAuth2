@@ -30,6 +30,9 @@ class Weixin extends Gateway
      */
     public function getRedirectUrl()
     {
+        //存储state
+        $this->saveState();
+        //登录参数
         $this->switchAccessTokenURL();
         $params = [
             'appid'         => $this->config['app_id'],
