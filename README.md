@@ -338,8 +338,7 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 > 获取用户email: 'scope'      => 'https://www.googleapis.com/auth/userinfo.email',
 
 
-### 返回样例
-
+### `userinfo()`公共返回样例
 ```
 Array
 (
@@ -350,5 +349,8 @@ Array
     [avatar] => http://thirdqq.qlogo.cn/qqapp/101426434/50D523803F5B51AAC01616105161C7B1/100 //头像
 )
 ```
+> 部分登录类型还会返回个别数据,如需返回原数据请使用 `getUserInfo()` 方法
+
+
 
 > 大家如果有问题要交流，就发在这里吧： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
