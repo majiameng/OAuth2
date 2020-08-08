@@ -16,7 +16,7 @@ namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 
-class Weixin extends Gateway
+class Wechat extends Gateway
 {
     const API_BASE            = 'https://api.weixin.qq.com/sns/';
     protected $AuthorizeURL   = 'https://open.weixin.qq.com/connect/qrconnect';

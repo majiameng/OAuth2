@@ -1,6 +1,6 @@
 {
     "name": "tinymeng/oauth",
-    "description": "weixin weibo qq alipay twitter google line facebook oauth",
+    "description": "wechat sina qq alipay twitter google line facebook oauth",
     "type": "library",
     "keywords": [
         "tinymeng", "oauth-login","login","php","qq-login","wx-login","sina-login","github-login","alipay-login"

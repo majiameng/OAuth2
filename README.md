@@ -38,8 +38,8 @@ composer require tinymeng/oauth:^1.0.0 -vvv
 │   │   ├── Line.php
 │   │   ├── Qq.php
 │   │   ├── Twitter.php
-│   │   ├── Weibo.php
-│   │   └── Weixin.php
+│   │   ├── Sina.php
+│   │   └── Wechat.php
 │   ├── Helper
 │   │   ├── ConstCode.php          公共常量
 │   │   └── Str.php                字符串辅助类
@@ -153,7 +153,7 @@ class Login extends Common
         //$this->config['proxy'] = 'http://127.0.0.1:1080';
         
         $this->config = Config::get($name);
-        if($name == 'weixin'){
+        if($name == 'wechat'){
             if(!Tool::isMobile()){
                 $this->config = $this->config['pc'];//微信pc扫码登录
             }elseif(Tool::isWeiXin()){
@@ -245,7 +245,7 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
 > 微信会返回特有的unionid字段
 
 ```
-'weixin'=>[
+'wechat'=>[
     'pc'=>[
         'app_id' => 'wx52e2b2464*****',
         'app_secret' => 'd5dad705a1159d*********',
