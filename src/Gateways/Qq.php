@@ -40,9 +40,10 @@ class Qq extends Gateway
 
     /**
      * Description:  获取格式化后的用户信息
+     * @return array
+     * @throws \Exception
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @return array
      */
     public function userInfo()
     {
@@ -62,9 +63,10 @@ class Qq extends Gateway
 
     /**
      * Description:  获取原始接口返回的用户信息
+     * @return array
+     * @throws \Exception
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @return array
      */
     public function getUserInfo()
     {
