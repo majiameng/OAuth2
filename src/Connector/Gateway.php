@@ -45,6 +45,18 @@ abstract class Gateway implements GatewayInterface
     protected $checkState = false;
 
     /**
+     * 第三方返回的userInfo
+     * @var array
+     */
+    protected $userInfo = [];
+
+    /**
+     * 格式化的userInfo
+     * @var array
+     */
+    protected $formatUserInfo = [];
+
+    /**
      * Gateway constructor.
      * @param null $config
      * @throws \Exception

@@ -174,14 +174,6 @@ class Login extends Common
         /** 获取配置 */
         $this->getConfig($name);
 
-        /**
-         * 如果需要微信代理登录，则需要：
-         * 1.将 example/wx_proxy.php 放置在微信公众号设定的回调域名某个地址，如 http://www.abc.com/proxy/wx_proxy.php
-         * 2.config中加入配置参数proxy_url，地址为 http://www.abc.com/proxy/wx_proxy.php
-         * 然后获取跳转地址方法是getProxyURL，如下所示
-         */
-        //$this->config['proxy_url'] = 'http://www.abc.com/proxy/wx_proxy.php';
-
         /** 初始化实例类 */
         $oauth = OAuth::$name($this->config);
         $oauth->mustCheckState();//如需手动验证state,请关闭此行
@@ -242,24 +234,36 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
 
 #### 1.微信
 
-> 微信会返回特有的unionid字段
-
 ```
 'wechat'=>[
     'pc'=>[
         'app_id' => 'wx52e2b2464*****',
         'app_secret' => 'd5dad705a1159d*********',
-        'callback' => 'http://i.959.cn/qq-login.php',
+        'callback' => 'http://majiameng.com/app/wechat',
         'scope'      => 'snsapi_login',//扫码登录
     ],
     'mobile'=>[
         'app_id' => 'wx6ca7410f8******',
         'app_secret' => '30a206b87b7689b19f11******',
-        'callback' => 'http://i.959.cn/qq-login.php',
+        'callback' => 'http://majiameng.com/app/wechat',
         'scope'      => 'snsapi_userinfo',//静默授权=>snsapi_base;获取用户信息=>snsapi_userinfo
+        //'proxy_url' => 'http://www.abc.com/proxy/wx_proxy.php',//如果不需要代理请注释此行
     ],
 ]
 ```
+> 打通unionid的话需要将公众号绑定到同一个微信开放平台
+会返回的唯一凭证unionid字段
+
+```
+/**
+ * 如果需要微信代理登录(微信app内登录)，则需要：
+ * 1.将 example/wx_proxy.php 放置在微信公众号设定的回调域名某个地址，如 http://www.abc.com/proxy/wx_proxy.php
+ * 2.config中加入配置参数proxy_url，地址为 http://www.abc.com/proxy/wx_proxy.php
+ * 如下所示
+ */
+//$config['proxy_url'] = 'http://www.abc.com/proxy/wx_proxy.php';
+```
+
 
 #### 2.QQ
 
@@ -342,7 +346,8 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 ```
 Array
 (
-    [openid] => 1047776979*******
+    [openid] => 1047776979*******   //部分登录此字段值是access_token(例:sina/google),如做唯一请使用union_id字段
+    [union_id] => 444444445*******  //用户的唯一凭证
     [channel] => 1;                 //登录类型请查看 \tinymeng\OAuth2\Helper\ConstCode
     [nickname] => 'Tinymeng'        //昵称
     [gender] => 1;                  //0=>未知 1=>男 2=>女   twitter和line不会返回性别，所以这里是0，Facebook根据你的权限，可能也不会返回，所以也可能是0

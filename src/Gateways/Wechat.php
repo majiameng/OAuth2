@@ -32,6 +32,12 @@ class Wechat extends Gateway
     {
         //存储state
         $this->saveState();
+
+        //获取代理链接
+        if(isset($this->config['proxy_url'])){
+            return $this->getProxyURL();
+        }
+
         //登录参数
         $this->switchAccessTokenURL();
         $params = [
@@ -82,9 +88,10 @@ class Wechat extends Gateway
 
     /**
      * Description:  获取格式化后的用户信息
+     * @return array
+     * @throws \Exception
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @return array
      */
     public function userInfo()
     {
@@ -103,9 +110,10 @@ class Wechat extends Gateway
 
     /**
      * Description:  获取原始接口返回的用户信息
+     * @return array
+     * @throws \Exception
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @return array
      */
     public function getUserInfo()
     {

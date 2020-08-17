@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Class WxProxy
+ * @Author: TinyMeng <666@majiameng.com>
+ * @Created: 2020/8/17
+ */
 class WxProxy
 {
     protected $AuthorizeURL = 'https://open.weixin.qq.com/connect/oauth2/authorize';
