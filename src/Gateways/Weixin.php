@@ -32,6 +32,12 @@ class Weixin extends Gateway
     {
         //存储state
         $this->saveState();
+
+        //获取代理链接
+        if(isset($this->config['proxy_url'])){
+            return $this->getProxyURL();
+        }
+
         //登录参数
         $this->switchAccessTokenURL();
         $params = [
