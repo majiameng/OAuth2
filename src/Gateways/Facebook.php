@@ -63,7 +63,7 @@ class Facebook extends Gateway
         $rsp = $this->getUserInfo();
 
         $userinfo = [
-            'openid'  => $rsp['id'],
+            'open_id'  => $rsp['id'],
             'channel' => ConstCode::TYPE_FACEBOOK,
             'nick'    => $rsp['name'],
             'gender'  => $this->getGender($rsp), //不一定会返回
