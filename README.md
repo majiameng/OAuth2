@@ -15,7 +15,7 @@
 ### 安装
 
 ```
-composer require tinymeng/oauth:^1.0.0 -vvv
+composer require tinymeng/oauth:^2.0.0 -vvv
 ```
 
 > 类库使用的命名空间为`\\tinymeng\\oauth`
@@ -346,7 +346,7 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 ```
 Array
 (
-    [openid] => 1047776979*******   //部分登录此字段值是access_token(例:sina/google),如做唯一请使用union_id字段
+    [open_id] => 1047776979*******   //部分登录此字段值是access_token(例:sina/google),如做唯一请使用union_id字段
     [union_id] => 444444445*******  //用户的唯一凭证
     [channel] => 1;                 //登录类型请查看 \tinymeng\OAuth2\Helper\ConstCode
     [nickname] => 'Tinymeng'        //昵称
