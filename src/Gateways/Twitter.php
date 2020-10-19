@@ -41,7 +41,7 @@ class Twitter extends Gateway
         $data = $this->getUserInfo();
 
         $return = [
-            'openid'  => $data['id_str'],
+            'open_id'  => $data['id_str'],
             'channel' => ConstCode::TYPE_TWITTER,
             'nick'    => $data['name'],
             'gender'  => 'n', //twitter不返回用户性别
