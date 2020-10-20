@@ -76,7 +76,7 @@ class Github extends Gateway
             'avatar'  => $rsp['avatar_url'],
             'email'  => $rsp['email'],
             'sign'  => $rsp['bio'],
-            'gender'  => 0,
+            'gender'  => ConstCode::GENDER,
         ];
         return $userInfo;
     }

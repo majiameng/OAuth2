@@ -49,8 +49,8 @@ class Line extends Gateway
         $userinfo = [
             'open_id'  => $rsp['userId'],
             'channel' => ConstCode::TYPE_LINE,
-            'nick'    => $rsp['displayName'],
-            'gender'  => 'n', //line不返回性别信息
+            'nickname'    => $rsp['displayName'],
+            'gender'  => ConstCode::GENDER, //line不返回性别信息
             'avatar'  => isset($rsp['pictureUrl']) ? $rsp['pictureUrl'] . '/large' : '',
         ];
         return $userinfo;

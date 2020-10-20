@@ -43,8 +43,8 @@ class Twitter extends Gateway
         $return = [
             'open_id'  => $data['id_str'],
             'channel' => ConstCode::TYPE_TWITTER,
-            'nick'    => $data['name'],
-            'gender'  => 'n', //twitter不返回用户性别
+            'nickname'    => $data['name'],
+            'gender'  => ConstCode::GENDER, //twitter不返回用户性别
             'avatar'  => $data['profile_image_url_https'],
         ];
         return $return;

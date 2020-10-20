@@ -38,6 +38,10 @@ abstract class OAuth
             'callback'  => '',
             'scope'     => '',
         ];
+        if($gateway == 'weixin'){
+            /** 兼容 tinymeng/oauth v1.0.0完美升级 */
+            $gateway = 'wechat';
+        }
         $gateway = Str::uFirst($gateway);
         $class = __NAMESPACE__ . '\\Gateways\\' . $gateway;
         if (class_exists($class)) {

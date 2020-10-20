@@ -65,7 +65,7 @@ class Facebook extends Gateway
         $userinfo = [
             'open_id'  => $rsp['id'],
             'channel' => ConstCode::TYPE_FACEBOOK,
-            'nick'    => $rsp['name'],
+            'nickname'    => $rsp['name'],
             'gender'  => $this->getGender($rsp), //不一定会返回
             'avatar'  => $this->getAvatar($rsp),
         ];
@@ -142,13 +142,13 @@ class Facebook extends Gateway
     private function getGender($rsp)
     {
         $gender = isset($rsp['gender']) ? $rsp['gender'] : null;
-        $return = 'n';
+        $return = ConstCode::GENDER;
         switch ($gender) {
             case 'male':
-                $return = 'm';
+                $return = ConstCode::GENDER_MAN;
                 break;
             case 'female':
-                $return = 'f';
+                $return = ConstCode::GENDER_WOMEN;
                 break;
         }
         return $return;
