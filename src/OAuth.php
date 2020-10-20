@@ -10,6 +10,7 @@ use tinymeng\OAuth2\Helper\Str;
 /**
  * @method static \tinymeng\OAuth2\Gateways\Alipay Alipay(array $config) 阿里云
  * @method static \tinymeng\OAuth2\Gateways\Wechat wechat(array $config) 微信
+ * @method static \tinymeng\OAuth2\Gateways\Wechat weixin(array $config) 微信
  * @method static \tinymeng\OAuth2\Gateways\Qq Qq(array $config) QQ
  * @method static \tinymeng\OAuth2\Gateways\Facebook Facebook(array $config) Facebook
  * @method static \tinymeng\OAuth2\Gateways\Github Github(array $config) Github
