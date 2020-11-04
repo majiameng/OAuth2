@@ -2,35 +2,52 @@
 /**
  * Class WxProxy
  * @Author: TinyMeng <666@majiameng.com>
- * @Created: 2020/8/17
+ * @Created: 2018/11/4
  */
 class WxProxy
 {
-    protected $AuthorizeURL = 'https://open.weixin.qq.com/connect/oauth2/authorize';
+    /** @var string  */
+    protected $AuthorizeURL = 'https://open.weixin.qq.com';
 
-    public function run()
-    {
+    /**
+     * @Author: TinyMeng <666@majiameng.com>
+     */
+    public function run(){
         if (isset($_GET['code'])) {
-            header('Location: ' . $_COOKIE['return_uri'] . '?code=' . $_GET['code'] . '&state=' . $_GET['state']);
+            $state = isset($_GET['state']) ? $_GET['state'] : "";
+            header('Location: ' . $_COOKIE['redirect_uri'] . '?code=' . $_GET['code'] . '&state=' . $state);
         } else {
+            if(!isset($_GET['appid']) || !isset($_GET['response_type']) || !isset($_GET['scope'])){
+                echo "参数缺失";exit();
+            }
+            $state = isset($_GET['state']) ? $_GET['state'] : "";
+
             $protocol = $this->is_HTTPS() ? 'https://' : 'http://';
             $params   = array(
                 'appid'         => $_GET['appid'],
                 'redirect_uri'  => $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['DOCUMENT_URI'],
                 'response_type' => $_GET['response_type'],
                 'scope'         => $_GET['scope'],
-                'state'         => $_GET['state'],
+                'state'         => $state,
             );
-            setcookie('return_uri', urldecode($_GET['return_uri']), $_SERVER['REQUEST_TIME'] + 60, '/');
-            header('Location: ' . $this->AuthorizeURL . '?' . http_build_query($params) . '#wechat_redirect');
+            if($_GET['scope'] == 'snsapi_login'){
+                //扫码登录
+                $AuthorizeURL = $this->AuthorizeURL . '/connect/qrconnect';
+            }else{
+                $AuthorizeURL = $this->AuthorizeURL . '/connect/oauth2/authorize';
+            }
+
+            setcookie('redirect_uri', urldecode($_GET['redirect_uri']), $_SERVER['REQUEST_TIME'] + 60, '/');
+            header('Location: ' . $AuthorizeURL . '?' . http_build_query($params) . '#wechat_redirect');
         }
     }
 
     /**
      * 是否https
+     * @Author: TinyMeng <666@majiameng.com>
+     * @return bool
      */
-    protected function is_HTTPS()
-    {
+    protected function is_HTTPS(){
         if (!isset($_SERVER['HTTPS'])) {
             return false;
         }

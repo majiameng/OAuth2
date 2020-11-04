@@ -20,6 +20,12 @@ use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
+/**
+ * Class Alipay
+ * @package tinymeng\OAuth2\Gateways
+ * @Author: TinyMeng <666@majiameng.com>
+ * @Created: 2018/11/9
+ */
 class Alipay extends Gateway
 {
     const RSA_PRIVATE = 1;

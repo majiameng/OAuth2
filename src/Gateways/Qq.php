@@ -10,6 +10,12 @@ namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 
+/**
+ * Class Qq
+ * @package tinymeng\OAuth2\Gateways
+ * @Author: TinyMeng <666@majiameng.com>
+ * @Created: 2018/11/9
+ */
 class Qq extends Gateway
 {
     const API_BASE            = 'https://graph.qq.com/';

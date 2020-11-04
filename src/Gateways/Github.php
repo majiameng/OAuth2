@@ -9,6 +9,12 @@ namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 
+/**
+ * Class Github
+ * @package tinymeng\OAuth2\Gateways
+ * @Author: TinyMeng <666@majiameng.com>
+ * @Created: 2018/11/9
+ */
 class Github extends Gateway
 {
 

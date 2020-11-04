@@ -16,6 +16,12 @@ namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 
+/**
+ * Class Wechat
+ * @package tinymeng\OAuth2\Gateways
+ * @Author: TinyMeng <666@majiameng.com>
+ * @Created: 2018/11/9
+ */
 class Wechat extends Gateway
 {
     const API_BASE            = 'https://api.weixin.qq.com/sns/';
@@ -63,7 +69,7 @@ class Wechat extends Gateway
             'response_type' => $this->config['response_type'],
             'scope'         => $this->config['scope'],
             'state'         => $this->config['state'],
-            'return_uri'    => $this->config['callback'],
+            'redirect_uri'    => $this->config['callback'],
         ];
         return $this->config['proxy_url'] . '?' . http_build_query($params);
     }

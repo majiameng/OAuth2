@@ -6,6 +6,12 @@ use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
+/**
+ * Class Twitter
+ * @package tinymeng\OAuth2\Gateways
+ * @Author: TinyMeng <666@majiameng.com>
+ * @Created: 2018/11/9
+ */
 class Twitter extends Gateway
 {
     const API_BASE = 'https://api.twitter.com/';

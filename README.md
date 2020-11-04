@@ -241,13 +241,16 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
         'app_secret' => 'd5dad705a1159d*********',
         'callback' => 'http://majiameng.com/app/wechat',
         'scope'      => 'snsapi_login',//扫码登录
+        //'proxy_url' => 'http://www.abc.com/wx_proxy.php',//如果不需要代理请注释此行
+        //'proxy_url' => 'http://www.abc.com/weixin-authorize-proxy.html',//如果不需要代理请注释此行
     ],
     'mobile'=>[
         'app_id' => 'wx6ca7410f8******',
         'app_secret' => '30a206b87b7689b19f11******',
         'callback' => 'http://majiameng.com/app/wechat',
         'scope'      => 'snsapi_userinfo',//静默授权=>snsapi_base;获取用户信息=>snsapi_userinfo
-        //'proxy_url' => 'http://www.abc.com/proxy/wx_proxy.php',//如果不需要代理请注释此行
+        //'proxy_url' => 'http://www.abc.com/wx_proxy.php',//如果不需要代理请注释此行
+        //'proxy_url' => 'http://www.abc.com/weixin-authorize-proxy.html',//如果不需要代理请注释此行
     ],
 ]
 ```
@@ -272,7 +275,7 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
     'app_id'        => '1014*****',
     'app_secret'    => '8a2b322610d7a0d****',
     'scope'         => 'get_user_info',
-    'callback' => 'http://majiameng.com/login/qq',
+    'callback' => 'http://majiameng.com/app/qq',
     'withUnionid' => true //已申请unioid打通
 ]
 ```
@@ -284,6 +287,7 @@ QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4
 ```
 'app_id'     => '78734****',
 'app_secret' => 'd8a00617469018d61c**********',
+'callback' => 'http://majiameng.com/app/sina',
 'scope'      => 'all',
 ```
 
@@ -301,8 +305,11 @@ QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4
 ```
 'app_id'      => '2016052*******',
 'scope'       => 'auth_user',
-'pem_private' => Env::get('ROOT_PATH') . 'pem/private.pem', // 你的私钥
-'pem_public'  => Env::get('ROOT_PATH') . 'pem/public.pem', // 支付宝公钥
+'aes' => 'asdf*******************==',// AES密钥
+'callback' => 'http://majiameng.com/app/alipay',
+'pem_private' => '/config/cert/rsaPrivateKey.pem', // 你的私钥
+'pem_public'  => '/config/cert/alipayrsaPublicKey.pem', // 支付宝公钥
+'is_sandbox' => false,   //是否是沙箱环境
 ```
 
 #### 6.Facebook
@@ -336,6 +343,7 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 'app_id'     => '7682717*******************.apps.googleusercontent.com',
 'app_secret' => 'w0Kq-aYA***************',
 'scope'      => 'https://www.googleapis.com/auth/userinfo.profile',
+'callback' => 'http://majiameng.com/app/google',
 ```
 > scope 有两个值 
 > 获取用户信息:  'scope'      => 'https://www.googleapis.com/auth/userinfo.profile',
