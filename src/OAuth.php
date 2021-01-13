@@ -38,6 +38,7 @@ abstract class OAuth
             'app_secret'=> '',
             'callback'  => '',
             'scope'     => '',
+            'is_app'    => false,
         ];
         if($gateway == 'weixin'){
             /** 兼容 tinymeng/oauth v1.0.0完美升级 */
