@@ -30,7 +30,7 @@ abstract class Gateway implements GatewayInterface
      * 是否是App
      * @var bool
      */
-    protected $isapp = false;
+    protected $is_app = false;
 
     /**
      * 第三方Token信息
@@ -102,7 +102,7 @@ abstract class Gateway implements GatewayInterface
      */
     public function setIsApp()
     {
-        $this->isapp = true;
+        $this->is_app = true;
         return $this;
     }
 

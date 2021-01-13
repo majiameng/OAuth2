@@ -96,7 +96,7 @@ class Qq extends Gateway
      */
     public function openid()
     {
-        if($this->isapp === true){
+        if($this->is_app === true){
             if(!isset($_REQUEST['access_token'])){
                 throw new \Exception("腾讯QQ,APP登录 需要传输access_token参数! ");
             }

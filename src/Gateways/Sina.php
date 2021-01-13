@@ -88,7 +88,7 @@ class Sina extends Gateway
      */
     public function getUserInfo()
     {
-        if($this->isapp === true){//App登录
+        if($this->is_app === true){//App登录
             if(!isset($_REQUEST['access_token']) || !isset($_REQUEST['uid'])){
                 throw new \Exception("新浪微博,APP登录 需要传输access_token和uid参数! ");
             }
