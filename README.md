@@ -266,6 +266,11 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
         //'proxy_url' => 'http://www.abc.com/wx_proxy.php',//如果不需要代理请注释此行
         //'proxy_url' => 'http://www.abc.com/weixin-authorize-proxy.html',//如果不需要代理请注释此行
     ],
+    'app'=>[
+        'app_id' => 'wx6ca7410f8******',
+        'app_secret' => '30a206b87b7689b19f11******',
+        'is_app'      => true,
+    ],
 ]
 ```
 > 打通unionid的话需要将公众号绑定到同一个微信开放平台
