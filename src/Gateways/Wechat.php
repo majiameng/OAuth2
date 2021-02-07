@@ -123,8 +123,15 @@ class Wechat extends Gateway
      */
     public function getUserInfo()
     {
-        /** 获取token信息 */
-        $this->getToken();
+        if($this->is_app === true){//App登录
+            if(!isset($_REQUEST['access_token']) ){
+                throw new \Exception("Wechat APP登录 需要传输access_token参数! ");
+            }
+            $this->token['access_token'] = $_REQUEST['access_token'];
+        }else {
+            /** 获取token信息 */
+            $this->getToken();
+        }
 
         /** 获取用户信息 */
         $params = [

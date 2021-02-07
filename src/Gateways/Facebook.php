@@ -84,9 +84,9 @@ class Facebook extends Gateway
             $this->token['access_token'] = $_REQUEST['access_token'];
         }else {
             $this->getToken();
-            $fields = isset($this->config['fields']) ? $this->config['fields'] : 'id,name,gender,picture.width(400)';
-            return $this->call('me', ['access_token' => $this->token['access_token'], 'fields' => $fields], 'GET');
         }
+        $fields = isset($this->config['fields']) ? $this->config['fields'] : 'id,name,gender,picture.width(400)';
+        return $this->call('me', ['access_token' => $this->token['access_token'], 'fields' => $fields], 'GET');
     }
 
     /**

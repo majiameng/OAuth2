@@ -105,10 +105,19 @@ class Alipay extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
+     * @throws \Exception
      */
     public function getUserInfo()
     {
-        $this->getToken();
+        if($this->is_app === true){//App登录
+            if(!isset($_REQUEST['access_token']) ){
+                throw new \Exception("Wechat APP登录 需要传输access_token参数! ");
+            }
+            $this->token['access_token'] = $_REQUEST['access_token'];
+        }else {
+            /** 获取token信息 */
+            $this->getToken();
+        }
 
         $params = [
             'app_id'     => $this->config['app_id'],

@@ -78,7 +78,7 @@ abstract class Gateway implements GatewayInterface
             'is_sandbox'    => false,//是否是沙箱环境
         ];
         $this->config    = array_merge($_config, $config);
-        $this->is_app    = $this->config['is_app'];
+        $this->is_app    = isset($this->config['is_app']) ? $this->config['is_app'] : false;
         $this->timestamp = time();
     }
 

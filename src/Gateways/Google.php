@@ -97,10 +97,10 @@ class Google extends Gateway
         }else{
             $this->getToken();
 
-            $headers = ['Authorization : Bearer ' . $this->token['access_token']];
-            $data = $this->get(self::API_BASE . 'oauth2/v2/userinfo', '', $headers);
-            return json_decode($data, true);
         }
+        $headers = ['Authorization : Bearer ' . $this->token['access_token']];
+        $data = $this->get(self::API_BASE . 'oauth2/v2/userinfo', '', $headers);
+        return json_decode($data, true);
     }
 
     /**
