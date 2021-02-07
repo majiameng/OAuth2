@@ -114,6 +114,10 @@ Tag v2.0.4
      * 回调中如果是App登录
      */
     $userInfo = OAuth::$name($this->config)->setIsApp()->userInfo();
+    //->setIsApp() 或者  在配置文件中设置config['is_app'] = true
+
+
+    //access_token 通过$_POST['access_token'] 进行传值到oauth中
 ```
 
 ### 典型用法
