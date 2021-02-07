@@ -128,6 +128,16 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
+     * 设置token(App登录时)
+     * @param $token
+     * @return $this
+     */
+    public function setToken($token){
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
      * 存储state
      * @Author: TinyMeng <666@majiameng.com>
      */
