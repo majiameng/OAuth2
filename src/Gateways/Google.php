@@ -89,11 +89,18 @@ class Google extends Gateway
      */
     public function getUserInfo()
     {
-        $this->getToken();
+        if($this->is_app === true){//App登录
+            if(!isset($_REQUEST['access_token']) ){
+                throw new \Exception("Google APP登录 需要传输access_token参数! ");
+            }
+            $this->token['access_token'] = $_REQUEST['access_token'];
+        }else{
+            $this->getToken();
 
-        $headers = ['Authorization : Bearer ' . $this->token['access_token']];
-        $data = $this->get(self::API_BASE . 'oauth2/v2/userinfo', '', $headers);
-        return json_decode($data, true);
+            $headers = ['Authorization : Bearer ' . $this->token['access_token']];
+            $data = $this->get(self::API_BASE . 'oauth2/v2/userinfo', '', $headers);
+            return json_decode($data, true);
+        }
     }
 
     /**

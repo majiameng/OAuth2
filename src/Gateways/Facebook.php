@@ -77,9 +77,16 @@ class Facebook extends Gateway
      */
     public function getUserInfo()
     {
-        $this->getToken();
-        $fields = isset($this->config['fields']) ? $this->config['fields'] : 'id,name,gender,picture.width(400)';
-        return $this->call('me', ['access_token' => $this->token['access_token'], 'fields' => $fields], 'GET');
+        if($this->is_app === true){//App登录
+            if(!isset($_REQUEST['access_token']) ){
+                throw new \Exception("Facebook APP登录 需要传输access_token参数! ");
+            }
+            $this->token['access_token'] = $_REQUEST['access_token'];
+        }else {
+            $this->getToken();
+            $fields = isset($this->config['fields']) ? $this->config['fields'] : 'id,name,gender,picture.width(400)';
+            return $this->call('me', ['access_token' => $this->token['access_token'], 'fields' => $fields], 'GET');
+        }
     }
 
     /**

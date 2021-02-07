@@ -90,7 +90,7 @@ class Sina extends Gateway
     {
         if($this->is_app === true){//App登录
             if(!isset($_REQUEST['access_token']) || !isset($_REQUEST['uid'])){
-                throw new \Exception("新浪微博,APP登录 需要传输access_token和uid参数! ");
+                throw new \Exception("Sina APP登录 需要传输access_token和uid参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
             $this->token['openid'] = $_REQUEST['uid'];
