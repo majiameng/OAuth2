@@ -165,7 +165,7 @@ abstract class Gateway implements GatewayInterface
             if (session_status() !== PHP_SESSION_ACTIVE) {
                 session_start();
             }
-            if (!isset($_GET['state']) || !isset($_SESSION['tinymeng_oauth_state']) || $_GET['state'] != $_SESSION['tinymeng_oauth_state']) {
+            if (!isset($_REQUEST['state']) || !isset($_SESSION['tinymeng_oauth_state']) || $_REQUEST['state'] != $_SESSION['tinymeng_oauth_state']) {
                 throw new \Exception('传递的STATE参数不匹配！');
             }
         }
@@ -182,7 +182,7 @@ abstract class Gateway implements GatewayInterface
             'client_id'     => $this->config['app_id'],
             'client_secret' => $this->config['app_secret'],
             'grant_type'    => $this->config['grant_type'],
-            'code'          => isset($_GET['code']) ? $_GET['code'] : '',
+            'code'          => isset($_REQUEST['code']) ? $_REQUEST['code'] : '',
             'redirect_uri'  => $this->config['callback'],
         ];
         return $params;

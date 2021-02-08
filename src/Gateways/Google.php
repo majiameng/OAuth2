@@ -4,6 +4,8 @@
  * Oauth开发文档:
  *      https://developers.google.com/identity/protocols/OAuth2?csw=1
  *      https://developers.google.com/identity/protocols/OAuth2WebServer
+ * App开发文档:
+ *      https://developers.google.com/identity/sign-in/android/offline-access
  * 1.创建项目->并创建凭证
  */
 namespace tinymeng\OAuth2\Gateways;
@@ -90,14 +92,11 @@ class Google extends Gateway
     public function getUserInfo()
     {
         if($this->is_app === true){//App登录
-            if(!isset($_REQUEST['access_token']) ){
-                throw new \Exception("Google APP登录 需要传输access_token参数! ");
+            if(!isset($_REQUEST['code']) ){
+                throw new \Exception("Google APP登录 需要传输code参数! ");
             }
-            $this->token['access_token'] = $_REQUEST['access_token'];
-        }else{
-            $this->getToken();
-
         }
+        $this->getToken();
         $headers = ['Authorization : Bearer ' . $this->token['access_token']];
         $data = $this->get(self::API_BASE . 'oauth2/v2/userinfo', '', $headers);
         return json_decode($data, true);

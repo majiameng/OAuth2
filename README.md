@@ -117,7 +117,17 @@ Tag v2.0.4
     //->setIsApp() 或者  在配置文件中设置config['is_app'] = true
 
 
-    //access_token 通过$_POST['access_token'] 进行传值到oauth中
+    /**
+    * access_token 通过$_REQUEST['access_token'] 进行传值到oauth中
+    *    facebook App登录
+    *    qq App登录
+    *    wechat App登录
+    */
+
+    /**
+    * code 通过$_REQUEST['code'] 进行传值到oauth中
+    *    google App登录
+    */
 ```
 
 ### 典型用法
