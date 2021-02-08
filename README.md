@@ -25,7 +25,8 @@ composer require tinymeng/oauth:^2.0.0 -vvv
 ```
 .
 ├── example                          代码源文件目录
-│   └── wx_proxy.php                微信多域名代理文件
+│   └── wx_proxy.php                微信多域名代理php代码版
+│   └── weixin-authorize-proxy.html 微信多域名代理html代码版
 ├── src                              代码源文件目录
 │   ├── Connector
 │   │   ├── Gateway.php            必须继承的抽象类
