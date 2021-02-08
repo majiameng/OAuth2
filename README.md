@@ -108,6 +108,7 @@ Tag v2.0.4
     public function getProxyURL();
 ```
 
+App登录回调
 ```php
     $name = "qq";
     /**
