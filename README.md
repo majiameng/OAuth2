@@ -2,15 +2,18 @@
 
 # 通用第三方登录说明文档
 
-* 微信
+* 微信网页扫码、微信公众号、微信小程序、微信App
 * QQ
 * 微博
 * 支付宝
 * GitHub
+* Google
 * Facebook
+* Naver
 * Twitter
 * Line
-* Google
+
+* 所有的APP登录
 
 ### 安装
 
@@ -37,6 +40,7 @@ composer require tinymeng/oauth:^2.0.0 -vvv
 │   │   ├── Github.php
 │   │   ├── Google.php
 │   │   ├── Line.php
+│   │   ├── Naver.php
 │   │   ├── Qq.php
 │   │   ├── Twitter.php
 │   │   ├── Sina.php
@@ -89,38 +93,6 @@ composer require tinymeng/oauth:^2.0.0 -vvv
      */
     public function getUserInfo();
     
-```
-
-微信有一个额外的方法，用于获取代理请求的地址
-
-```php
-    /**
-     * 获取中转代理地址
-     */
-    public function getProxyURL();
-```
-
-App登录回调
-```php
-    $name = "qq";
-    /**
-     * 回调中如果是App登录
-     */
-    $userInfo = OAuth::$name($this->config)->setIsApp()->userInfo();
-    //->setIsApp() 或者  在配置文件中设置config['is_app'] = true
-
-
-    /**
-    * access_token 通过$_REQUEST['access_token'] 进行传值到oauth中
-    *    facebook App登录
-    *    qq App登录
-    *    wechat App登录
-    */
-
-    /**
-    * code 通过$_REQUEST['code'] 进行传值到oauth中
-    *    google App登录
-    */
 ```
 
 ### 典型用法
@@ -247,6 +219,40 @@ $snsInfo = OAuth::$name($this->config)->mustCheckState()->userinfo();
 > 注意，不是所有的平台都支持传递state，请自行阅读官方文档链接,各个文档在实现类里有说明.
 
 
+微信有一个额外的方法，用于获取代理请求的地址
+
+```php
+    /**
+     * 获取中转代理地址
+     */
+    public function getProxyURL();
+```
+
+App登录回调
+```php
+    $name = "qq";
+    /**
+     * 回调中如果是App登录
+     */
+    $userInfo = OAuth::$name($this->config)->setIsApp()->userInfo();
+    //->setIsApp() 或者  在配置文件中设置config['is_app'] = true
+
+
+    /**
+    * access_token 通过$_REQUEST['access_token'] 进行传值到oauth中
+    *    facebook App登录
+    *    qq App登录
+    *    wechat App登录
+    */
+
+    /**
+    * code 通过$_REQUEST['code'] 进行传值到oauth中
+    *    google App登录
+    */
+```
+
+
+
 ### 配置文件样例
 
 #### 1.微信
@@ -357,6 +363,13 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 'app_id'     => '159******',
 'app_secret' => '1f19c98a61d148f2************',
 'scope'      => 'profile',
+```
+
+#### 8.Naver
+
+```
+'app_id'     => 'OTRf******',
+'app_secret' => 'hAc5****',
 ```
 
 #### 9.Google
