@@ -60,7 +60,7 @@ class Qq extends Gateway
             'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
             'channel' => ConstCode::TYPE_QQ,
             'nickname'=> $result['nickname'],
-            'gender'  => $result['gender'] == "男" ? ConstCode::GENDER_MAN  : ConstCode::GENDER_WOMEN,
+            'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $result['figureurl_qq_2'] ? $result['figureurl_qq_2'] : $result['figureurl_qq_1'],
             'birthday'=> date('Y-m-d',strtotime($result['year'])),
         ];
@@ -154,5 +154,14 @@ class Qq extends Gateway
         } else {
             throw new \Exception("获取用户openid出错：" . $data['error_description']);
         }
+    }
+
+    /**
+     * 格式化性别参数
+     * M代表男性,F代表女性
+     * @param $gender
+     */
+    public function getGender($gender){
+        return $gender == '男' ? ConstCode::GENDER_MAN : ConstCode::GENDER_WOMEN;
     }
 }

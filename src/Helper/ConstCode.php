@@ -28,10 +28,11 @@ class ConstCode{
     const TYPE_GOOGLE           = 8; //google
     const TYPE_TWITTER          = 9; //飞鸽
     const TYPE_LINE             = 10;//line
+    const TYPE_NAVER             = 11;//naver
 
     const TYPE_QQ_APP           = 21; //qqAPP
     const TYPE_WECHAT_APP       = 22; //微信APP
-    const TYPE_APPLETS          = 23; //小程序
+    const TYPE_WECHAT_APPLETS   = 23; //微信小程序
 
     /**
      * Description:  getType

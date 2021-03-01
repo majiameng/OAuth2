@@ -1,6 +1,7 @@
 <?php
 namespace tinymeng\OAuth2\Connector;
 
+use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
 /**
@@ -235,5 +236,14 @@ abstract class Gateway implements GatewayInterface
     {
         $headers[] = 'Accept: application/json';//GitHub需要的header
         return \tinymeng\tools\HttpRequest::httpPost($url, $params,$headers);
+    }
+
+    /**
+     * 格式化性别参数
+     * M代表男性,F代表女性
+     * @param $gender
+     */
+    public function getGender($gender){
+        return strtolower(substr($gender , 0 , 1)) == 'm' ? ConstCode::GENDER_MAN : ConstCode::GENDER_WOMEN;
     }
 }

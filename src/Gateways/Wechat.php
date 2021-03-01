@@ -108,7 +108,7 @@ class Wechat extends Gateway
             'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
             'channel' => ConstCode::TYPE_WECHAT,
             'nickname'=> $result['nickname'],
-            'gender'  => $result['sex'],
+            'gender'  => isset($result['sex']) ? $result['sex'] : ConstCode::GENDER,
             'avatar'  => $result['headimgurl'],
         ];
         return $userInfo;

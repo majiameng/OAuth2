@@ -66,15 +66,15 @@ class Sina extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->getUserInfo();
+        $result = $this->getUserInfo();
 
         $userinfo = [
             'open_id'  => $this->token['access_token'],
             'union_id'  => $this->openid(),
             'channel' => ConstCode::TYPE_SINA,
-            'nickname'    => $rsp['screen_name'],
-            'gender'  => $rsp['gender'] == 'm' ? ConstCode::GENDER_MAN : ConstCode::GENDER_WOMEN,
-            'avatar'  => $rsp['avatar_hd'],
+            'nickname'    => $result['screen_name'],
+            'gender'  => $this->getGender($result['gender']),
+            'avatar'  => $result['avatar_hd'],
         ];
         return $userinfo;
     }
@@ -165,4 +165,5 @@ class Sina extends Gateway
     public function statusesShare($data){
         return $this->call('statuses/share.json', json_encode($data),'POST');
     }
+
 }

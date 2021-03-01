@@ -41,8 +41,8 @@ class Line extends Gateway
      */
     public function openid()
     {
-        $rsp = $this->getUserInfo();
-        return $rsp['userId'];
+        $result = $this->getUserInfo();
+        return $result['userId'];
     }
 
     /**
@@ -50,14 +50,14 @@ class Line extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->getUserInfo();
+        $result = $this->getUserInfo();
 
         $userinfo = [
-            'open_id'  => $rsp['userId'],
+            'open_id'  => $result['userId'],
             'channel' => ConstCode::TYPE_LINE,
-            'nickname'    => $rsp['displayName'],
+            'nickname'    => $result['displayName'],
             'gender'  => ConstCode::GENDER, //line不返回性别信息
-            'avatar'  => isset($rsp['pictureUrl']) ? $rsp['pictureUrl'] . '/large' : '',
+            'avatar'  => isset($result['pictureUrl']) ? $result['pictureUrl'] . '/large' : '',
         ];
         return $userinfo;
     }

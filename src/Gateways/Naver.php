@@ -3,6 +3,7 @@
  * naver开放平台  https://developers.naver.com/
  * api接口文档
  *      https://developers.naver.com/docs/common/openapiguide/
+ * 申请的时候请选择
  */
 namespace tinymeng\OAuth2\Gateways;
 
@@ -18,9 +19,9 @@ use tinymeng\OAuth2\Helper\Str;
  */
 class Naver extends Gateway
 {
-    const API_BASE            = 'https://api.line.me/v2/';
-    protected $AuthorizeURL   = 'https://access.line.me/oauth2/v2.1/authorize';
-    protected $AccessTokenURL = 'https://api.line.me/oauth2/v2.1/token';
+    const API_BASE            = 'https://openapi.naver.com/v1/';
+    protected $AuthorizeURL   = 'https://nid.naver.com/oauth2.0/authorize';
+    protected $AccessTokenURL = 'https://nid.naver.com/oauth2.0/token';
 
     /**
      * 得到跳转地址
@@ -45,8 +46,8 @@ class Naver extends Gateway
      */
     public function openid()
     {
-        $rsp = $this->getUserInfo();
-        return $rsp['userId'];
+        $result = $this->getUserInfo();
+        return $result['userId'];
     }
 
     /**
@@ -54,14 +55,16 @@ class Naver extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->getUserInfo();
+        $result = $this->getUserInfo();
 
         $userinfo = [
-            'open_id'  => $rsp['userId'],
-            'channel' => ConstCode::TYPE_LINE,
-            'nickname'    => $rsp['displayName'],
-            'gender'  => ConstCode::GENDER, //line不返回性别信息
-            'avatar'  => isset($rsp['pictureUrl']) ? $rsp['pictureUrl'] . '/large' : '',
+            'open_id'  => $this->token['access_token'],
+            'union_id'  => $result['id'],
+            'channel' => ConstCode::TYPE_NAVER,
+            'email'=> isset($result['email']) ? $result['email'] : '',
+            'nickname'=> isset($result['nickname']) ? $result['nickname'] : '',
+            'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
+            'avatar'  => isset($result['profile_image']) ? $result['profile_image'] : '',
         ];
         return $userinfo;
     }
@@ -71,14 +74,20 @@ class Naver extends Gateway
      */
     public function getUserInfo()
     {
-        $this->getToken();
-
-        $data = $this->call('profile', $this->token, 'GET');
-
+        if($this->is_app === true){//App登录
+            if(!isset($_REQUEST['access_token']) ){
+                throw new \Exception("Naver APP登录 需要传输access_token参数! ");
+            }
+            $this->token['token_type'] = 'Bearer';
+            $this->token['access_token'] = $_REQUEST['access_token'];
+        }else {
+            $this->getToken();
+        }
+        $data = $this->call('nid/me', $this->token, 'GET');
         if (isset($data['error'])) {
             throw new \Exception($data['error_description']);
         }
-        return $data;
+        return $data['response'];
     }
 
     /**
@@ -116,4 +125,5 @@ class Naver extends Gateway
         }
         return $token;
     }
+
 }

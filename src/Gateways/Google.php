@@ -59,25 +59,12 @@ class Google extends Gateway
     {
         $result = $this->getUserInfo();
 
-        /** 格式化性别 */
-        $gender = ConstCode::GENDER;
-        if(!empty($result['gender'])){
-            switch ($result['gender']) {
-                case 'male':
-                    $gender = ConstCode::GENDER_MAN;
-                    break;
-                case 'female':
-                    $gender = ConstCode::GENDER_WOMEN;
-                    break;
-            }
-        }
-
         $userInfo = [
-            'open_id'  => $this->token['access_token'],
-            'union_id'  => $result['id'],
+            'open_id' => $this->token['access_token'],
+            'union_id'=> $result['id'],
             'channel' => ConstCode::TYPE_GOOGLE,
-            'nickname'    => isset($result['name']) ? $result['name'] : $result['email'],
-            'gender'  => $gender,
+            'nickname'=> isset($result['name']) ? $result['name'] : $result['email'],
+            'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $result['picture'],
         ];
         if(isset($result['email'])){
@@ -119,5 +106,4 @@ class Google extends Gateway
             throw new \Exception("获取谷歌 ACCESS_TOKEN 出错：{$token}");
         }
     }
-
 }

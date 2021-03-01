@@ -60,14 +60,14 @@ class Facebook extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->getUserInfo();
+        $result = $this->getUserInfo();
 
         $userinfo = [
-            'open_id'  => $rsp['id'],
+            'open_id'  => $result['id'],
             'channel' => ConstCode::TYPE_FACEBOOK,
-            'nickname'    => $rsp['name'],
-            'gender'  => $this->getGender($rsp), //不一定会返回
-            'avatar'  => $this->getAvatar($rsp),
+            'nickname'    => $result['name'],
+            'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
+            'avatar'  => $this->getAvatar($result),
         ];
         return $userinfo;
     }
@@ -141,36 +141,15 @@ class Facebook extends Gateway
     }
 
     /**
-     * 格式化性别
-     *
-     * @param array $rsp
-     * @return string
-     */
-    private function getGender($rsp)
-    {
-        $gender = isset($rsp['gender']) ? $rsp['gender'] : null;
-        $return = ConstCode::GENDER;
-        switch ($gender) {
-            case 'male':
-                $return = ConstCode::GENDER_MAN;
-                break;
-            case 'female':
-                $return = ConstCode::GENDER_WOMEN;
-                break;
-        }
-        return $return;
-    }
-
-    /**
      * 获取用户头像
      *
-     * @param array $rsp
+     * @param array $result
      * @return string
      */
-    private function getAvatar($rsp)
+    private function getAvatar($result)
     {
-        if (isset($rsp['picture']['data']['url'])) {
-            return $rsp['picture']['data']['url'];
+        if (isset($result['picture']['data']['url'])) {
+            return $result['picture']['data']['url'];
         }
         return '';
     }

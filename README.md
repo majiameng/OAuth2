@@ -370,6 +370,7 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 ```
 'app_id'     => 'OTRf******',
 'app_secret' => 'hAc5****',
+'callback' => 'http://majiameng.com/app/naver',
 ```
 
 #### 9.Google

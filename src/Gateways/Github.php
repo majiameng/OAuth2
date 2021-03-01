@@ -71,17 +71,17 @@ class Github extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->getUserInfo();
+        $result = $this->getUserInfo();
 
         $userInfo = [
             'open_id'  => $this->token['access_token'],
-            'union_id'  => $rsp['id'],
+            'union_id'  => $result['id'],
             'channel' => ConstCode::TYPE_GITHUB,
-            'nickname'    => $rsp['name'],
-            'username'  => $rsp['login'],
-            'avatar'  => $rsp['avatar_url'],
-            'email'  => $rsp['email'],
-            'sign'  => $rsp['bio'],
+            'nickname'    => $result['name'],
+            'username'  => $result['login'],
+            'avatar'  => $result['avatar_url'],
+            'email'  => $result['email'],
+            'sign'  => $result['bio'],
             'gender'  => ConstCode::GENDER,
         ];
         return $userInfo;

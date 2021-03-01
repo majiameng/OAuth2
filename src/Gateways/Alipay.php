@@ -87,15 +87,15 @@ class Alipay extends Gateway
      */
     public function userInfo()
     {
-        $rsp = $this->getUserInfo();
+        $result = $this->getUserInfo();
 
         $userinfo = [
             'open_id'  => $this->token['access_token'],
             'union_id'  => $this->token['openid'],
             'channel' => ConstCode::TYPE_ALIPAY,
-            'nickname'    => $rsp['nick_name'],
-            'gender'  => strtolower($rsp['gender']) == 'm' ? ConstCode::GENDER_MAN : ConstCode::GENDER_WOMEN,
-            'avatar'  => $rsp['avatar'],
+            'nickname'    => $result['nick_name'],
+            'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
+            'avatar'  => $result['avatar'],
         ];
         return $userinfo;
     }
@@ -132,8 +132,8 @@ class Alipay extends Gateway
 
         $data = $this->post(self::API_BASE, $params);
         $data = mb_convert_encoding($data, 'utf-8', 'gbk');
-        $rsp =  json_decode($data, true);
-        return $rsp['alipay_user_info_share_response'];
+        $result =  json_decode($data, true);
+        return $result['alipay_user_info_share_response'];
     }
 
     /**
