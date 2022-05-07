@@ -197,11 +197,17 @@ class Login extends Common
         $userInfo = $oauth->userInfo();
         /**
          * 如果是App登录
-         * $userInfo = OAuth::$name($this->config)->setIsApp()->userInfo();
+         * $type = "applets";
+         * $userInfo = OAuth::$name($this->config)->setType($type)->userInfo();
+         */
+         /**
+         * 如果是App登录
+         * $type = "applets";
+         * $userInfo = OAuth::$name($this->config)->setType($type)->userInfo();
          */
 
         //获取登录类型
-        $userInfo['type'] = \tinymeng\OAuth2\Helper\ConstCode::getType($userInfo['channel']);
+        $userInfo['type'] = \tinymeng\OAuth2\Helper\ConstCode::getTypeConst($userInfo['channel']);
 
         var_dump($userInfo);die;
         
@@ -234,8 +240,9 @@ App登录回调
     /**
      * 回调中如果是App登录
      */
-    $userInfo = OAuth::$name($this->config)->setIsApp()->userInfo();
-    //->setIsApp() 或者  在配置文件中设置config['is_app'] = true
+    $type = 'app';
+    $userInfo = OAuth::$name($this->config)->setType($type)->userInfo();
+    //->setType() 或者  在配置文件中设置config['type'] = 'app'
 
 
     /**
@@ -278,7 +285,16 @@ App登录回调
     'app'=>[
         'app_id' => 'wx6ca7410f8******',
         'app_secret' => '30a206b87b7689b19f11******',
-        'is_app'      => true,
+        'type'      => 'app',//登录类型app
+    ],
+    /**
+     * 微信小程序只能获取到 openid session_key
+     * 详见文档 https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+     */
+    'applets'=>[
+        'app_id' => 'wx6ca7410f8******',
+        'app_secret' => '30a206b87b7689b19f11******',
+        'type'      => 'applets',//登录类型小程序
     ],
 ]
 ```
@@ -304,7 +320,7 @@ App登录回调
     'app_secret'    => '8a2b322610d7a0d****',
     'scope'         => 'get_user_info',
     'callback' => 'http://majiameng.com/app/qq',
-    'withUnionid' => true //已申请unioid打通
+    'is_unioid' => true //已申请unioid打通
 ]
 ```
 QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4%BB%8B%E7%BB%8D
@@ -396,6 +412,7 @@ Array
     [nickname] => 'Tinymeng'        //昵称
     [gender] => 1;                  //0=>未知 1=>男 2=>女   twitter和line不会返回性别，所以这里是0，Facebook根据你的权限，可能也不会返回，所以也可能是0
     [avatar] => http://thirdqq.qlogo.cn/qqapp/101426434/50D523803F5B51AAC01616105161C7B1/100 //头像
+    [type] => 21;                   //登录子类型请查看 \tinymeng\OAuth2\Helper\ConstCode ，例如：channel：微信 type：小程序或app
 )
 ```
 > 部分登录类型还会返回个别数据,如需返回原数据请使用 `getUserInfo()` 方法
@@ -403,6 +420,13 @@ Array
 
 
 ### 版本修复
+
+2022-05-07 更新以下功能
+Tag v2.0.8
+```
+1.兼容微信小程序获取openid处理
+接口文档： https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+```
 
 2021-03-01 更新以下功能
 Tag v2.0.7

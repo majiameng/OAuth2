@@ -27,6 +27,7 @@ class Wechat extends Gateway
     const API_BASE            = 'https://api.weixin.qq.com/sns/';
     protected $AuthorizeURL   = 'https://open.weixin.qq.com/connect/qrconnect';
     protected $AccessTokenURL = 'https://api.weixin.qq.com/sns/oauth2/access_token';
+    protected $jsCode2Session = 'https://api.weixin.qq.com/sns/jscode2session';
 
     /**
      * Description:  得到跳转地址
@@ -107,10 +108,11 @@ class Wechat extends Gateway
             'open_id' => $this->openid(),
             'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
             'channel' => ConstCode::TYPE_WECHAT,
-            'nickname'=> $result['nickname'],
+            'nickname'=> $result['nickname']??'',
             'gender'  => isset($result['sex']) ? $result['sex'] : ConstCode::GENDER,
-            'avatar'  => $result['headimgurl'],
+            'avatar'  => $result['headimgurl']??'',
         ];
+        $userInfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);
         return $userInfo;
     }
 
@@ -123,11 +125,14 @@ class Wechat extends Gateway
      */
     public function getUserInfo()
     {
-        if($this->is_app === true){//App登录
+        if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) ){
                 throw new \Exception("Wechat APP登录 需要传输access_token参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
+        }elseif ($this->type == 'applets'){
+            //小程序
+            return $this->applets();
         }else {
             /** 获取token信息 */
             $this->getToken();
@@ -141,6 +146,22 @@ class Wechat extends Gateway
         ];
         $data = $this->get(self::API_BASE . 'userinfo', $params);
         return json_decode($data, true);
+    }
+
+    /**
+     * @return array|mixed|null
+     * @throws \Exception
+     */
+    public function applets(){
+        /** 获取参数 */
+        $params = $this->accessTokenParams();
+        $params['js_code'] = $params['code'];
+
+        /** 获取access_token */
+        $token =  $this->get($this->jsCode2Session, $params);
+        /** 解析token值(子类实现此方法) */
+        $this->token = $this->parseToken($token);
+        return $this->token;
     }
 
     /**
@@ -192,6 +213,9 @@ class Wechat extends Gateway
     {
         $data = json_decode($token, true);
         if (isset($data['access_token'])) {
+            return $data;
+        }elseif (isset($data['session_key'])){
+            //小程序登录
             return $data;
         } else {
             throw new \Exception("获取微信 ACCESS_TOKEN 出错：{$token}");

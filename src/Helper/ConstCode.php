@@ -35,37 +35,39 @@ class ConstCode{
     const TYPE_WECHAT_APPLETS   = 23; //微信小程序
 
     /**
-     * Description:  getType
+     * Description:  getTypeConst
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
-     * @param int $channel
-     * @param bool $is_app
+     * @param int $channel 渠道：登录方式
+     * @param bool $type 类型：app applets
      * @return int
      */
-    static public function getType($channel,$is_app=false)
+    static public function getTypeConst($channel,$type="")
     {
         switch ($channel){
             case self::TYPE_QQ:
-                if($is_app === true){
-                    $type = self::TYPE_WECHAT_APP;//qqApp
+                if($type == 'app'){
+                    $typeConst = self::TYPE_WECHAT_APP;//qqApp
                 }else{
-                    $type = $channel;
+                    $typeConst = $channel;
                 }
                 break;
             case self::TYPE_WECHAT:
-                if($is_app === true){
-                    $type = self::TYPE_WECHAT_APP;//微信App
+                if($type == 'app'){
+                    $typeConst = self::TYPE_WECHAT_APP;//微信App
+                }else if($type == 'applets'){
+                    $typeConst =  self::TYPE_WECHAT_APPLETS;//微信小程序
                 }else if(Tool::isWeiXin()){
-                    $type =  self::TYPE_WECHAT_MOBILE;//微信mobile
+                    $typeConst =  self::TYPE_WECHAT_MOBILE;//微信mobile
                 }else{
-                    $type = $channel;
+                    $typeConst = $channel;
                 }
                 break;
             default:
-                $type = $channel;
+                $typeConst = $channel;
                 break;
         }
-        return $type;
+        return $typeConst;
     }
 
 }

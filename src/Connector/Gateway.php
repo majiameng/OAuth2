@@ -16,6 +16,24 @@ abstract class Gateway implements GatewayInterface
     protected $config;
 
     /**
+     * AppId
+     * @var array
+     */
+    protected $app_id;
+    
+    /**
+     * AppSecret
+     * @var string
+     */
+    protected $app_secret;
+
+    /**
+     * 回调地址
+     * @var string
+     */
+    protected $callback;
+
+    /**
      * 当前时间戳
      * @var int
      */
@@ -28,10 +46,10 @@ abstract class Gateway implements GatewayInterface
     protected $display = 'default';
 
     /**
-     * 是否是App
+     * 登录类型：app applets
      * @var bool
      */
-    protected $is_app = false;
+    protected $type;
 
     /**
      * 第三方Token信息
@@ -76,10 +94,13 @@ abstract class Gateway implements GatewayInterface
             'grant_type'    => 'authorization_code',
             'proxy'         => '',
             'state'         => '',
+            'type'          => '',
             'is_sandbox'    => false,//是否是沙箱环境
         ];
         $this->config    = array_merge($_config, $config);
-        $this->is_app    = isset($this->config['is_app']) ? $this->config['is_app'] : false;
+        foreach($this->config as $key=>$val){
+            if(property_exists($this,$key)) $this->$key=$val;
+        }
         $this->timestamp = time();
     }
 
@@ -102,9 +123,9 @@ abstract class Gateway implements GatewayInterface
      * Updater:
      * @return $this
      */
-    public function setIsApp()
+    public function setType($type)
     {
-        $this->is_app = true;
+        $this->type = $type;
         return $this;
     }
 

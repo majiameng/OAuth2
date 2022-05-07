@@ -77,7 +77,7 @@ class Facebook extends Gateway
      */
     public function getUserInfo()
     {
-        if($this->is_app === true){//App登录
+        if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) ){
                 throw new \Exception("Facebook APP登录 需要传输access_token参数! ");
             }
