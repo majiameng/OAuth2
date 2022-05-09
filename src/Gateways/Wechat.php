@@ -111,6 +111,7 @@ class Wechat extends Gateway
             'nickname'=> $result['nickname']??'',
             'gender'  => isset($result['sex']) ? $result['sex'] : ConstCode::GENDER,
             'avatar'  => $result['headimgurl']??'',
+            'session_key'  => $result['session_key']??'',
         ];
         $userInfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);
         return $userInfo;
