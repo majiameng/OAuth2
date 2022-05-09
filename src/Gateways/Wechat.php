@@ -196,7 +196,7 @@ class Wechat extends Gateway
             'appid'      => $this->config['app_id'],
             'secret'     => $this->config['app_secret'],
             'grant_type' => $this->config['grant_type'],
-            'code'       => isset($_GET['code']) ? $_GET['code'] : '',
+            'code'       => isset($_REQUEST['code']) ? $_REQUEST['code'] : '',
         ];
         return $params;
     }
