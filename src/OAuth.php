@@ -31,8 +31,11 @@ abstract class OAuth
      * @return mixed
      * @throws \Exception
      */
-    protected static function init($gateway, $config = null)
+    protected static function init($gateway, $config)
     {
+        if(empty($config)){
+            throw new \Exception("第三方登录 [$gateway] config配置不能为空");
+        }
         $baseConfig = [
             'app_id'    => '',
             'app_secret'=> '',
@@ -47,6 +50,9 @@ abstract class OAuth
         $gateway = Str::uFirst($gateway);
         $class = __NAMESPACE__ . '\\Gateways\\' . $gateway;
         if (class_exists($class)) {
+            var_dump($baseConfig);
+            var_dump($config);
+            die;
             $app = new $class(array_replace_recursive($baseConfig,$config));
             if ($app instanceof GatewayInterface) {
                 return $app;

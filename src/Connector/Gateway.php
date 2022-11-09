@@ -20,7 +20,7 @@ abstract class Gateway implements GatewayInterface
      * @var array
      */
     protected $app_id;
-    
+
     /**
      * AppSecret
      * @var string

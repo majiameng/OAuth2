@@ -33,6 +33,10 @@ class ConstCode{
     const TYPE_QQ_APP           = 21; //qqAPP
     const TYPE_WECHAT_APP       = 22; //微信APP
     const TYPE_WECHAT_APPLETS   = 23; //微信小程序
+    
+    const TYPE_DOUYIN           = 31; //抖音
+    const TYPE_TOUTIAO          = 32; //头条
+    const TYPE_XIGUA            = 33; //西瓜
 
     /**
      * Description:  getTypeConst

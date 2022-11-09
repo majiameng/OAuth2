@@ -12,6 +12,7 @@
 * Naver
 * Twitter
 * Line
+* 抖音 Douyin 、 头条 toutiao 、西瓜 xigua
 
 * 所有Web和App登录
 
@@ -36,6 +37,7 @@ composer require tinymeng/oauth:^2.0.0 -vvv
 │   │   └── GatewayInterface.php   必须实现的接口
 │   ├── Gateways
 │   │   ├── Alipay.php
+│   │   ├── Douyin.php
 │   │   ├── Facebook.php
 │   │   ├── Github.php
 │   │   ├── Google.php
@@ -402,6 +404,40 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 > 获取用户email: 'scope'      => 'https://www.googleapis.com/auth/userinfo.email',
 
 
+#### 10.抖音 Douyin 、 头条 toutiao 、西瓜 xigua
+
+```
+'douyin'=>[
+    //抖音官方：请确保授权回调域网站协议为 https
+    'pc'=>[
+        'oauth_type' => \tinymeng\OAuth2\Helper\ConstCode::TYPE_DOUYIN,//抖音douyin，头条toutiao，西瓜xigua，使用\tinymeng\OAuth2\Helper\ConstCode
+        'app_id' => 'awenvxxxxxxxx7x4',
+        'app_secret' => '5cfbc25badxxxxxxxc7be8c1',
+        'callback' => 'https://majiameng.com/app/douyin',
+        'scope'      => 'trial.whitelist,user_info',//trial.whitelist为白名单人员权限,上线后删掉
+        'optionalScope' => '',//应用授权可选作用域,多个授权作用域以英文逗号（,）分隔，每一个授权作用域后需要加上一个是否默认勾选的参数，1为默认勾选，0为默认不勾选
+    ],
+    'mobile'=>[
+        //待完善TODO...
+        'app_id' => 'awenvxxxxxxxx7x4',
+        'app_secret' => '5cfbc25badxxxxxxxc7be8c1',
+        'callback' => 'https://majiameng.com/app/douyin',
+        'scope'      => 'login_id',//login_id为静默授权
+    ],
+    'app'=>[
+        //待完善TODO...
+    ],
+    'applets'=>[
+        //待完善TODO...
+        'app_id'=>'awenvxxxxxxxx7x4',
+        'app_secret'=>'5cfbc2sssadxxxxxxxc7be8c1',
+    ],
+]
+```
+> 打通unionid的话需要将公众号绑定到同一个微信开放平台
+会返回的唯一凭证unionid字段
+
+
 ### `userinfo()`公共返回样例
 ```
 Array
@@ -418,8 +454,14 @@ Array
 > 部分登录类型还会返回个别数据,如需返回原数据请使用 `getUserInfo()` 方法
 
 
-
 ### 版本修复
+
+2022-11-09 更新以下功能
+Tag v2.2.0
+```
+1.新增【抖音 Douyin 、 头条 toutiao 、西瓜 xigua】PC端登录
+其他方式待完善ing，欢迎大家push代码
+```
 
 2022-05-12 更新以下功能
 Tag v2.1.0
