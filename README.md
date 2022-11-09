@@ -1,4 +1,4 @@
-# Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login and so on
+# Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、douyin-login and so on
 
 # 通用第三方登录说明文档
 
