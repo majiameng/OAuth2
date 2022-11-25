@@ -8,9 +8,6 @@
 <a href="https://packagist.org/packages/tinymeng/oauth"><img src="https://poser.pugx.org/tinymeng/oauth/license" alt="License"></a>
 </p>
 
-# Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、douyin-login and so on
-
-# 通用第三方登录说明文档
 
 开发了多次QQ与微信登录后，很自然产生一种反感，惰性又来了，想在网上找相关的轮子，可是一直没有找到一款自己觉得逞心如意的，要么使用起来太难理解，要么文件结构太杂乱，只有自己撸起袖子干了。
 
@@ -18,19 +15,26 @@
 
 欢迎 Star，欢迎 PR！
 
-* 微信网页扫码、微信公众号、微信小程序、微信App
-* QQ
-* 微博
-* 支付宝
-* GitHub
-* Google
-* Facebook
-* Naver
-* Twitter
-* Line
-* 抖音 Douyin 、 头条 toutiao 、西瓜 xigua
 
-* 所有Web和App登录
+# Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、douyin-login and so on
+
+# 通用第三方登录说明文档
+
+
+| Gateways |   登录名称  |      登录方式       |
+|:--------:|:------:|:---------------:|
+|    qq    |  腾讯QQ  |    PC扫码、App     |
+|  wechat  | 微信  | PC、 公众号、小程序、App |
+|   sina   | 新浪微博  |     PC、APP      |
+|  alipay  |  支付宝  |     PC、APP      |
+|  github  |  GitHub  |       PC        |
+|  google  | 谷歌google |       PC        |
+| facebook |  脸书  |       PC        |
+|  naver   |  Naver  |       PC        |
+| twitter  |  twitter  |       PC        |
+|   line   |  line  |       PC        |
+|  douyin  |  抖音 Douyin 、 头条 toutiao 、西瓜 xigua  |     PC、APP      |
+
 
 ### 安装
 
