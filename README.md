@@ -1,4 +1,4 @@
-<h1 align="center">Oauth2</h1>
+<h1 align="center">tinymeng/oauth</h1>
 <p align="center">
 <a href="https://scrutinizer-ci.com/g/majiameng/OAuth2/?branch=master"><img src="https://scrutinizer-ci.com/g/majiameng/OAuth2/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
 <a href="https://scrutinizer-ci.com/g/majiameng/OAuth2/build-status/master"><img src="https://scrutinizer-ci.com/g/majiameng/OAuth2/badges/build.png?b=master" alt="Build Status"></a>
@@ -8,12 +8,13 @@
 <a href="https://packagist.org/packages/tinymeng/oauth"><img src="https://poser.pugx.org/tinymeng/oauth/license" alt="License"></a>
 </p>
 
-
 开发了多次QQ与微信登录后，很自然产生一种反感，惰性又来了，想在网上找相关的轮子，可是一直没有找到一款自己觉得逞心如意的，要么使用起来太难理解，要么文件结构太杂乱，只有自己撸起袖子干了。
 
 **！！请先熟悉 Oauth/QQ/微信 说明文档！！请具有基本的 debug 能力！！**
 
 欢迎 Star，欢迎 PR！
+
+> 大家如果有问题要交流，就发在这里吧： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
 
 
 # Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、douyin-login and so on
