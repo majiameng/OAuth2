@@ -77,10 +77,10 @@ abstract class Gateway implements GatewayInterface
 
     /**
      * Gateway constructor.
-     * @param null $config
+     * @param $config
      * @throws \Exception
      */
-    public function __construct($config = null)
+    public function __construct($config)
     {
         if (!$config) {
             throw new \Exception('传入的配置不能为空');

@@ -163,4 +163,12 @@ class Twitter extends Gateway
     {
         return $this->call('oauth/access_token', $_GET, 'POST');
     }
+
+    /**
+     * 解析access_token方法请求后的返回值
+     * @param string $token 获取access_token的方法的返回值
+     */
+    protected function parseToken($token){
+        return $token;
+    }
 }
