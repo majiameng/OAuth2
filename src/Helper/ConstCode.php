@@ -51,7 +51,7 @@ class ConstCode{
         switch ($channel){
             case self::TYPE_QQ:
                 if($type == 'app'){
-                    $typeConst = self::TYPE_WECHAT_APP;//qqApp
+                    $typeConst = self::TYPE_QQ_APP;//qqApp
                 }else{
                     $typeConst = $channel;
                 }
