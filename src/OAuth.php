@@ -18,6 +18,7 @@ use tinymeng\OAuth2\Helper\Str;
  * @method static \tinymeng\OAuth2\Gateways\Line Line(array $config) Line
  * @method static \tinymeng\OAuth2\Gateways\Sina Sina(array $config) Sina
  * @method static \tinymeng\OAuth2\Gateways\Twitter Twitter(array $config) Twitter
+ * @method static \tinymeng\OAuth2\Gateways\Douyin Douyin(array $config) 抖音
  */
 abstract class OAuth
 {
@@ -50,9 +51,6 @@ abstract class OAuth
         $gateway = Str::uFirst($gateway);
         $class = __NAMESPACE__ . '\\Gateways\\' . $gateway;
         if (class_exists($class)) {
-            var_dump($baseConfig);
-            var_dump($config);
-            die;
             $app = new $class(array_replace_recursive($baseConfig,$config));
             if ($app instanceof GatewayInterface) {
                 return $app;

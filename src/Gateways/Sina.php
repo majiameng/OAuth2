@@ -68,7 +68,7 @@ class Sina extends Gateway
     {
         $result = $this->getUserInfo();
 
-        $userinfo = [
+        $userInfo = [
             'open_id'  => $this->token['access_token'],
             'union_id'  => $this->openid(),
             'channel' => ConstCode::TYPE_SINA,
@@ -76,7 +76,7 @@ class Sina extends Gateway
             'gender'  => $this->getGender($result['gender']),
             'avatar'  => $result['avatar_hd'],
         ];
-        return $userinfo;
+        return $userInfo;
     }
 
     /**

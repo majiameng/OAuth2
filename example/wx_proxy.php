@@ -18,7 +18,8 @@ class WxProxy
             header('Location: ' . $_COOKIE['redirect_uri'] . '?code=' . $_GET['code'] . '&state=' . $state);
         } else {
             if(!isset($_GET['appid']) || !isset($_GET['response_type']) || !isset($_GET['scope'])){
-                echo "参数缺失";exit();
+                echo "参数缺失";
+                return;
             }
             $state = isset($_GET['state']) ? $_GET['state'] : "";
 

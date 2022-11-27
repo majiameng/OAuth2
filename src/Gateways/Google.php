@@ -48,8 +48,8 @@ class Google extends Gateway
      */
     public function openid()
     {
-        $userinfo = $this->getUserInfo();
-        return $userinfo['id'];
+        $userInfo = $this->getUserInfo();
+        return $userInfo['id'];
     }
 
     /**

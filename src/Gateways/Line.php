@@ -52,14 +52,14 @@ class Line extends Gateway
     {
         $result = $this->getUserInfo();
 
-        $userinfo = [
+        $userInfo = [
             'open_id'  => $result['userId'],
             'channel' => ConstCode::TYPE_LINE,
             'nickname'    => $result['displayName'],
             'gender'  => ConstCode::GENDER, //line不返回性别信息
             'avatar'  => isset($result['pictureUrl']) ? $result['pictureUrl'] . '/large' : '',
         ];
-        return $userinfo;
+        return $userInfo;
     }
 
     /**

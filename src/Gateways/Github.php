@@ -106,11 +106,11 @@ class Github extends Gateway
             'Accept: application/json'
         ];
         $response = $this->get($url, [], $headers);
-        $response = json_decode($response, true);
+        $data = json_decode($response, true);
         if (!empty($data['error'])) {
-            throw new \Exception($response);
+            throw new \Exception($data['error']);
         }
-        return $response;
+        return $data;
     }
 
 

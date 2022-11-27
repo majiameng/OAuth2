@@ -89,7 +89,7 @@ class Alipay extends Gateway
     {
         $result = $this->getUserInfo();
 
-        $userinfo = [
+        $userInfo = [
             'open_id'  => $this->token['access_token'],
             'union_id'  => $this->token['openid'],
             'channel' => ConstCode::TYPE_ALIPAY,
@@ -97,8 +97,8 @@ class Alipay extends Gateway
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $result['avatar'],
         ];
-        $userinfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);
-        return $userinfo;
+        $userInfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);
+        return $userInfo;
     }
 
     /**

@@ -51,8 +51,8 @@ class Facebook extends Gateway
      */
     public function openid()
     {
-        $userinfo = $this->userInfo();
-        return $userinfo['openid'];
+        $userInfo = $this->userInfo();
+        return $userInfo['openid'];
     }
 
     /**
@@ -62,14 +62,14 @@ class Facebook extends Gateway
     {
         $result = $this->getUserInfo();
 
-        $userinfo = [
+        $userInfo = [
             'open_id'  => $result['id'],
             'channel' => ConstCode::TYPE_FACEBOOK,
             'nickname'    => $result['name'],
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $this->getAvatar($result),
         ];
-        return $userinfo;
+        return $userInfo;
     }
 
     /**

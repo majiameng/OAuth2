@@ -21,7 +21,7 @@ use tinymeng\OAuth2\Helper\ConstCode;
  */
 class Douyin extends Gateway
 {
-    const API_BASE            = 'https://open.douyin.com';
+    protected $ApiBase            = 'https://open.douyin.com';
     protected $AuthorizeURL   = 'https://open.douyin.com/platform/oauth/connect/';
     protected $AuthorizeSilenceURL   = 'https://open.douyin.com/oauth/authorize/v2/';//抖音静默授权
     protected $AccessTokenURL = 'oauth/access_token/';
@@ -168,13 +168,13 @@ class Douyin extends Gateway
     private function switchAccessTokenURL()
     {
         switch ($this->oauth_type){
-            case ConstCode::TYPE_DOUYIN:$this->API_BAE = $this->API_BASE_ARRAY['douyin'];break;
-            case ConstCode::TYPE_TOUTIAO:$this->API_BAE = $this->API_BASE_ARRAY['toutiao'];break;
-            case ConstCode::TYPE_XIGUA:$this->API_BAE = $this->API_BASE_ARRAY['xigua'];break;
+            case ConstCode::TYPE_DOUYIN:$this->ApiBase = $this->API_BASE_ARRAY['douyin'];break;
+            case ConstCode::TYPE_TOUTIAO:$this->ApiBase = $this->API_BASE_ARRAY['toutiao'];break;
+            case ConstCode::TYPE_XIGUA:$this->ApiBase = $this->API_BASE_ARRAY['xigua'];break;
             default:throw new \Exception("获取抖音 OAUTH_TYPE 参数出错：{$this->oauth_type}");
         }
-        $this->AccessTokenURL = $this->API_BAE.$this->AccessTokenURL;
-        $this->UserInfoURL = $this->API_BAE.$this->UserInfoURL;
+        $this->AccessTokenURL = $this->ApiBase.$this->AccessTokenURL;
+        $this->UserInfoURL = $this->ApiBase.$this->UserInfoURL;
     }
 
     /**
