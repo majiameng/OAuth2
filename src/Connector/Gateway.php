@@ -85,6 +85,9 @@ abstract class Gateway implements GatewayInterface
         if (!$config) {
             throw new \Exception('传入的配置不能为空');
         }
+        if(isset($_GET['referer']) && $config['callback']){
+            $config['callback'] .= ((strpos($config, '?') !== false) ? '&' : '?').'referer='.base64_encode($_GET['referer']);
+        }
         //默认参数
         $_config = [
             'app_id'        => '',
