@@ -545,3 +545,10 @@ Tag v2.0.4
 
 
 > 大家如果有问题要交流，就发在这里吧： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
+
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=majiameng/OAuth2&type=Date)](https://star-history.com/#majiameng/OAuth2&Date)
+
+
