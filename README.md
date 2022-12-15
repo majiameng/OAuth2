@@ -549,6 +549,6 @@ Tag v2.0.4
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=majiameng/OAuth2&type=Date)](https://star-history.com/#majiameng/OAuth2&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=majiameng/OAuth2&type=Date)](https://github.com/majiameng/OAuth2)
 
 
