@@ -103,6 +103,7 @@ class Douyin extends Gateway
 
         $userInfo = [
             'open_id' => $this->openid(),
+            'access_token'=> isset($this->token['access_token']) ? $this->token['access_token'] : '',
             'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
             'channel' => $this->oauth_type,
             'nickname'=> $result['nickname']??'',

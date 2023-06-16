@@ -463,8 +463,9 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
 ```
 Array
 (
-    [open_id] => 1047776979*******   //部分登录此字段值是access_token(例:sina/google),如做唯一请使用union_id字段
-    [union_id] => 444444445*******  //用户的唯一凭证
+    [open_id] => 1047776979*******   //open_id数据唯一凭证
+    [access_token] => 444444445*******  //用户的access_token凭证
+    [union_id] => 444444445*******  //用户的唯一凭证（在同一平台下多设备参数返回一致）,部分登录此字段值是open_id(例:sina/google),
     [channel] => 1;                 //登录类型请查看 \tinymeng\OAuth2\Helper\ConstCode
     [nickname] => 'Tinymeng'        //昵称
     [gender] => 1;                  //0=>未知 1=>男 2=>女   twitter和line不会返回性别，所以这里是0，Facebook根据你的权限，可能也不会返回，所以也可能是0

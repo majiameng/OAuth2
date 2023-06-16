@@ -74,7 +74,8 @@ class Github extends Gateway
         $result = $this->getUserInfo();
 
         $userInfo = [
-            'open_id'  => $this->token['access_token'],
+            'open_id'  => $result['id'],
+            'access_token'  => $this->token['access_token'],
             'union_id'  => $result['id'],
             'channel' => ConstCode::TYPE_GITHUB,
             'nickname'    => $result['name'],

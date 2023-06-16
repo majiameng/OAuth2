@@ -44,14 +44,16 @@ class Twitter extends Gateway
      */
     public function userInfo()
     {
-        $data = $this->getUserInfo();
+        $result = $this->getUserInfo();
 
         $userInfo = [
-            'open_id'  => $data['id_str'],
+            'open_id'  => $result['id_str'],
+            'access_token'=> isset($this->token['oauth_token_secret']) ? $this->token['oauth_token_secret'] : '',
+            'union_id'=> $result['id_str'],
             'channel' => ConstCode::TYPE_TWITTER,
-            'nickname'    => $data['name'],
+            'nickname'    => $result['name'],
             'gender'  => ConstCode::GENDER, //twitter不返回用户性别
-            'avatar'  => $data['profile_image_url_https'],
+            'avatar'  => $result['profile_image_url_https'],
         ];
         return $userInfo;
     }

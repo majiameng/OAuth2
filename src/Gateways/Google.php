@@ -61,6 +61,7 @@ class Google extends Gateway
 
         $userInfo = [
             'open_id' => $this->token['access_token'],
+            'access_token'=> isset($this->token['access_token']) ? $this->token['access_token'] : '',
             'union_id'=> $result['id'],
             'channel' => ConstCode::TYPE_GOOGLE,
             'nickname'=> isset($result['name']) ? $result['name'] : $result['email'],
