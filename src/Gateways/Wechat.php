@@ -107,6 +107,7 @@ class Wechat extends Gateway
         $userInfo = [
             'open_id' => $this->openid(),
             'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
+            'access_token'=>isset($this->token['access_token']) ? $this->token['access_token'] : '',
             'channel' => ConstCode::TYPE_WECHAT,
             'nickname'=> $result['nickname']??'',
             'gender'  => isset($result['sex']) ? $result['sex'] : ConstCode::GENDER,

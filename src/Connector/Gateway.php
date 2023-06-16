@@ -185,7 +185,7 @@ abstract class Gateway implements GatewayInterface
      * @Author: TinyMeng <666@majiameng.com>
      * @throws \Exception
      */
-    public function CheckState(){
+    public function checkState(){
         if ($this->checkState === true) {
             if (session_status() !== PHP_SESSION_ACTIVE) {
                 session_start();
@@ -221,7 +221,7 @@ abstract class Gateway implements GatewayInterface
     protected function getToken(){
         if (empty($this->token)) {
             /** 验证state参数 */
-            $this->CheckState();
+            $this->checkState();
 
             /** 获取参数 */
             $params = $this->accessTokenParams();
