@@ -70,7 +70,7 @@ class Sina extends Gateway
 
         $userInfo = [
             'open_id'  => $this->openid(),
-            'access_token'=> isset($this->token['access_token']) ? $this->token['access_token'] : '',
+            'access_token'=> $this->token['access_token'] ?? '',
             'union_id'  => $this->openid(),
             'channel' => ConstCode::TYPE_SINA,
             'nickname'    => $result['screen_name'],

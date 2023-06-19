@@ -48,7 +48,7 @@ class Twitter extends Gateway
 
         $userInfo = [
             'open_id'  => $result['id_str'],
-            'access_token'=> isset($this->token['oauth_token_secret']) ? $this->token['oauth_token_secret'] : '',
+            'access_token'=> $this->token['oauth_token_secret'] ?? '',
             'union_id'=> $result['id_str'],
             'channel' => ConstCode::TYPE_TWITTER,
             'nickname'    => $result['name'],

@@ -57,8 +57,8 @@ class Qq extends Gateway
 
         $userInfo = [
             'open_id' => $this->openid(),
-            'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
-            'access_token'=>isset($this->token['access_token']) ? $this->token['access_token'] : '',
+            'union_id'=> $this->token['unionid'] ?? '',
+            'access_token'=> $this->token['access_token'] ?? '',
             'channel' => ConstCode::TYPE_QQ,
             'nickname'=> $result['nickname'],
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,

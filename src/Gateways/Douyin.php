@@ -103,11 +103,11 @@ class Douyin extends Gateway
 
         $userInfo = [
             'open_id' => $this->openid(),
-            'access_token'=> isset($this->token['access_token']) ? $this->token['access_token'] : '',
-            'union_id'=> isset($this->token['unionid']) ? $this->token['unionid'] : '',
+            'access_token'=> $this->token['access_token'] ?? '',
+            'union_id'=> $this->token['unionid'] ?? '',
             'channel' => $this->oauth_type,
             'nickname'=> $result['nickname']??'',
-            'gender'  => isset($result['gender']) ? $result['gender'] : ConstCode::GENDER,
+            'gender'  => $result['gender'] ?? ConstCode::GENDER,
             'avatar'  => $result['avatar']??'',
         ];
         $userInfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);

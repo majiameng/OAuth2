@@ -54,7 +54,7 @@ class Line extends Gateway
 
         $userInfo = [
             'open_id'  => $result['userId'],
-            'access_token'=> isset($this->token['access_token']) ? $this->token['access_token'] : '',
+            'access_token'=> $this->token['access_token'] ?? '',
             'union_id'=> $result['userId'],
             'channel' => ConstCode::TYPE_LINE,
             'nickname'    => $result['displayName'],

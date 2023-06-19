@@ -64,7 +64,7 @@ class Facebook extends Gateway
 
         $userInfo = [
             'open_id'  => $result['id'],
-            'access_token'=> isset($this->token['access_token']) ? $this->token['access_token'] : '',
+            'access_token'=> $this->token['access_token'] ?? '',
             'union_id'=> $result['id'],
             'channel' => ConstCode::TYPE_FACEBOOK,
             'nickname'    => $result['name'],

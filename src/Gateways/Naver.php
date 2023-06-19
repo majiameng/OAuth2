@@ -57,15 +57,15 @@ class Naver extends Gateway
     {
         $result = $this->getUserInfo();
 
-        $userInfo = [
+        $userInfo = array(
             'open_id'  => $this->token['access_token'],
             'union_id'  => $result['id'],
             'channel' => ConstCode::TYPE_NAVER,
-            'email'=> isset($result['email']) ? $result['email'] : '',
-            'nickname'=> isset($result['nickname']) ? $result['nickname'] : '',
+            'email'=> $result['email'] ?? '',
+            'nickname'=> $result['nickname'] ?? '',
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
-            'avatar'  => isset($result['profile_image']) ? $result['profile_image'] : '',
-        ];
+            'avatar'  => $result['profile_image'] ?? '',
+        );
         return $userInfo;
     }
 
