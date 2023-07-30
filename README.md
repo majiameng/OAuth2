@@ -17,24 +17,25 @@
 > 大家如果有问题要交流，就发在这里吧： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
 
 
-# Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、douyin-login and so on
+# Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、aliyum-login、douyin-login and so on
 
 # 通用第三方登录说明文档
 
 
-| Gateways |   登录名称  |      登录方式       |
-|:--------:|:------:|:---------------:|
-|    qq    |  腾讯QQ  |    PC扫码、App     |
-|  wechat  | 微信  | PC、 公众号、小程序、App |
-|   sina   | 新浪微博  |     PC、APP      |
-|  alipay  |  支付宝  |     PC、APP      |
-|  github  |  GitHub  |       PC        |
-|  google  | 谷歌google |       PC        |
-| facebook |  脸书  |       PC        |
-|  naver   |  Naver  |       PC        |
-| twitter  |  twitter  |       PC        |
-|   line   |  line  |       PC        |
-|  douyin  |  抖音 Douyin 、 头条 toutiao 、西瓜 xigua  |     PC、APP      |
+| Gateways |               登录名称               |      登录方式       |
+|:--------:|:--------------------------------:|:---------------:|
+|    qq    |               腾讯QQ               |    PC扫码、App     |
+|  wechat  |                微信                | PC、 公众号、小程序、App |
+|   sina   |               新浪微博               |     PC、APP      |
+|  alipay  |               支付宝                |     PC、APP      |
+|  github  |              GitHub              |       PC        |
+|  google  |             谷歌google             |       PC        |
+| facebook |                脸书                |       PC        |
+|  naver   |              Naver               |       PC        |
+| twitter  |             twitter              |       PC        |
+|   line   |               line               |       PC        |
+|  douyin  | 抖音 Douyin 、 头条 toutiao 、西瓜 xigua |     PC、APP      |
+|  aliyun  |               阿里云                |     PC      |
 
 
 ### 安装
@@ -455,6 +456,19 @@ facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,pict
     ],
 ]
 ```
+
+
+#### 11.阿里云
+
+```
+'app_id'        => '4487**********',
+'app_secret'    => 'Bf0DnBKnwUc**********************************',
+'scope'         => 'openid aliuid profile',
+'callback' => 'http://majiameng.com/app/aliyun',
+```
+
+
+
 > 打通unionid的话需要将公众号绑定到同一个微信开放平台
 会返回的唯一凭证unionid字段
 
