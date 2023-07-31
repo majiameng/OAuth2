@@ -78,7 +78,7 @@ class Aliyun extends Gateway
         /** 获取用户信息 */
         $this->openid();
 
-        $headers[] = 'Authorization: Bearer '.$this->token['access_token'];
+        $headers = ['Authorization: Bearer '.$this->token['access_token']];
         $data = $this->get($this->UserInfoURL, [],$headers);
         return json_decode($data, true);
     }
@@ -135,37 +135,4 @@ class Aliyun extends Gateway
         }
     }
 
-    /**
-     * Description:  通过接口获取openid
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
-     * @return mixed|string
-     * @throws \Exception
-     */
-    private function getOpenID(){
-        $query = [
-            'access_token' => $this->token['access_token']
-        ];
-        /** 如果要获取unionid，先去申请：http://wiki.connect.qq.com/开发者反馈 */
-        if (isset($this->config['is_unioid']) && $this->config['is_unioid'] === true) {
-            $query['unionid'] = 1;
-        }
-
-        $data = $this->get(self::API_BASE . 'oauth2.0/me',$query);
-        $data     = json_decode(trim(substr($data, 9), " );\n"), true);
-        if (isset($data['openid'])) {
-            return $data;
-        } else {
-            throw new \Exception("获取用户openid出错：" . $data['error_description']);
-        }
-    }
-
-    /**
-     * 格式化性别参数
-     * M代表男性,F代表女性
-     * @param $gender
-     */
-    public function getGender($gender){
-        return $gender == '男' ? ConstCode::GENDER_MAN : ConstCode::GENDER_WOMEN;
-    }
 }
