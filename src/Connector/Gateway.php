@@ -10,6 +10,24 @@ use tinymeng\OAuth2\Helper\Str;
 abstract class Gateway implements GatewayInterface
 {
     /**
+     * 授权地址
+     * @var
+     */
+    protected $AuthorizeURL;
+
+    /**
+     * 获取token地址
+     * @var
+     */
+    protected $AccessTokenURL;
+
+    /**
+     * 获取token地址
+     * @var
+     */
+    protected $UserInfoURL;
+
+    /**
      * 配置参数
      * @var array
      */

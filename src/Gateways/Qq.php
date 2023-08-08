@@ -19,8 +19,21 @@ use tinymeng\OAuth2\Helper\ConstCode;
 class Qq extends Gateway
 {
     const API_BASE            = 'https://graph.qq.com/';
-    protected $AuthorizeURL   = 'https://graph.qq.com/oauth2.0/authorize';
-    protected $AccessTokenURL = 'https://graph.qq.com/oauth2.0/token';
+    protected $AuthorizeURL   = 'oauth2.0/authorize';
+    protected $AccessTokenURL = 'oauth2.0/token';
+    protected $UserInfoURL = 'user/get_user_info';
+
+    /**
+     * @param $config
+     * @throws \Exception
+     */
+    public function __construct($config)
+    {
+        parent::__construct($config);
+        $this->AuthorizeURL = static::API_BASE.$this->AuthorizeURL;
+        $this->AccessTokenURL = static::API_BASE.$this->AccessTokenURL;
+        $this->UserInfoURL = static::API_BASE.$this->UserInfoURL;
+    }
 
     /**
      * Description:  得到跳转地址
@@ -84,7 +97,7 @@ class Qq extends Gateway
             'access_token'=>$this->token['access_token'],
             'format'=>'json',
         ];
-        $data = $this->get(self::API_BASE . 'user/get_user_info', $params);
+        $data = $this->get($this->UserInfoURL, $params);
         return json_decode($data, true);
     }
 

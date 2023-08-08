@@ -21,6 +21,17 @@ class Github extends Gateway
     const API_BASE            = 'https://api.github.com/';
     protected $AuthorizeURL   = 'https://github.com/login/oauth/authorize';
     protected $AccessTokenURL = 'https://github.com/login/oauth/access_token';
+    protected $UserInfoURL = 'user';
+
+    /**
+     * @param $config
+     * @throws \Exception
+     */
+    public function __construct($config)
+    {
+        parent::__construct($config);
+        $this->UserInfoURL = static::API_BASE.$this->UserInfoURL;
+    }
 
     /**
      * Description:  得到跳转地址
@@ -99,14 +110,13 @@ class Github extends Gateway
     {
         $this->getToken();
 
-        $url = self::API_BASE . "user";
         $headers = [
             'User-Agent: '.$this->config['application_name'],
             'UserModel-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36 ',
             'Authorization: token ' . $this->token['access_token'],
             'Accept: application/json'
         ];
-        $response = $this->get($url, [], $headers);
+        $response = $this->get($this->UserInfoURL, [], $headers);
         $data = json_decode($response, true);
         if (!empty($data['error'])) {
             throw new \Exception($data['error']);
@@ -122,9 +132,7 @@ class Github extends Gateway
      */
     private function switchAccessTokenURL()
     {
-        if ($this->display == 'mobile') {
-            $this->AuthorizeURL = 'https://open.weibo.cn/oauth2/authorize';
-        }
+        if ($this->display == 'mobile') {}
     }
 
     /**

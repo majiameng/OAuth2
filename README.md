@@ -28,6 +28,7 @@
 |  wechat  |                微信                | PC、 公众号、小程序、App |
 |   sina   |               新浪微博               |     PC、APP      |
 |  alipay  |               支付宝                |     PC、APP      |
+|  aliyun  |               阿里云                |     PC      |
 |  github  |              GitHub              |       PC        |
 |  google  |             谷歌google             |       PC        |
 | facebook |                脸书                |       PC        |
@@ -35,8 +36,15 @@
 | twitter  |             twitter              |       PC        |
 |   line   |               line               |       PC        |
 |  douyin  | 抖音 Douyin 、 头条 toutiao 、西瓜 xigua |     PC、APP      |
-|  aliyun  |               阿里云                |     PC      |
+|  baidu   |            百度(开发ing)             |       PC        |
+|  coding  |              Coding(开发ing)              |       PC        |
+|   csdn   |               CSDN(开发ing)               |       PC        |
+|  gitee   |              Gitee(开发ing)               |       PC        |
+|  gitlab  |              GitLab(开发ing)              |       PC        |
+| oschina  |             OSChina(开发ing)              |       PC        |
 
+
+> 注：Google、facebook、twitter等这些国外平台需要海外或者HK服务器才能回调成功
 
 ### 安装
 
@@ -569,7 +577,10 @@ Tag v2.0.4
 
 
 ### 如这些都懒得去申请资质以及想更简单的接入，下面会对你有帮助
-[微梦聚合快捷登录平台](http://oauth.bjwmsc.com/)
+[微梦聚合快捷登录平台](https://oauth.bjwmsc.com/)
+
+
+[微梦登录demo](https://oauth.bjwmsc.com/demo/)
 
 > 1.微梦聚合快捷登录中转API 是一款社会化账号聚合登录系统，让网站的最终用户可以一站式选择使用包括微信、微博、QQ、百度等多种社会化帐号登录该站点。
  

@@ -35,7 +35,6 @@ class Alipay extends Gateway
 
     const API_BASE            = 'https://openapi.alipay.com/gateway.do';
     protected $AuthorizeURL   = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm';
-    protected $AccessTokenURL = 'https://openapi.alipay.com/gateway.do';
 
     /**
      * 非必须参数。接口权限值，目前只支持 auth_user 和 auth_base 两个值。以空格分隔的权限列表，若不传递此参数，代表请求的数据访问操作权限与上次获取Access Token时一致。通过Refresh Token刷新Access Token时所要求的scope权限范围必须小于等于上次获取Access Token时授予的权限范围。
@@ -48,6 +47,16 @@ class Alipay extends Gateway
      * @var string
      */
     protected $sign_type = 'RSA2';
+
+    /**
+     * @param $config
+     * @throws \Exception
+     */
+    public function __construct($config)
+    {
+        parent::__construct($config);
+        $this->AccessTokenURL = static::API_BASE;
+    }
 
     /**
      * Description:  得到跳转地址

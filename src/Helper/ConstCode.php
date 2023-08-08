@@ -28,8 +28,14 @@ class ConstCode{
     const TYPE_GOOGLE           = 8; //google
     const TYPE_TWITTER          = 9; //飞鸽
     const TYPE_LINE             = 10;//line
-    const TYPE_NAVER             = 11;//naver
+    const TYPE_NAVER            = 11;//naver
     const TYPE_ALIYUN           = 12; //阿里云
+    const TYPE_BAIDU            = 13; //百度
+    const TYPE_CODING           = 14; //Coding
+    const TYPE_CSDN             = 15; //CSDN
+    const TYPE_GITEE            = 16; //Gitee
+    const TYPE_GITLAB           = 17; //GitLab
+    const TYPE_OSCHINA          = 18; //OSChina
 
     const TYPE_QQ_APP           = 21; //qqAPP
     const TYPE_WECHAT_APP       = 22; //微信APP

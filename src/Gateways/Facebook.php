@@ -26,7 +26,17 @@ class Facebook extends Gateway
 {
     const API_BASE            = 'https://graph.facebook.com/v3.1/';
     protected $AuthorizeURL   = 'https://www.facebook.com/v3.1/dialog/oauth';
-    protected $AccessTokenURL = 'https://graph.facebook.com/v3.1/oauth/access_token';
+    protected $AccessTokenURL = 'oauth/access_token';
+
+    /**
+     * @param $config
+     * @throws \Exception
+     */
+    public function __construct($config)
+    {
+        parent::__construct($config);
+        $this->AccessTokenURL = static::API_BASE.$this->AccessTokenURL;
+    }
 
     /**
      * 得到跳转地址

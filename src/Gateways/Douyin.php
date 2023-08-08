@@ -38,6 +38,17 @@ class Douyin extends Gateway
     public $oauth_type = ConstCode::TYPE_DOUYIN;//抖音
 
     /**
+     * @param $config
+     * @throws \Exception
+     */
+    public function __construct($config)
+    {
+        parent::__construct($config);
+        //切换方式
+        $this->switchAccessTokenURL();
+    }
+
+    /**
      * Description:  得到跳转地址
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
@@ -49,7 +60,6 @@ class Douyin extends Gateway
         $this->saveState();
 
         //登录参数
-        $this->switchAccessTokenURL();
         $params = [
             'client_key'    => $this->config['app_id'],
             'redirect_uri'  => $this->config['callback'],
@@ -97,8 +107,6 @@ class Douyin extends Gateway
     public function userInfo()
     {
         //登录参数
-        $this->switchAccessTokenURL();
-
         $result = $this->getUserInfo();
 
         $userInfo = [
