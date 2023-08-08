@@ -190,7 +190,7 @@ class Douyin extends Gateway
             'client_key'      => $this->config['app_id'],
             'client_secret'     => $this->config['app_secret'],
             'grant_type' => $this->config['grant_type'],
-            'code'       => isset($_REQUEST['code']) ? $_REQUEST['code'] : '',
+            'code'       => $this->getCode(),
         ];
 
         return $params;

@@ -13,6 +13,8 @@
  *     1.6 复制rsa_public_key.pem 中间那一段到支付宝填写(注: 不要复制头和尾)
  * 2.1.PC登录需要签约:	第三方应用授权/获取会员信息
  * 2.2.APP登录需要签约:	APP支付宝登录/获取会员信息
+ *
+ * 网页授权文档：https://opendocs.alipay.com/open/284/web
  */
 namespace tinymeng\OAuth2\Gateways;
 
@@ -34,6 +36,18 @@ class Alipay extends Gateway
     const API_BASE            = 'https://openapi.alipay.com/gateway.do';
     protected $AuthorizeURL   = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm';
     protected $AccessTokenURL = 'https://openapi.alipay.com/gateway.do';
+
+    /**
+     * 非必须参数。接口权限值，目前只支持 auth_user 和 auth_base 两个值。以空格分隔的权限列表，若不传递此参数，代表请求的数据访问操作权限与上次获取Access Token时一致。通过Refresh Token刷新Access Token时所要求的scope权限范围必须小于等于上次获取Access Token时授予的权限范围。
+     * @var string
+     */
+    protected $scope;
+
+    /**
+     * 商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2.
+     * @var string
+     */
+    protected $sign_type = 'RSA2';
 
     /**
      * Description:  得到跳转地址
@@ -124,7 +138,7 @@ class Alipay extends Gateway
             'app_id'     => $this->config['app_id'],
             'method'     => 'alipay.user.info.share',
             'charset'    => 'UTF-8',
-            'sign_type'  => 'RSA2',
+            'sign_type'  => $this->sign_type,
             'timestamp'  => date("Y-m-d H:i:s"),
             'version'    => '1.0',
             'auth_token' => $this->token['access_token'],
@@ -149,11 +163,11 @@ class Alipay extends Gateway
             'app_id'     => $this->config['app_id'],
             'method'     => 'alipay.system.oauth.token',
             'charset'    => 'UTF-8',
-            'sign_type'  => 'RSA2',
+            'sign_type'  => $this->sign_type,
             'timestamp'  => date("Y-m-d H:i:s"),
             'version'    => '1.0',
             'grant_type' => $this->config['grant_type'],
-            'code'       => isset($_GET['auth_code']) ? $_GET['auth_code'] : '',
+            'code'       => $this->getCode(),
         ];
         $params['sign'] = $this->signature($params);
         return $params;

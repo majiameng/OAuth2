@@ -28,6 +28,12 @@ abstract class Gateway implements GatewayInterface
     protected $app_secret;
 
     /**
+     * 接口权限值
+     * @var
+     */
+    protected $scope;
+
+    /**
      * 回调地址
      * @var string
      */
@@ -196,6 +202,16 @@ abstract class Gateway implements GatewayInterface
         }
     }
 
+
+    /**
+     * 获取授权后的Code
+     * @author: JiaMeng <666@majiameng.com>
+     * @return string
+     */
+    public function getCode(){
+        return isset($_REQUEST['code']) ? $_REQUEST['code'] : '';
+    }
+
     /**
      * Description:  默认获取AccessToken请求参数
      * @author: JiaMeng <666@majiameng.com>
@@ -207,7 +223,7 @@ abstract class Gateway implements GatewayInterface
             'client_id'     => $this->config['app_id'],
             'client_secret' => $this->config['app_secret'],
             'grant_type'    => $this->config['grant_type'],
-            'code'          => isset($_REQUEST['code']) ? $_REQUEST['code'] : '',
+            'code'          => $this->getCode(),
             'redirect_uri'  => $this->config['callback'],
         ];
         return $params;
