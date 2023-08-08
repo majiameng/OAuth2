@@ -246,6 +246,8 @@ abstract class Gateway implements GatewayInterface
             $token =  $this->POST($this->AccessTokenURL, $params);
             /** 解析token值(子类实现此方法) */
             $this->token = $this->parseToken($token);
+        }else{
+            return $this->token;
         }
     }
 
@@ -285,5 +287,26 @@ abstract class Gateway implements GatewayInterface
      */
     public function getGender($gender){
         return strtolower(substr($gender , 0 , 1)) == 'm' ? ConstCode::GENDER_MAN : ConstCode::GENDER_WOMEN;
+    }
+
+
+    /**
+     * 刷新AccessToken续期(未实现)
+     * @param string $refreshToken
+     * @return bool
+     */
+    public function refreshToken($refreshToken)
+    {
+        return true;
+    }
+
+    /**
+     * 检验授权凭证AccessToken是否有效(未实现)
+     * @param string $accessToken
+     * @return bool
+     */
+    public function validateAccessToken($accessToken = null)
+    {
+        return true;
     }
 }

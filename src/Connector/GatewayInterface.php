@@ -38,4 +38,22 @@ interface GatewayInterface
      * @return mixed
      */
     public function getUserInfo();
+
+
+    /**
+     * 刷新AccessToken续期
+     * @author: JiaMeng <666@majiameng.com>
+     * @param string $refreshToken
+     * @return bool
+     */
+    public function refreshToken($refreshToken);
+
+    /**
+     * 检验授权凭证AccessToken是否有效.
+     * @author: JiaMeng <666@majiameng.com>
+     * @param string $accessToken
+     * @return bool
+     */
+    public function validateAccessToken($accessToken = null);
+
 }

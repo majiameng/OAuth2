@@ -104,8 +104,9 @@ class Alipay extends Gateway
         $result = $this->getUserInfo();
 
         $userInfo = [
-            'open_id'  => $this->token['access_token'],
-            'union_id'  => $this->token['openid'],
+            'open_id'  => $this->openid(),
+            'union_id'  => $this->token['user_id'],
+            'access_token'=> $this->token['access_token'] ?? '',
             'channel' => ConstCode::TYPE_ALIPAY,
             'nickname'    => $result['nick_name'],
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
@@ -126,7 +127,7 @@ class Alipay extends Gateway
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) ){
-                throw new \Exception("Wechat APP登录 需要传输access_token参数! ");
+                throw new \Exception("AliPay APP登录 需要传输access_token参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
         }else {

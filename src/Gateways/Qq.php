@@ -165,4 +165,42 @@ class Qq extends Gateway
     public function getGender($gender){
         return $gender == '男' ? ConstCode::GENDER_MAN : ConstCode::GENDER_WOMEN;
     }
+
+
+    /**
+     * 解密小程序 qq.getUserInfo() 敏感数据.
+     *
+     * @param string $encryptedData
+     * @param string $iv
+     * @param string $sessionKey
+     *
+     * @return array
+     */
+    public function descryptData($encryptedData, $iv, $sessionKey)
+    {
+        if (24 != strlen($sessionKey))
+        {
+            throw new \InvalidArgumentException('sessionKey 格式错误');
+        }
+        if (24 != strlen($iv))
+        {
+            throw new \InvalidArgumentException('iv 格式错误');
+        }
+        $aesKey = base64_decode($sessionKey);
+        $aesIV = base64_decode($iv);
+        $aesCipher = base64_decode($encryptedData);
+        $result = openssl_decrypt($aesCipher, 'AES-128-CBC', $aesKey, 1, $aesIV);
+        if (!$result)
+        {
+            throw new \InvalidArgumentException('解密失败');
+        }
+        $dataObj = json_decode($result, true);
+        if (!$dataObj)
+        {
+            throw new \InvalidArgumentException('反序列化数据失败');
+        }
+
+        return $dataObj;
+    }
+
 }
