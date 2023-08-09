@@ -17,9 +17,19 @@
 > 大家如果有问题要交流，就发在这里吧： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
 
 
-# Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、aliyum-login、douyin-login and so on
+Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、aliyum-login、douyin-login and so on
 
-# 通用第三方登录说明文档
+# Documentation
+
+## You can find the tinymeng/oauth documentation on the website. Check out the Getting Started page for a quick overview.
+
+* [Getting Started](https://github.com/majiameng/OAuth2/wiki)
+* [Installation](https://github.com/majiameng/OAuth2/wiki/Installation)
+* [Configuration](https://github.com/majiameng/OAuth2/wiki/Configuration)
+* [Contributing Guide](https://github.com/majiameng/OAuth2/wiki/Contributing-Guide)
+* [Update log](https://github.com/majiameng/OAuth2/wiki/Update-log)
+
+## 通用第三方登录说明文档
 
 
 | Gateways |               登录名称               |      登录方式       |
@@ -46,13 +56,13 @@
 
 > 注：Google、facebook、twitter等这些国外平台需要海外或者HK服务器才能回调成功
 
-### 安装
+### Installation
 
 ```
 composer require tinymeng/oauth:^2.0.0 -vvv
 ```
 
-> 类库使用的命名空间为`\\tinymeng\\oauth`
+> The namespace used by the class library is `\\tinymeng\\oauth`
 
 ### 目录结构
 
@@ -86,6 +96,12 @@ composer require tinymeng/oauth:^2.0.0 -vvv
 └── README.md                        说明文件
 ```
 
+
+### Configuration
+[Configuration](https://github.com/majiameng/OAuth2/wiki/Configuration)
+```
+Config::get($name)  获取对应登录类型的配置
+```
 
 ### 公共方法
 
@@ -290,193 +306,6 @@ App登录回调
     */
 ```
 
-
-
-### 配置文件样例
-
-#### 1.微信
-
-```
-'wechat'=>[
-    'pc'=>[
-        'app_id' => 'wx52e2b2464*****',
-        'app_secret' => 'd5dad705a1159d*********',
-        'callback' => 'http://majiameng.com/app/wechat',
-        'scope'      => 'snsapi_login',//扫码登录
-        //'proxy_url' => 'http://www.abc.com/wx_proxy.php',//如果不需要代理请注释此行
-        //'proxy_url' => 'http://www.abc.com/weixin-authorize-proxy.html',//如果不需要代理请注释此行
-    ],
-    'mobile'=>[
-        'app_id' => 'wx6ca7410f8******',
-        'app_secret' => '30a206b87b7689b19f11******',
-        'callback' => 'http://majiameng.com/app/wechat',
-        'scope'      => 'snsapi_userinfo',//静默授权=>snsapi_base;获取用户信息=>snsapi_userinfo
-        //'proxy_url' => 'http://www.abc.com/wx_proxy.php',//如果不需要代理请注释此行
-        //'proxy_url' => 'http://www.abc.com/weixin-authorize-proxy.html',//如果不需要代理请注释此行
-    ],
-    'app'=>[
-        'app_id' => 'wx6ca7410f8******',
-        'app_secret' => '30a206b87b7689b19f11******',
-        'type'      => 'app',//登录类型app
-    ],
-    /**
-     * 微信小程序只能获取到 openid session_key
-     * 详见文档 https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
-     */
-    'applets'=>[
-        'app_id' => 'wx6ca7410f8******',
-        'app_secret' => '30a206b87b7689b19f11******',
-        'type'      => 'applets',//登录类型小程序
-    ],
-]
-```
-> 打通unionid的话需要将公众号绑定到同一个微信开放平台
-会返回的唯一凭证unionid字段
-
-```
-/**
- * 如果需要微信代理登录(微信app内登录)，则需要：
- * 1.将 example/wx_proxy.php 放置在微信公众号设定的回调域名某个地址，如 http://www.abc.com/proxy/wx_proxy.php
- * 2.config中加入配置参数proxy_url，地址为 http://www.abc.com/proxy/wx_proxy.php
- * 如下所示
- */
-//$config['proxy_url'] = 'http://www.abc.com/proxy/wx_proxy.php';
-```
-
-
-#### 2.QQ
-
-```
-'qq'=>[
-    'app_id'        => '1014*****',
-    'app_secret'    => '8a2b322610d7a0d****',
-    'scope'         => 'get_user_info',
-    'callback' => 'http://majiameng.com/app/qq',
-    'is_unioid' => true //已申请unioid打通
-]
-```
-QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4%BB%8B%E7%BB%8D
-只需要配置参数`$config['withUnionid'] = true`，默认不会请求获取Unionid
-
-#### 3.微博
-
-```
-'app_id'     => '78734****',
-'app_secret' => 'd8a00617469018d61c**********',
-'callback' => 'http://majiameng.com/app/sina',
-'scope'      => 'all',
-```
-
-#### 4.GitHub
-
-```
-'application_name' => '佳萌驿站',
-'app_id'      => 'a56b04a5********',
-'app_secret' => '93ae7e5b137c6228e******************',
-'callback' => 'http://majiameng.com/app/github',
-```
-
-#### 5.支付宝
-
-```
-'app_id'      => '2016052*******',
-'scope'       => 'auth_user',
-'aes' => 'asdf*******************==',// AES密钥
-'callback' => 'http://majiameng.com/app/alipay',
-'pem_private' => '/config/cert/rsaPrivateKey.pem', // 你的私钥
-'pem_public'  => '/config/cert/alipayrsaPublicKey.pem', // 支付宝公钥
-'is_sandbox' => false,   //是否是沙箱环境
-```
-
-#### 6.Facebook
-
-```
-'app_id'     => '2774925********',
-'app_secret' => '99bfc8ad35544d7***********',
-'scope'      => 'public_profile,user_gender',//user_gender需要审核，所以不一定能获取到
-```
-
-facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,picture.width(400)'`，你可以根据需求参考官方文档自行选择要获取的用户信息
-
-#### 7.Twitter
-
-```
-'app_id'     => '3nHCxZgcK1WpYV**********',
-'app_secret' => '2byVAPayMrG8LISjopwIMcJGy***************',
-```
-
-#### 8.Line
-
-```
-'app_id'     => '159******',
-'app_secret' => '1f19c98a61d148f2************',
-'scope'      => 'profile',
-```
-
-#### 8.Naver
-
-```
-'app_id'     => 'OTRf******',
-'app_secret' => 'hAc5****',
-'callback' => 'http://majiameng.com/app/naver',
-```
-
-#### 9.Google
-
-```
-'app_id'     => '7682717*******************.apps.googleusercontent.com',
-'app_secret' => 'w0Kq-aYA***************',
-'scope'      => 'https://www.googleapis.com/auth/userinfo.profile',
-'callback' => 'http://majiameng.com/app/google',
-```
-> scope 有两个值 
-> 获取用户信息:  'scope'      => 'https://www.googleapis.com/auth/userinfo.profile',
-> 获取用户email: 'scope'      => 'https://www.googleapis.com/auth/userinfo.email',
-
-
-#### 10.抖音 Douyin 、 头条 toutiao 、西瓜 xigua
-
-```
-'douyin'=>[
-    //抖音官方：请确保授权回调域网站协议为 https
-    'pc'=>[
-        'oauth_type' => \tinymeng\OAuth2\Helper\ConstCode::TYPE_DOUYIN,//抖音douyin，头条toutiao，西瓜xigua，使用\tinymeng\OAuth2\Helper\ConstCode
-        'app_id' => 'awenvxxxxxxxx7x4',
-        'app_secret' => '5cfbc25badxxxxxxxc7be8c1',
-        'callback' => 'https://majiameng.com/app/douyin',
-        'scope'      => 'trial.whitelist,user_info',//trial.whitelist为白名单人员权限,上线后删掉
-        'optionalScope' => '',//应用授权可选作用域,多个授权作用域以英文逗号（,）分隔，每一个授权作用域后需要加上一个是否默认勾选的参数，1为默认勾选，0为默认不勾选
-    ],
-    'mobile'=>[
-        //待完善TODO...
-        'app_id' => 'awenvxxxxxxxx7x4',
-        'app_secret' => '5cfbc25badxxxxxxxc7be8c1',
-        'callback' => 'https://majiameng.com/app/douyin',
-        'scope'      => 'login_id',//login_id为静默授权
-    ],
-    'app'=>[
-        //待完善TODO...
-    ],
-    'applets'=>[
-        //待完善TODO...
-        'app_id'=>'awenvxxxxxxxx7x4',
-        'app_secret'=>'5cfbc2sssadxxxxxxxc7be8c1',
-    ],
-]
-```
-
-
-#### 11.阿里云
-
-```
-'app_id'        => '4487**********',
-'app_secret'    => 'Bf0DnBKnwUc**********************************',
-'scope'         => 'openid aliuid profile',
-'callback' => 'http://majiameng.com/app/aliyun',
-```
-
-
-
 > 打通unionid的话需要将公众号绑定到同一个微信开放平台
 会返回的唯一凭证unionid字段
 
@@ -498,77 +327,6 @@ Array
 > 部分登录类型还会返回个别数据,如需返回原数据请使用 `getUserInfo()` 方法
 
 
-### 版本修复
-
-2022-11-28 更新以下功能
-Tag v2.2.2
-```
-1.callback回调地址中添加referer参数
-```
-
-2022-11-09 更新以下功能
-Tag v2.2.0
-```
-1.新增【抖音 Douyin 、 头条 toutiao 、西瓜 xigua】PC端登录
-其他方式待完善ing，欢迎大家push代码
-```
-
-2022-05-12 更新以下功能
-Tag v2.1.0
-```
-1.解决微信小程序session_key登录信息返回
-```
-
-2022-05-09 更新以下功能
-Tag v2.0.9
-```
-1.解决bug：获取用户信息post方式，导致code获取不到
-```
-
-2022-05-07 更新以下功能
-Tag v2.0.8
-```
-1.兼容微信小程序获取openid处理
-接口文档： https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
-```
-
-2021-03-01 更新以下功能
-Tag v2.0.7
-```
-1.兼容所有性别处理
-2.添加naver第三方登录
-```
-
-2021-02-07 更新以下功能
-Tag v2.0.6
-```
-1.修复Google应用APP登录
-```
-
-2021-02-07 更新以下功能
-Tag v2.0.5
-```
-1.修复各个应用APP登录
-```
-
-2020-11-04 更新以下功能
-Tag v2.0.4
-```
-1.修复微信登录代理bug
-2.完善Readme
-```
-
-
-
-## 代码贡献
-由于测试及使用环境的限制，本项目中开发了「QQ」和「微信」「微信」等的相关登录网关。
-
-如果您有其它登录网关的需求，或者发现本项目中需要改进的代码，**_欢迎 Fork 并提交 PR！_**
-
-
-
-> 大家如果有问题要交流，就发在这里吧： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
-
 
 ## Star History
 
@@ -583,10 +341,9 @@ Tag v2.0.4
 [微梦登录demo](https://oauth.bjwmsc.com/demo/)
 
 > 1.微梦聚合快捷登录中转API 是一款社会化账号聚合登录系统，让网站的最终用户可以一站式选择使用包括微信、微博、QQ、百度等多种社会化帐号登录该站点。
- 
+
 > 2.简化用户注册登录过程、改善用户浏览站点的体验、迅速提高网站注册量和用户数据量。有完善的开发文档与SDK，方便开发者快速接入。
 
 > 3.可快捷接入标有【彩虹聚合登录】、【Oauth聚合登录】、【聚合登录】等项目平台。
 
 > 4.不需要具备oauth开发资质和申请流程。
-
