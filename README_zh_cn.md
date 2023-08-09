@@ -23,7 +23,8 @@
 
 ## 您可以在网站上找到tinymeng/oauth文档。查看“入门”页面以获取快速概述。
 
-* [开始](https://github.com/majiameng/OAuth2/wiki)
+* [Wiki Home](https://github.com/majiameng/OAuth2/wiki)
+* [开始](https://github.com/majiameng/OAuth2/wiki/Getting-Started)
 * [安装](https://github.com/majiameng/OAuth2/wiki/Installation)
 * [配置文件](https://github.com/majiameng/OAuth2/wiki/Configuration)
 * [贡献指南](https://github.com/majiameng/OAuth2/wiki/Contributing-Guide)
