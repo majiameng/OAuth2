@@ -23,7 +23,7 @@ Integrating many third party login interfaces, including qq-login、wx-login、s
 
 ## You can find the tinymeng/oauth documentation on the website. Check out the Getting Started page for a quick overview.
 
-* [Home](https://github.com/majiameng/OAuth2/wiki)
+* [Wiki Home](https://github.com/majiameng/OAuth2/wiki)
 * [Getting Started](https://github.com/majiameng/OAuth2/wiki/Getting-Started)
 * [Installation](https://github.com/majiameng/OAuth2/wiki/Installation)
 * [Configuration](https://github.com/majiameng/OAuth2/wiki/Configuration)
