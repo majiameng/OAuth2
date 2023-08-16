@@ -16,20 +16,19 @@
 
 > 大家如果有问题要交流，就发在这里吧： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) 交流 或发邮件 666@majiameng.com
 
-
-集成了许多第三方登录界面，包括qq登录、wx登录、新浪登录、github登录、支付宝登录、百胜登录、抖音登录等
+集成了许多第三方登录界面，包括QQ登录、微信登录、新浪登录、github登录、支付宝登录、百度登录、抖音登录、GitLab、Naver、Line、codeing、csdn、gitee等，陆续增加ing
 
 # Documentation
 
 ## 您可以在网站上找到tinymeng/oauth文档。查看“入门”页面以获取快速概述。
 
 * [Wiki Home](https://github.com/majiameng/OAuth2/wiki)
-* [开始](https://github.com/majiameng/OAuth2/wiki/Getting-Started)
-* [安装](https://github.com/majiameng/OAuth2/wiki/Installation)
-* [配置文件](https://github.com/majiameng/OAuth2/wiki/Configuration)
-* [贡献指南](https://github.com/majiameng/OAuth2/wiki/Contributing-Guide)
-* [更新日志](https://github.com/majiameng/OAuth2/wiki/Update-log)
-* [中文文档](https://github.com/majiameng/OAuth2/wiki/zh-cn/Home)
+* [中文文档](https://github.com/majiameng/OAuth2/wiki/zh-cn-Home)
+* [开始](https://github.com/majiameng/OAuth2/wiki/zh-cn-Getting-Started)
+* [安装](https://github.com/majiameng/OAuth2/wiki/zh-cn-Installation)
+* [配置文件](https://github.com/majiameng/OAuth2/wiki/zh-cn-Configuration)
+* [贡献指南](https://github.com/majiameng/OAuth2/wiki/zh-cn-Contributing-Guide)
+* [更新日志](https://github.com/majiameng/OAuth2/wiki/zh-cn-Update-log)
 
 ## 通用第三方登录说明文档
 

@@ -16,8 +16,9 @@ Welcome Star, welcome PR ！
 
 > If you have any questions to communicate, please post them here ： [OAuth2](https://github.com/majiameng/OAuth2/issues/1) exchange Or Send an email 666@majiameng.com
 
-
 Integrating many third party login interfaces, including qq-login、wx-login、sina-login、github-login、alipay-login、aliyum-login、douyin-login and so on
+
+集成了许多第三方登录界面，包括QQ登录、微信登录、新浪登录、github登录、支付宝登录、百度登录、抖音登录、GitLab、Naver、Line、codeing、csdn、gitee等，陆续增加ing
 
 # Documentation
 
@@ -29,7 +30,7 @@ Integrating many third party login interfaces, including qq-login、wx-login、s
 * [Configuration](https://github.com/majiameng/OAuth2/wiki/Configuration)
 * [Contributing Guide](https://github.com/majiameng/OAuth2/wiki/Contributing-Guide)
 * [Update log](https://github.com/majiameng/OAuth2/wiki/Update-log)
-* [中文文档](https://github.com/majiameng/OAuth2/wiki/zh%E2%80%90cn-Home)
+* [中文文档](https://github.com/majiameng/OAuth2/wiki/zh-cn-Home)
 
 ## General third-party login instructions document
 
