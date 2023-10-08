@@ -10,6 +10,7 @@
  */
 namespace tinymeng\OAuth2\Gateways;
 
+use Exception;
 use tinymeng\OAuth2\Connector\Gateway;
 use tinymeng\OAuth2\Helper\ConstCode;
 
@@ -85,9 +86,29 @@ class Google extends Gateway
             }
         }
         $this->getToken();
-        $headers = ['Authorization : Bearer ' . $this->token['access_token']];
-        $data = $this->get(self::API_BASE . 'oauth2/v2/userinfo', '', $headers);
-        return json_decode($data, true);
+
+        $headers = array(
+            'Authorization: Bearer ' . $this->token['access_token'],
+        );
+
+        // 创建请求上下文
+        $context = stream_context_create(array(
+            'http' => array(
+                'header' => $headers,
+            ),
+        ));
+
+        try {
+            $data = file_get_contents(self::API_BASE . 'oauth2/v2/userinfo', false, $context);
+            // 检查响应是否成功
+            if ($data !== false) {
+                return json_decode($data, true);
+            } else {
+                throw new \Exception("请求失败 " . $data);
+            }
+        }catch (Exception $exception){
+            throw new \Exception("异常 " . $exception);
+        }
     }
 
     /**
