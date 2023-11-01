@@ -2,27 +2,23 @@
 /**
  * Gitee
  * api接口文档
-*/
-namespace tinymeng\OAuth2\Gateways;
-use tinymeng\OAuth2\Connector\Gateway;
-use tinymeng\OAuth2\Helper\ConstCode;
+ */
+namespace ZhuoSheGuaMo\YxOAuth\Gateways;
+
+use ZhuoSheGuaMo\YxOAuth\Connector\Gateway;
+use ZhuoSheGuaMo\YxOAuth\Plug\ConstCode;
 
 /**
  * Class Gitee
- * @package tinymeng\OAuth2\Gateways
- * @Author: TinyMeng <666@majiameng.com>
- * @Created: 2023/07/09
  */
 class Gitee extends Gateway
 {
-    const API_BASE            = 'https://openapi.baidu.com/';
-    protected $AuthorizeURL   = 'https://openapi.baidu.com/oauth/2.0/authorize';
-    protected $AccessTokenURL = 'https://openapi.baidu.com/';
-    protected $UserInfoURL = 'https://openapi.baidu.com/';
+    protected $AuthorizeURL   = 'https://gitee.com/oauth/authorize';
+    protected $AccessTokenURL = 'https://gitee.com/oauth/token/';
+    protected $UserInfoURL = 'https://gitee.com/api/v5/user';
 
     /**
      * Description:  得到跳转地址
-     * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return string
      */
@@ -45,19 +41,17 @@ class Gitee extends Gateway
      * Description:  获取格式化后的用户信息
      * @return array
      * @throws \Exception
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
      */
     public function userInfo()
     {
         $result = $this->getUserInfo();
         $userInfo = [
-            'open_id' => isset($result['uid']) ? $result['uid'] : '',
-            'union_id'=> isset($result['aid']) ? $result['aid'] : '',
+            'open_id' => isset($result['id']) ? $result['id'] : '',
+            'union_id'=> isset($result['login']) ? $result['login'] : '',
             'channel' => ConstCode::TYPE_GITEE,
-            'nickname'=> $result['login_name'],
+            'nickname'=> $result['name'],
             'gender'  => ConstCode::GENDER,
-            'avatar'  => '',
+            'avatar'  => $result['avatar_url'],
             'birthday'=> '',
             'access_token'=> $this->token['access_token'] ?? '',
             'native'=> $result,
@@ -69,23 +63,22 @@ class Gitee extends Gateway
      * Description:  获取原始接口返回的用户信息
      * @return array
      * @throws \Exception
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
      */
     public function getUserInfo()
     {
         /** 获取用户信息 */
         $this->openid();
 
-        $headers = ['Authorization: Bearer '.$this->token['access_token']];
-        $data = $this->get($this->UserInfoURL, [],$headers);
+//        $headers = ['Authorization: Bearer '.$this->token['access_token']];
+        $params = [
+            'access_token'=>$this->token['access_token'],
+        ];
+        $data = $this->get($this->UserInfoURL,$params);
         return json_decode($data, true);
     }
 
     /**
      * Description:  获取当前授权用户的openid标识
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
      * @return mixed
      * @throws \Exception
      */
@@ -97,8 +90,6 @@ class Gitee extends Gateway
 
     /**
      * Description:  获取AccessToken
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
      */
     protected function getToken(){
         if (empty($this->token)) {
@@ -118,8 +109,6 @@ class Gitee extends Gateway
 
     /**
      * Description:  解析access_token方法请求后的返回值
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
      * @param $token
      * @return mixed
      * @throws \Exception
