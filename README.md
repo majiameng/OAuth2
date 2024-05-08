@@ -51,7 +51,7 @@ Integrating many third party login interfaces, including qq-login、wx-login、s
 |  baidu   |            百度(开发ing)             |               PC                |
 |  coding  |          Coding(开发ing)           |               PC                |
 |   csdn   |           CSDN(开发ing)            |               PC                |
-|  gitee   |           Gitee(开发ing)           |               PC                |
+|  gitee   |           Gitee           |               PC                |
 |  gitlab  |          GitLab(开发ing)           |               PC                |
 | oschina  |          OSChina(开发ing)          |               PC                |
 
