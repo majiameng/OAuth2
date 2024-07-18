@@ -3,10 +3,9 @@
  * Gitee
  * api接口文档
  */
-namespace ZhuoSheGuaMo\YxOAuth\Gateways;
-
-use ZhuoSheGuaMo\YxOAuth\Connector\Gateway;
-use ZhuoSheGuaMo\YxOAuth\Plug\ConstCode;
+namespace tinymeng\OAuth2\Gateways;
+use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
  * Class Gitee
@@ -69,7 +68,6 @@ class Gitee extends Gateway
         /** 获取用户信息 */
         $this->openid();
 
-//        $headers = ['Authorization: Bearer '.$this->token['access_token']];
         $params = [
             'access_token'=>$this->token['access_token'],
         ];
