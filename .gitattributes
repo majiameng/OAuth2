@@ -1,2 +1,2 @@
-examples/ export-ignore
+example/ export-ignore
 .git* export-ignore
