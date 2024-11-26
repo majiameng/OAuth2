@@ -114,12 +114,14 @@ class Alipay extends Gateway
 
         $userInfo = [
             'open_id'  => $this->openid(),
-            'union_id'  => $this->token['user_id'],
-            'access_token'=> $this->token['access_token'] ?? '',
+            'union_id'  => $this->token['union_id']??'',
             'channel' => ConstCode::TYPE_ALIPAY,
             'nickname'    => $result['nick_name'],
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $result['avatar'],
+            // 拓展字段
+            'access_token'  => $this->token['access_token']??'',
+            'user_id'  => $this->token['user_id'],
         ];
         $userInfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);
         return $userInfo;
@@ -253,7 +255,7 @@ class Alipay extends Gateway
 
         if (isset($data['alipay_system_oauth_token_response'])) {
             $data           = $data['alipay_system_oauth_token_response'];
-            $data['openid'] = $data['user_id'];
+            $data['openid'] = $data['open_id']??$data['user_id'];
             return $data;
         } else {
             throw new \Exception("获取支付宝 ACCESS_TOKEN 出错：{$token}");
