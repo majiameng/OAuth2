@@ -17,6 +17,9 @@
         "php": ">=7.0",
         "tinymeng/tools": "^2.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
     "autoload": {
         "psr-4": {
             "tinymeng\\OAuth2\\": "src"
