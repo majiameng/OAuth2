@@ -34,29 +34,53 @@ Integrating many third party login interfaces, including qq-login、wx-login、s
 
 ## General third-party login instructions document
 
-| Gateways |            Login Name            |          Login Method           |
-|:--------:|:--------------------------------:|:-------------------------------:|
-|    qq    |               腾讯QQ               |        PC Scan Code、App         |
-|  wechat  |                微信                | PC、 Official account、Applet、App |
-|   sina   |               新浪微博               |             PC、APP              |
-|  alipay  |               支付宝                |             PC、APP              |
-|  aliyun  |               阿里云                |               PC                |
-|  github  |              GitHub              |               PC                |
-|  google  |             谷歌google             |               PC                |
-| facebook |                脸书                |               PC                |
-|  naver   |              Naver               |               PC                |
-| twitter  |             twitter              |               PC                |
-|   line   |               line               |               PC                |
-|  douyin  | 抖音 Douyin 、 头条 toutiao 、西瓜 xigua |             PC、APP              |
-|  baidu   |            百度             |               PC                |
-|  coding  |          Coding           |               PC                |
-|   csdn   |           CSDN            |               PC                |
-|  gitee   |           Gitee           |               PC                |
-|  gitlab  |          GitLab           |               PC                |
-| oschina  |          OSChina          |               PC                |
+### Domestic Platforms
 
+| Gateways  | Login Name | Login Method  |
+|:---------:|:----------:|:-------------:|
+| qq        | Tencent QQ | PC Scan Code, APP |
+| wechat    | WeChat     | PC, Official Account, Mini Program, APP |
+| wecom     | WeCom      | PC, APP      |
+| sina      | Sina Weibo | PC, APP      |
+| alipay    | Alipay     | PC, APP      |
+| aliyun    | Alibaba Cloud | PC        |
+| baidu     | Baidu      | PC           |
+| douyin    | Douyin     | PC, APP      |
+| toutiao   | Toutiao    | PC, APP      |
+| xigua     | Xigua Video | PC, APP     |
+| dingtalk  | DingTalk   | PC, APP      |
+| xiaomi    | Xiaomi     | PC, APP      |
+| huawei    | Huawei     | PC, APP      |
 
-> Pay attention to ：Google、facebook、twitter These foreign platforms require overseas or HK servers to successfully callback
+### Development Platforms
+
+| Gateways | Login Name | Login Method |
+|:--------:|:----------:|:------------:|
+| github   | GitHub     | PC           |
+| gitlab   | GitLab     | PC           |
+| gitee    | Gitee      | PC           |
+| coding   | Coding     | PC           |
+| oschina  | OSChina    | PC           |
+| csdn     | CSDN       | PC           |
+
+### International Platforms
+
+| Gateways  | Login Name | Login Method |
+|:---------:|:----------:|:------------:|
+| google    | Google     | PC           |
+| facebook  | Facebook   | PC           |
+| twitter   | Twitter    | PC           |
+| line      | Line       | PC           |
+| naver     | Naver      | PC           |
+| amazon    | Amazon     | PC           |
+| apple     | Apple      | PC, APP      |
+| yahoo     | Yahoo      | PC           |
+| microsoft | Microsoft  | PC           |
+
+> Notes:
+> 1. International platforms like Google, Facebook, and Twitter require overseas or Hong Kong servers for successful callback
+> 2. Some platforms support multiple authorization methods, such as PC web authorization and APP authorization
+> 3. Please read the corresponding platform's development documentation and complete developer qualification certification before use
 
 ### Installation
 

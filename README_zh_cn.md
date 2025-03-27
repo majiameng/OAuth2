@@ -32,28 +32,53 @@
 
 ## 通用第三方登录说明文档
 
+### 国内平台 (Domestic Platforms)
 
-| Gateways |               登录名称               |      登录方式       |
-|:--------:|:--------------------------------:|:---------------:|
-|    qq    |               腾讯QQ               |        PC Scan Code、App         |
-|  wechat  |                微信                | PC、 Official account、Applet、App |
-|   sina   |               新浪微博               |             PC、APP              |
-|  alipay  |               支付宝                |             PC、APP              |
-|  aliyun  |               阿里云                |               PC                |
-|  github  |              GitHub              |               PC                |
-|  google  |             谷歌google             |               PC                |
-| facebook |                脸书                |               PC                |
-|  naver   |              Naver               |               PC                |
-| twitter  |             twitter              |               PC                |
-|   line   |               line               |               PC                |
-|  douyin  | 抖音 Douyin 、 头条 toutiao 、西瓜 xigua |             PC、APP              |
-|  baidu   |            百度             |               PC                |
-|  coding  |          Coding           |               PC                |
-|   csdn   |           CSDN            |               PC                |
-|  gitee   |           Gitee           |               PC                |
-|  gitlab  |          GitLab           |               PC                |
-| oschina  |          OSChina          |               PC                |
+| Gateways  | Login Name | Login Method  |
+|:---------:|:----------:|:-------------:|
+| qq        | 腾讯QQ      | PC扫码、APP     |
+| wechat    | 微信        | PC、公众号、小程序、APP |
+| wecom     | 企业微信      | PC、APP        |
+| sina      | 新浪微博      | PC、APP        |
+| alipay    | 支付宝       | PC、APP        |
+| aliyun    | 阿里云       | PC            |
+| baidu     | 百度        | PC            |
+| douyin    | 抖音        | PC、APP        |
+| toutiao   | 头条        | PC、APP        |
+| xigua     | 西瓜视频      | PC、APP        |
+| dingtalk  | 钉钉        | PC、APP        |
+| xiaomi    | 小米        | PC、APP        |
+| huawei    | 华为        | PC、APP        |
 
+### 开发平台 (Development Platforms)
+
+| Gateways | Login Name | Login Method |
+|:--------:|:----------:|:------------:|
+| github   | GitHub     | PC           |
+| gitlab   | GitLab     | PC           |
+| gitee    | Gitee      | PC           |
+| coding   | Coding     | PC           |
+| oschina  | OSChina    | PC           |
+| csdn     | CSDN       | PC           |
+
+### 国际平台 (International Platforms)
+
+| Gateways  | Login Name | Login Method |
+|:---------:|:----------:|:------------:|
+| google    | Google     | PC           |
+| facebook  | Facebook   | PC           |
+| twitter   | Twitter    | PC           |
+| line      | Line       | PC           |
+| naver     | Naver      | PC           |
+| amazon    | Amazon     | PC           |
+| apple     | Apple      | PC、APP       |
+| yahoo     | Yahoo      | PC           |
+| microsoft | Microsoft  | PC           |
+
+> 注意事项 (Notes)：
+> 1. Google、Facebook、Twitter 等国际平台需要使用海外或香港服务器才能正常回调
+> 2. 部分平台支持多种授权方式，如 PC 网页授权、APP 授权等
+> 3. 使用前请先阅读相应平台的开发文档并完成开发者资质认证
 
 > 注：Google、facebook、twitter等这些国外平台需要海外或者HK服务器才能回调成功
 
