@@ -11,6 +11,10 @@ $callback = $hostInfo."/example/login";
  */
 $params = [
     // 国内平台
+    /**
+     * QQ现在可以获取`unionid`了，详见: http://wiki.connect.qq.com/unionid%E4%BB%8B%E7%BB%8D
+     * 只需要配置参数`$config['withUnionid'] = true`，默认不会请求获取Unionid
+     */
     'qq' => [
         'app_id'     => '1014*****',
         'app_secret' => '8a2b322610d7a0d****',
@@ -60,6 +64,36 @@ $params = [
         'callback'   => $callback,
         'scope'      => 'all',
     ],
+    'douyin'=>[
+        //抖音官方：请确保授权回调域网站协议为 https
+        'pc'=>[
+            'oauth_type' => \tinymeng\OAuth2\Helper\ConstCode::TYPE_DOUYIN,//抖音douyin，头条toutiao，西瓜xigua，使用\tinymeng\OAuth2\Helper\ConstCode
+            'app_id' => 'awenvxxxxxxxx7x4',
+            'app_secret' => '5cfbc25badxxxxxxxc7be8c1',
+            'callback' => 'https://majiameng.com/app/douyin',
+            'scope'      => 'trial.whitelist,user_info',//trial.whitelist为白名单人员权限,上线后删掉
+            'optionalScope' => '',//应用授权可选作用域,多个授权作用域以英文逗号（,）分隔，每一个授权作用域后需要加上一个是否默认勾选的参数，1为默认勾选，0为默认不勾选
+        ],
+        'mobile'=>[
+            //待完善TODO...
+            'app_id' => 'awenvxxxxxxxx7x4',
+            'app_secret' => '5cfbc25badxxxxxxxc7be8c1',
+            'callback' => 'https://majiameng.com/app/douyin',
+            'scope'      => 'login_id',//login_id为静默授权
+        ],
+        'app'=>[
+            //待完善TODO...
+        ],
+        'applets'=>[
+            //待完善TODO...
+            'app_id'=>'awenvxxxxxxxx7x4',
+            'app_secret'=>'5cfbc2sssadxxxxxxxc7be8c1',
+        ],
+    ],
+    /**
+     * 支付宝增加open_id废弃user_id https://opendocs.alipay.com/mini/0ai2i6?pathHash=13dd5946
+     * 支付宝unionid布局 https://opendocs.alipay.com/mini/0ai2i8?pathHash=9e717ecc
+     */
     'alipay' => [
         'app_id'      => '2021********',
         'app_secret'  => 'MIIEvg******',
@@ -84,6 +118,12 @@ $params = [
         'app_secret' => 'abcdefg******',
         'callback'   => $callback,
         'scope'      => 'openid profile',
+    ],
+    'huawei' => [
+        'app_id'        => '4487**********',
+        'app_secret'    => 'Bf0DnBKnwUc**********************************',
+        'scope'         => 'openid aliuid profile',
+        'callback' => 'http://majiameng.com/app/aliyun',
     ],
 
     // 开发平台
@@ -113,17 +153,25 @@ $params = [
     ],
 
     // 国际平台
+    /**
+     * > scope 有两个值
+     * > 获取用户信息:  'scope'      => 'https://www.googleapis.com/auth/userinfo.profile',
+     * > 获取用户email: 'scope'      => 'https://www.googleapis.com/auth/userinfo.email',
+     */
     'google' => [
         'app_id'     => '1234567890-abcdefg******',
         'app_secret' => 'GOCSPX-******',
         'callback'   => $callback,
-        'scope'      => 'openid email profile',
+        'scope'      => 'https://www.googleapis.com/auth/userinfo.profile',
     ],
+    /**
+     * facebook有个特殊的配置`$config['field']`，默认是`'id,name,gender,picture.width(400)'`，你可以根据需求参考官方文档自行选择要获取的用户信息
+     */
     'facebook' => [
         'app_id'     => '1234567890',
         'app_secret' => 'abcdefgh******',
         'callback'   => $callback,
-        'scope'      => 'public_profile,email',
+        'scope'      => 'public_profile,user_gender',//user_gender需要审核，所以不一定能获取到
     ],
     'twitter' => [
         'app_id'     => 'abcdefgh******',
@@ -157,5 +205,19 @@ $params = [
         'scope'      => 'openid profile',
     ],
 ];
+
+/**
+ * 打通unionid的话需要将公众号绑定到同一个微信开放平台
+ * 会返回的唯一凭证unionid字段
+ */
+
+
+/**
+ * 如果需要微信代理登录(微信app内登录)，则需要：
+ * 1.将 example/wx_proxy.php 放置在微信公众号设定的回调域名某个地址，如 http://www.abc.com/proxy/wx_proxy.php
+ * 2.config中加入配置参数proxy_url，地址为 http://www.abc.com/proxy/wx_proxy.php
+ * 如下所示
+ */
+//$config['proxy_url'] = 'http://www.abc.com/proxy/wx_proxy.php';
 
 return $params;
