@@ -4,6 +4,8 @@
  */
 namespace tinymeng\OAuth2\Helper;
 
+use tinymeng\OAuth2\Exception\OAuthException;
+
 class Encryptor{
 
     /**
@@ -27,7 +29,7 @@ class Encryptor{
      *      string(18) "wxb771b4b7fb****"
      *      }
      * }
-     * @throws \Exception
+     * @throws OAuthException
      */
     static public function decryptData(string $sessionKey, string $iv, string $encrypted): array
     {
@@ -40,7 +42,7 @@ class Encryptor{
         $decrypted = json_decode($decrypted, true);
 
         if (!$decrypted) {
-            throw new \Exception("The given payload is invalid.");
+            throw new OAuthException("The given payload is invalid.");
         }
 
         return $decrypted;

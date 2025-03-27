@@ -11,6 +11,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -39,7 +40,7 @@ class Douyin extends Gateway
 
     /**
      * @param $config
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function __construct($config)
     {
@@ -84,7 +85,7 @@ class Douyin extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -93,14 +94,14 @@ class Douyin extends Gateway
         if (isset($this->token['open_id'])) {
             return $this->token['open_id'];
         } else {
-            throw new \Exception('没有获取到抖音用户ID！');
+            throw new OAuthException('没有获取到抖音用户ID！');
         }
     }
 
     /**
      * Description:  获取格式化后的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -116,16 +117,17 @@ class Douyin extends Gateway
             'channel' => $this->oauth_type,
             'nickname'=> $result['nickname']??'',
             'gender'  => $result['gender'] ?? ConstCode::GENDER,
+            'type'  => ConstCode::getTypeConst($this->oauth_type,$this->type),
             'avatar'  => $result['avatar']??'',
+            'native'   => $result,
         ];
-        $userInfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);
         return $userInfo;
     }
 
     /**
      * Description:  获取原始接口返回的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -133,7 +135,7 @@ class Douyin extends Gateway
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) ){
-                throw new \Exception("Douyin APP登录 需要传输access_token参数! ");
+                throw new OAuthException("Douyin APP登录 需要传输access_token参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
         }elseif ($this->type == 'applets'){
@@ -156,7 +158,7 @@ class Douyin extends Gateway
 
     /**
      * @return array|mixed|null
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function applets(){
         /** 获取参数 */
@@ -180,7 +182,7 @@ class Douyin extends Gateway
             case ConstCode::TYPE_DOUYIN:$this->ApiBase = $this->API_BASE_ARRAY['douyin'];break;
             case ConstCode::TYPE_TOUTIAO:$this->ApiBase = $this->API_BASE_ARRAY['toutiao'];break;
             case ConstCode::TYPE_XIGUA:$this->ApiBase = $this->API_BASE_ARRAY['xigua'];break;
-            default:throw new \Exception("获取抖音 OAUTH_TYPE 参数出错：{$this->oauth_type}");
+            default:throw new OAuthException("获取抖音 OAUTH_TYPE 参数出错：{$this->oauth_type}");
         }
         $this->AccessTokenURL = $this->ApiBase.$this->AccessTokenURL;
         $this->UserInfoURL = $this->ApiBase.$this->UserInfoURL;
@@ -228,7 +230,7 @@ class Douyin extends Gateway
      * Updater:
      * @param string $token 获取access_token的方法的返回值
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -239,7 +241,7 @@ class Douyin extends Gateway
             //小程序登录
             return $data;
         } else {
-            throw new \Exception("获取抖音 ACCESS_TOKEN 出错：{$token}");
+            throw new OAuthException("获取抖音 ACCESS_TOKEN 出错：{$token}");
         }
     }
 
@@ -249,7 +251,7 @@ class Douyin extends Gateway
      * Updater:
      * @param string $token 获取access_token的方法的返回值
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseUserInfo($data)
     {
@@ -257,7 +259,7 @@ class Douyin extends Gateway
         if (isset($data['message']) && $data['message'] == 'success') {
             return $data['data'];
         } else {
-            throw new \Exception("获取抖音 UserInfo 出错：{$data['data']['description']}");
+            throw new OAuthException("获取抖音 UserInfo 出错：{$data['data']['description']}");
         }
     }
 

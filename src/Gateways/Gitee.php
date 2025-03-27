@@ -5,6 +5,7 @@
  */
 namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -39,7 +40,7 @@ class Gitee extends Gateway
     /**
      * Description:  获取格式化后的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function userInfo()
     {
@@ -61,7 +62,7 @@ class Gitee extends Gateway
     /**
      * Description:  获取原始接口返回的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function getUserInfo()
     {
@@ -78,7 +79,7 @@ class Gitee extends Gateway
     /**
      * Description:  获取当前授权用户的openid标识
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -109,7 +110,7 @@ class Gitee extends Gateway
      * Description:  解析access_token方法请求后的返回值
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -117,7 +118,7 @@ class Gitee extends Gateway
         if (isset($data['access_token'])) {
             return $data;
         } else {
-            throw new \Exception("获取Gitee ACCESS_TOKEN出错：{$data['error']}");
+            throw new OAuthException("获取Gitee ACCESS_TOKEN出错：{$data['error']}");
         }
     }
 

@@ -1,6 +1,7 @@
 <?php
 namespace tinymeng\OAuth2\Connector;
 
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
@@ -9,6 +10,7 @@ use tinymeng\OAuth2\Helper\Str;
  */
 abstract class Gateway implements GatewayInterface
 {
+    use GatewayTrait;
     /**
      * 授权地址
      * @var
@@ -99,15 +101,16 @@ abstract class Gateway implements GatewayInterface
      */
     protected $formatUserInfo = [];
 
+
     /**
      * Gateway constructor.
      * @param $config
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function __construct($config)
     {
         if (!$config) {
-            throw new \Exception('传入的配置不能为空');
+            throw new OAuthException('传入的配置不能为空');
         }
         if(isset($_GET['referer']) && $config['callback']){
             $config['callback'] .= ((strpos($config['callback'], '?') !== false) ? '&' : '?').'referer='.$_GET['referer'];
@@ -207,7 +210,7 @@ abstract class Gateway implements GatewayInterface
     /**
      * 验证state
      * @Author: TinyMeng <666@majiameng.com>
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function checkState(){
         if ($this->checkState === true) {
@@ -215,7 +218,7 @@ abstract class Gateway implements GatewayInterface
                 session_start();
             }
             if (!isset($_REQUEST['state']) || !isset($_SESSION['tinymeng_oauth_state']) || $_REQUEST['state'] != $_SESSION['tinymeng_oauth_state']) {
-                throw new \Exception('传递的STATE参数不匹配！');
+                throw new OAuthException('传递的STATE参数不匹配！');
             }
         }
     }
@@ -270,35 +273,6 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
-     * Description:  执行GET请求操作
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
-     * @param $url
-     * @param array $params
-     * @param array $headers
-     * @return string
-     */
-    protected function get($url, $params = [], $headers = [])
-    {
-        return \tinymeng\tools\HttpRequest::httpGet($url, $params,$headers);
-    }
-
-    /**
-     * Description:  执行POST请求操作
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
-     * @param $url
-     * @param array $params
-     * @param array $headers
-     * @return mixed
-     */
-    protected function post($url, $params = [], $headers = [])
-    {
-        $headers[] = 'Accept: application/json';//GitHub需要的header
-        return \tinymeng\tools\HttpRequest::httpPost($url, $params,$headers);
-    }
-
-    /**
      * 格式化性别参数
      * M代表男性,F代表女性
      * @param $gender
@@ -309,7 +283,7 @@ abstract class Gateway implements GatewayInterface
 
 
     /**
-     * 刷新AccessToken续期(未实现)
+     * 刷新AccessToken续期
      * @param string $refreshToken
      * @return bool
      */
@@ -319,7 +293,7 @@ abstract class Gateway implements GatewayInterface
     }
 
     /**
-     * 检验授权凭证AccessToken是否有效(未实现)
+     * 检验授权凭证AccessToken是否有效
      * @param string $accessToken
      * @return bool
      */
@@ -327,4 +301,5 @@ abstract class Gateway implements GatewayInterface
     {
         return true;
     }
+
 }

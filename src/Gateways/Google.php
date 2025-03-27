@@ -11,6 +11,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -67,6 +68,7 @@ class Google extends Gateway
             'nickname'=> $result['name'] ?? $result['email'],
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $result['picture'],
+            'native'   => $result,
         );
         if(isset($result['email'])){
             $userInfo['email'] = $result['email'];
@@ -81,7 +83,7 @@ class Google extends Gateway
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['code']) ){
-                throw new \Exception("Google APP登录 需要传输code参数! ");
+                throw new OAuthException("Google APP登录 需要传输code参数! ");
             }
         }
         $this->getToken();
@@ -96,7 +98,7 @@ class Google extends Gateway
      * Updater:
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -104,7 +106,7 @@ class Google extends Gateway
         if (isset($data['access_token'])) {
             return $data;
         } else {
-            throw new \Exception("获取谷歌 ACCESS_TOKEN 出错：{$token}");
+            throw new OAuthException("获取谷歌 ACCESS_TOKEN 出错：{$token}");
         }
     }
 }

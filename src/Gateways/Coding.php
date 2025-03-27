@@ -5,6 +5,7 @@
 */
 namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -44,7 +45,7 @@ class Coding extends Gateway
     /**
      * Description:  获取格式化后的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -53,18 +54,23 @@ class Coding extends Gateway
         $response = $this->getUserInfo();
         
         return [
-            'openid'   => $response['id'] ?? '',
-            'username' => $response['name'] ?? '',
+            'open_id'  => $response['id'] ?? '',
+            'union_id' => $response['id'] ?? '',
+            'access_token' => $this->token['access_token'] ?? '',
+            'channel' => ConstCode::TYPE_CODING,
+            'nickname' => $response['name'] ?? '',
+            'gender'   => ConstCode::GENDER,  // Coding 不返回性别信息
             'avatar'   => $response['avatar'] ?? '',
+            // 额外信息
             'email'    => $response['email'] ?? '',
-            'name'     => $response['name'] ?? '',
+            'native'   => $response
         ];
     }
 
     /**
      * Description:  获取原始接口返回的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function getUserInfo()
     {
@@ -75,7 +81,7 @@ class Coding extends Gateway
         $data = json_decode($data, true);
         
         if(!isset($data['id'])) {
-            throw new \Exception("获取Coding用户信息失败：" . ($data['error_description'] ?? '未知错误'));
+            throw new OAuthException("获取Coding用户信息失败：" . ($data['error_description'] ?? '未知错误'));
         }
         return $data;
     }
@@ -83,7 +89,7 @@ class Coding extends Gateway
     /**
      * Description:  获取当前授权用户的openid标识
      * @return string
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -93,7 +99,7 @@ class Coding extends Gateway
 
     /**
      * Description:  获取AccessToken
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function getToken()
     {
@@ -115,7 +121,7 @@ class Coding extends Gateway
      * Description:  解析access_token方法请求后的返回值
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -123,14 +129,14 @@ class Coding extends Gateway
         if (isset($data['access_token'])) {
             return $data;
         }
-        throw new \Exception("获取Coding ACCESS_TOKEN出错：" . ($data['error_description'] ?? '未知错误'));
+        throw new OAuthException("获取Coding ACCESS_TOKEN出错：" . ($data['error_description'] ?? '未知错误'));
     }
 
     /**
      * 刷新AccessToken续期
      * @param string $refreshToken
      * @return bool
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function refreshToken($refreshToken)
     {

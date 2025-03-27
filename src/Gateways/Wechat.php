@@ -14,6 +14,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -80,7 +81,7 @@ class Wechat extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -89,14 +90,14 @@ class Wechat extends Gateway
         if (isset($this->token['openid'])) {
             return $this->token['openid'];
         } else {
-            throw new \Exception('没有获取到微信用户ID！');
+            throw new OAuthException('没有获取到微信用户ID！');
         }
     }
 
     /**
      * Description:  获取格式化后的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -112,16 +113,18 @@ class Wechat extends Gateway
             'nickname'=> $result['nickname']??'',
             'gender'  => $result['sex'] ?? ConstCode::GENDER,
             'avatar'  => $result['headimgurl']??'',
+            'type'    => ConstCode::getTypeConst(ConstCode::TYPE_WECHAT, $this->type),
+            // 额外信息
             'session_key'  => $result['session_key']??'',
+            'native'   => $result,
         ];
-        $userInfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);
         return $userInfo;
     }
 
     /**
      * Description:  获取原始接口返回的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -129,7 +132,7 @@ class Wechat extends Gateway
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) ){
-                throw new \Exception("Wechat APP登录 需要传输access_token参数! ");
+                throw new OAuthException("Wechat APP登录 需要传输access_token参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
         }elseif ($this->type == 'applets'){
@@ -152,7 +155,7 @@ class Wechat extends Gateway
 
     /**
      * @return array|mixed|null
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function applets(){
         /** 获取参数 */
@@ -209,7 +212,7 @@ class Wechat extends Gateway
      * Updater:
      * @param string $token 获取access_token的方法的返回值
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -220,7 +223,7 @@ class Wechat extends Gateway
             //小程序登录
             return $data;
         } else {
-            throw new \Exception("获取微信 ACCESS_TOKEN 出错：{$token}");
+            throw new OAuthException("获取微信 ACCESS_TOKEN 出错：{$token}");
         }
     }
 
@@ -258,4 +261,48 @@ class Wechat extends Gateway
         return $dataObj;
     }
 
+    /**
+     * 刷新AccessToken续期
+     * @param string $refreshToken
+     * @return bool
+     * @throws OAuthException
+     */
+    public function refreshToken($refreshToken)
+    {
+        $params = [
+            'appid'         => $this->config['app_id'],
+            'grant_type'    => 'refresh_token',
+            'refresh_token' => $refreshToken,
+        ];
+        
+        $token = $this->get('https://api.weixin.qq.com/sns/oauth2/refresh_token', $params);
+        $token = $this->parseToken($token);
+        
+        if (isset($token['access_token'])) {
+            $this->token = $token;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 检验授权凭证AccessToken是否有效
+     * @param string $accessToken
+     * @return bool
+     */
+    public function validateAccessToken($accessToken = null)
+    {
+        try {
+            $accessToken = $accessToken ?? $this->token['access_token'];
+            $params = [
+                'access_token' => $accessToken,
+                'openid'      => $this->openid(),
+            ];
+            $result = $this->get(self::API_BASE . 'auth', $params);
+            $result = json_decode($result, true);
+            return isset($result['errcode']) && $result['errcode'] == 0;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

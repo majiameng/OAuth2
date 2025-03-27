@@ -8,6 +8,7 @@
 */
 namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -25,7 +26,7 @@ class Qq extends Gateway
 
     /**
      * @param $config
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function __construct($config)
     {
@@ -60,7 +61,7 @@ class Qq extends Gateway
     /**
      * Description:  获取格式化后的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -77,6 +78,7 @@ class Qq extends Gateway
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $result['figureurl_qq_2'] ? $result['figureurl_qq_2'] : $result['figureurl_qq_1'],
             'birthday'=> date('Y-m-d',strtotime($result['year'])),
+            'native'   => $result,
         ];
         return $userInfo;
     }
@@ -84,7 +86,7 @@ class Qq extends Gateway
     /**
      * Description:  获取原始接口返回的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -106,13 +108,13 @@ class Qq extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token'])){
-                throw new \Exception("腾讯QQ,APP登录 需要传输access_token参数! ");
+                throw new OAuthException("腾讯QQ,APP登录 需要传输access_token参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
         }else{
@@ -133,7 +135,7 @@ class Qq extends Gateway
      * Updater:
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -141,7 +143,7 @@ class Qq extends Gateway
         if (isset($data['access_token'])) {
             return $data;
         } else {
-            throw new \Exception("获取腾讯QQ ACCESS_TOKEN 出错：" . $token);
+            throw new OAuthException("获取腾讯QQ ACCESS_TOKEN 出错：" . $token);
         }
     }
 
@@ -150,7 +152,7 @@ class Qq extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed|string
-     * @throws \Exception
+     * @throws OAuthException
      */
     private function getOpenID(){
         $query = [
@@ -166,7 +168,7 @@ class Qq extends Gateway
         if (isset($data['openid'])) {
             return $data;
         } else {
-            throw new \Exception("获取用户openid出错：" . $data['error_description']);
+            throw new OAuthException("获取用户openid出错：" . $data['error_description']);
         }
     }
 

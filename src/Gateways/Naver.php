@@ -8,6 +8,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
@@ -65,6 +66,7 @@ class Naver extends Gateway
             'nickname'=> $result['nickname'] ?? '',
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $result['profile_image'] ?? '',
+            'native'   => $result,
         );
         return $userInfo;
     }
@@ -76,7 +78,7 @@ class Naver extends Gateway
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) ){
-                throw new \Exception("Naver APP登录 需要传输access_token参数! ");
+                throw new OAuthException("Naver APP登录 需要传输access_token参数! ");
             }
             $this->token['token_type'] = 'Bearer';
             $this->token['access_token'] = $_REQUEST['access_token'];
@@ -85,7 +87,7 @@ class Naver extends Gateway
         }
         $data = $this->call('nid/me', $this->token, 'GET');
         if (isset($data['error'])) {
-            throw new \Exception($data['error_description']);
+            throw new OAuthException($data['error_description']);
         }
         return $data['response'];
     }
@@ -121,7 +123,7 @@ class Naver extends Gateway
     {
         $token = json_decode($token, true);
         if (isset($token['error'])) {
-            throw new \Exception($token['error_description']);
+            throw new OAuthException($token['error_description']);
         }
         return $token;
     }

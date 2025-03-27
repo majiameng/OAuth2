@@ -19,6 +19,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
@@ -50,7 +51,6 @@ class Alipay extends Gateway
 
     /**
      * @param $config
-     * @throws \Exception
      */
     public function __construct($config)
     {
@@ -89,7 +89,7 @@ class Alipay extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -98,7 +98,7 @@ class Alipay extends Gateway
         if (isset($this->token['openid'])) {
             return $this->token['openid'];
         } else {
-            throw new \Exception('没有获取到支付宝用户ID！');
+            throw new OAuthException('没有获取到支付宝用户ID！');
         }
     }
 
@@ -122,6 +122,7 @@ class Alipay extends Gateway
             // 拓展字段
             'access_token'  => $this->token['access_token']??'',
             'user_id'  => $this->token['user_id'],
+            'native'   => $result,
         ];
         $userInfo['type'] = ConstCode::getTypeConst($userInfo['channel'],$this->type);
         return $userInfo;
@@ -132,13 +133,13 @@ class Alipay extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function getUserInfo()
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) ){
-                throw new \Exception("AliPay APP登录 需要传输access_token参数! ");
+                throw new OAuthException("AliPay APP登录 需要传输access_token参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
         }else {
@@ -191,7 +192,7 @@ class Alipay extends Gateway
      * Updater:
      * @param array $data
      * @return string
-     * @throws \Exception
+     * @throws OAuthException
      */
     private function signature($data = [])
     {
@@ -206,7 +207,7 @@ class Alipay extends Gateway
             openssl_free_key($res);
             return base64_encode($sign);
         }
-        throw new \Exception('支付宝RSA私钥不正确');
+        throw new OAuthException('支付宝RSA私钥不正确');
     }
 
     /**
@@ -215,7 +216,7 @@ class Alipay extends Gateway
      * Updater:
      * @param int $type
      * @return string
-     * @throws \Exception
+     * @throws OAuthException
      */
     private function getRsaKeyVal($type = self::RSA_PUBLIC)
     {
@@ -233,7 +234,7 @@ class Alipay extends Gateway
             $rsa = file_get_contents($rsa);
         }
         if (empty($rsa)) {
-            throw new \Exception('支付宝RSA密钥未配置');
+            throw new OAuthException('支付宝RSA密钥未配置');
         }
         $rsa    = str_replace([PHP_EOL, $header, $footer], '', $rsa);
         $rsaVal = $header . PHP_EOL . chunk_split($rsa, 64, PHP_EOL) . $footer;
@@ -246,7 +247,7 @@ class Alipay extends Gateway
      * Updater:
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -258,7 +259,7 @@ class Alipay extends Gateway
             $data['openid'] = $data['open_id']??$data['user_id'];
             return $data;
         } else {
-            throw new \Exception("获取支付宝 ACCESS_TOKEN 出错：{$token}");
+            throw new OAuthException("获取支付宝 ACCESS_TOKEN 出错：{$token}");
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
@@ -60,6 +61,7 @@ class Line extends Gateway
             'nickname'    => $result['displayName'],
             'gender'  => ConstCode::GENDER, //line不返回性别信息
             'avatar'  => isset($result['pictureUrl']) ? $result['pictureUrl'] . '/large' : '',
+            'native'   => $result,
         ];
         return $userInfo;
     }
@@ -74,7 +76,7 @@ class Line extends Gateway
         $data = $this->call('profile', $this->token, 'GET');
 
         if (isset($data['error'])) {
-            throw new \Exception($data['error_description']);
+            throw new OAuthException($data['error_description']);
         }
         return $data;
     }
@@ -110,7 +112,7 @@ class Line extends Gateway
     {
         $token = json_decode($token, true);
         if (isset($token['error'])) {
-            throw new \Exception($token['error_description']);
+            throw new OAuthException($token['error_description']);
         }
         return $token;
     }

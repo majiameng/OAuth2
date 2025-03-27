@@ -3,6 +3,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
@@ -54,6 +55,7 @@ class Twitter extends Gateway
             'nickname'    => $result['name'],
             'gender'  => ConstCode::GENDER, //twitter不返回用户性别
             'avatar'  => $result['profile_image_url_https'],
+            'native'  => $result,
         ];
         return $userInfo;
     }
@@ -68,7 +70,7 @@ class Twitter extends Gateway
             if (isset($this->token['oauth_token_secret'])) {
                 $this->tokenSecret = $this->token['oauth_token_secret'];
             } else {
-                throw new \Exception("获取Twitter ACCESS_TOKEN 出错：" . json_encode($this->token));
+                throw new OAuthException("获取Twitter ACCESS_TOKEN 出错：" . json_encode($this->token));
             }
         }
 
@@ -172,5 +174,33 @@ class Twitter extends Gateway
      */
     protected function parseToken($token){
         return $token;
+    }
+
+    /**
+     * 检验授权凭证AccessToken是否有效
+     * @param string $accessToken
+     * @return bool
+     */
+    public function validateAccessToken($accessToken = null)
+    {
+        try {
+            $accessToken = $accessToken ?? $this->token['oauth_token_secret'];
+            $this->tokenSecret = $accessToken;
+            $result = $this->call('1.1/account/verify_credentials.json', [], 'GET', true);
+            return isset($result['id_str']);
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * 刷新AccessToken续期
+     * @param string $refreshToken
+     * @return bool
+     */
+    public function refreshToken($refreshToken)
+    {
+        // Twitter OAuth 1.0a 不支持刷新令牌
+        return false;
     }
 }

@@ -3,6 +3,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -45,7 +46,7 @@ class Sina extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -54,7 +55,7 @@ class Sina extends Gateway
         if (isset($this->token['openid'])) {
             return $this->token['openid'];
         } else {
-            throw new \Exception('没有获取到新浪微博用户ID！');
+            throw new OAuthException('没有获取到新浪微博用户ID！');
         }
     }
 
@@ -76,6 +77,7 @@ class Sina extends Gateway
             'nickname'    => $result['screen_name'],
             'gender'  => $this->getGender($result['gender']),
             'avatar'  => $result['avatar_hd'],
+            'native'   => $result,
         ];
         return $userInfo;
     }
@@ -85,13 +87,13 @@ class Sina extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function getUserInfo()
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) || !isset($_REQUEST['uid'])){
-                throw new \Exception("Sina APP登录 需要传输access_token和uid参数! ");
+                throw new OAuthException("Sina APP登录 需要传输access_token和uid参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
             $this->token['openid'] = $_REQUEST['uid'];
@@ -144,7 +146,7 @@ class Sina extends Gateway
      * Updater:
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -154,7 +156,7 @@ class Sina extends Gateway
             unset($data['uid']);
             return $data;
         } else {
-            throw new \Exception("获取新浪微博ACCESS_TOKEN出错：{$data['error']}");
+            throw new OAuthException("获取新浪微博ACCESS_TOKEN出错：{$data['error']}");
         }
     }
 

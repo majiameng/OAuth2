@@ -6,6 +6,7 @@
 namespace tinymeng\OAuth2;
 
 use tinymeng\OAuth2\Connector\GatewayInterface;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\Str;
 /**
  * @method static \tinymeng\OAuth2\Gateways\Alipay Alipay(array $config) 阿里云
@@ -30,12 +31,12 @@ abstract class OAuth
      * @param $gateway
      * @param null $config
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected static function init($gateway, $config)
     {
         if(empty($config)){
-            throw new \Exception("第三方登录 [$gateway] config配置不能为空");
+            throw new OAuthException("第三方登录 [$gateway] config配置不能为空");
         }
         $baseConfig = [
             'app_id'    => '',
@@ -55,9 +56,9 @@ abstract class OAuth
             if ($app instanceof GatewayInterface) {
                 return $app;
             }
-            throw new \Exception("第三方登录基类 [$gateway] 必须继承抽象类 [GatewayInterface]");
+            throw new OAuthException("第三方登录基类 [$gateway] 必须继承抽象类 [GatewayInterface]");
         }
-        throw new \Exception("第三方登录基类 [$gateway] 不存在");
+        throw new OAuthException("第三方登录基类 [$gateway] 不存在");
     }
 
     /**

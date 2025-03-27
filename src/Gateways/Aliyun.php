@@ -6,6 +6,7 @@
 */
 namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -45,7 +46,7 @@ class Aliyun extends Gateway
     /**
      * Description:  获取格式化后的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -69,7 +70,7 @@ class Aliyun extends Gateway
     /**
      * Description:  获取原始接口返回的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -88,7 +89,7 @@ class Aliyun extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -123,7 +124,7 @@ class Aliyun extends Gateway
      * Updater:
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -131,7 +132,7 @@ class Aliyun extends Gateway
         if (isset($data['access_token'])) {
             return $data;
         } else {
-            throw new \Exception("获取Aliyun ACCESS_TOKEN出错：{$data['error']}");
+            throw new OAuthException("获取Aliyun ACCESS_TOKEN出错：{$data['error']}");
         }
     }
 

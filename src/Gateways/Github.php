@@ -7,6 +7,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -25,7 +26,7 @@ class Github extends Gateway
 
     /**
      * @param $config
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function __construct($config)
     {
@@ -61,7 +62,7 @@ class Github extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -70,7 +71,7 @@ class Github extends Gateway
         if (isset($this->token['openid'])) {
             return $this->token['openid'];
         } else {
-            throw new \Exception('没有获取到新浪微博用户ID！');
+            throw new OAuthException('没有获取到新浪微博用户ID！');
         }
     }
 
@@ -95,6 +96,7 @@ class Github extends Gateway
             'email'  => $result['email'],
             'sign'  => $result['bio'],
             'gender'  => ConstCode::GENDER,
+            'native'   => $result,
         ];
         return $userInfo;
     }
@@ -104,7 +106,7 @@ class Github extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function getUserInfo()
     {
@@ -119,7 +121,7 @@ class Github extends Gateway
         $response = $this->get($this->UserInfoURL, [], $headers);
         $data = json_decode($response, true);
         if (!empty($data['error'])) {
-            throw new \Exception($data['error']);
+            throw new OAuthException($data['error']);
         }
         return $data;
     }
@@ -141,7 +143,7 @@ class Github extends Gateway
      * Updater:
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -149,7 +151,7 @@ class Github extends Gateway
         if (isset($data['access_token'])) {
             return $data;
         } else {
-            throw new \Exception("获取GitHub ACCESS_TOKEN出错：{$data['error']}");
+            throw new OAuthException("获取GitHub ACCESS_TOKEN出错：{$data['error']}");
         }
     }
 }

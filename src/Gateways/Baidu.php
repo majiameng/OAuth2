@@ -5,6 +5,7 @@
 */
 namespace tinymeng\OAuth2\Gateways;
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 
 /**
@@ -49,7 +50,7 @@ class Baidu extends Gateway
     /**
      * Description:  获取格式化后的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -73,7 +74,7 @@ class Baidu extends Gateway
     /**
      * Description:  获取原始接口返回的用户信息
      * @return array
-     * @throws \Exception
+     * @throws OAuthException
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      */
@@ -87,7 +88,7 @@ class Baidu extends Gateway
         $data = json_decode($data, true);
         
         if(!isset($data['uid'])) {
-            throw new \Exception("获取百度用户信息失败：" . ($data['error_description'] ?? '未知错误'));
+            throw new OAuthException("获取百度用户信息失败：" . ($data['error_description'] ?? '未知错误'));
         }
         return $data;
     }
@@ -97,7 +98,7 @@ class Baidu extends Gateway
      * @author: JiaMeng <666@majiameng.com>
      * Updater:
      * @return string
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function openid()
     {
@@ -133,7 +134,7 @@ class Baidu extends Gateway
      * Updater:
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws OAuthException
      */
     protected function parseToken($token)
     {
@@ -141,7 +142,7 @@ class Baidu extends Gateway
         if (isset($data['access_token'])) {
             return $data;
         } else {
-            throw new \Exception("获取Baidu ACCESS_TOKEN出错：{$data['error']}");
+            throw new OAuthException("获取Baidu ACCESS_TOKEN出错：{$data['error']}");
         }
     }
 
@@ -150,7 +151,7 @@ class Baidu extends Gateway
      * 刷新AccessToken续期
      * @param string $refreshToken
      * @return bool
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function refreshToken($refreshToken)
     {
@@ -185,7 +186,7 @@ class Baidu extends Gateway
             $data = $this->get($this->UserInfoURL, [], $headers);
             $data = json_decode($data, true);
             return isset($data['uid']);
-        } catch (\Exception $e) {
+        } catch (OAuthException $e) {
             return false;
         }
     }

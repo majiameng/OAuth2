@@ -13,6 +13,7 @@
 namespace tinymeng\OAuth2\Gateways;
 
 use tinymeng\OAuth2\Connector\Gateway;
+use tinymeng\OAuth2\Exception\OAuthException;
 use tinymeng\OAuth2\Helper\ConstCode;
 use tinymeng\OAuth2\Helper\Str;
 
@@ -30,7 +31,7 @@ class Facebook extends Gateway
 
     /**
      * @param $config
-     * @throws \Exception
+     * @throws OAuthException
      */
     public function __construct($config)
     {
@@ -80,6 +81,7 @@ class Facebook extends Gateway
             'nickname'    => $result['name'],
             'gender'  => isset($result['gender']) ? $this->getGender($result['gender']) : ConstCode::GENDER,
             'avatar'  => $this->getAvatar($result),
+            'native'   => $result,
         ];
         return $userInfo;
     }
@@ -91,7 +93,7 @@ class Facebook extends Gateway
     {
         if($this->type == 'app'){//App登录
             if(!isset($_REQUEST['access_token']) ){
-                throw new \Exception("Facebook APP登录 需要传输access_token参数! ");
+                throw new OAuthException("Facebook APP登录 需要传输access_token参数! ");
             }
             $this->token['access_token'] = $_REQUEST['access_token'];
         }else {
@@ -147,7 +149,7 @@ class Facebook extends Gateway
     {
         $token = json_decode($token, true);
         if (isset($token['error'])) {
-            throw new \Exception($token['error']['message']);
+            throw new OAuthException($token['error']['message']);
         }
         return $token;
     }
