@@ -20,6 +20,14 @@ use tinymeng\OAuth2\Helper\Str;
  * @method static \tinymeng\OAuth2\Gateways\Sina Sina(array $config) Sina
  * @method static \tinymeng\OAuth2\Gateways\Twitter Twitter(array $config) Twitter
  * @method static \tinymeng\OAuth2\Gateways\Douyin Douyin(array $config) 抖音
+ * @method static \tinymeng\OAuth2\Gateways\Baidu Baidu(array $config) 百度
+ * @method static \tinymeng\OAuth2\Gateways\Coding Coding(array $config) Coding
+ * @method static \tinymeng\OAuth2\Gateways\Csdn Csdn(array $config) CSDN
+ * @method static \tinymeng\OAuth2\Gateways\Gitee Gitee(array $config) Gitee
+ * @method static \tinymeng\OAuth2\Gateways\Gitlab GitLab(array $config) GitLab
+ * @method static \tinymeng\OAuth2\Gateways\Oschina OSChina(array $config) OSChina
+ * @method static \tinymeng\OAuth2\Gateways\Wecom Wecom(array $config) 企业微信
+ * @method static \tinymeng\OAuth2\Gateways\Kuaishou Kuaishou(array $config) 快手
  */
 abstract class OAuth
 {

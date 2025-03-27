@@ -36,6 +36,15 @@ class ConstCode{
     const TYPE_GITEE            = 16; //Gitee
     const TYPE_GITLAB           = 17; //GitLab
     const TYPE_OSCHINA          = 18; //OSChina
+    const TYPE_DINGTALK         = 19; //钉钉
+    const TYPE_WECOM            = 20; //企业微信
+    const TYPE_KUAISHOU         = 41; //快手;
+    const TYPE_XIAOMI           = 42; //小米
+    const TYPE_HUAWEI           = 43; //华为
+    const TYPE_AMAZON           = 44; //亚马逊
+    const TYPE_APPLE            = 45; //苹果
+    const TYPE_YAHOO            = 46; //雅虎
+    const TYPE_MICROSOFT        = 47; //微软
 
     const TYPE_QQ_APP           = 21; //qqAPP
     const TYPE_WECHAT_APP       = 22; //微信APP
