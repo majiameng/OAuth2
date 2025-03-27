@@ -35,24 +35,24 @@
 
 | Gateways |               登录名称               |      登录方式       |
 |:--------:|:--------------------------------:|:---------------:|
-|    qq    |               腾讯QQ               |    PC扫码、App     |
-|  wechat  |                微信                | PC、 公众号、小程序、App |
-|   sina   |               新浪微博               |     PC、APP      |
-|  alipay  |               支付宝                |     PC、APP      |
-|  aliyun  |               阿里云                |     PC      |
-|  github  |              GitHub              |       PC        |
-|  google  |             谷歌google             |       PC        |
-| facebook |                脸书                |       PC        |
-|  naver   |              Naver               |       PC        |
-| twitter  |             twitter              |       PC        |
-|   line   |               line               |       PC        |
-|  douyin  | 抖音 Douyin 、 头条 toutiao 、西瓜 xigua |     PC、APP      |
-|  baidu   |            百度(开发ing)             |       PC        |
-|  coding  |              Coding(开发ing)              |       PC        |
-|   csdn   |               CSDN(开发ing)               |       PC        |
-|  gitee   |              Gitee(开发ing)               |       PC        |
-|  gitlab  |              GitLab(开发ing)              |       PC        |
-| oschina  |             OSChina(开发ing)              |       PC        |
+|    qq    |               腾讯QQ               |        PC Scan Code、App         |
+|  wechat  |                微信                | PC、 Official account、Applet、App |
+|   sina   |               新浪微博               |             PC、APP              |
+|  alipay  |               支付宝                |             PC、APP              |
+|  aliyun  |               阿里云                |               PC                |
+|  github  |              GitHub              |               PC                |
+|  google  |             谷歌google             |               PC                |
+| facebook |                脸书                |               PC                |
+|  naver   |              Naver               |               PC                |
+| twitter  |             twitter              |               PC                |
+|   line   |               line               |               PC                |
+|  douyin  | 抖音 Douyin 、 头条 toutiao 、西瓜 xigua |             PC、APP              |
+|  baidu   |            百度             |               PC                |
+|  coding  |          Coding           |               PC                |
+|   csdn   |           CSDN            |               PC                |
+|  gitee   |           Gitee           |               PC                |
+|  gitlab  |          GitLab           |               PC                |
+| oschina  |          OSChina          |               PC                |
 
 
 > 注：Google、facebook、twitter等这些国外平台需要海外或者HK服务器才能回调成功

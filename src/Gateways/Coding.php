@@ -15,10 +15,10 @@ use tinymeng\OAuth2\Helper\ConstCode;
  */
 class Coding extends Gateway
 {
-    const API_BASE            = 'https://openapi.baidu.com/';
-    protected $AuthorizeURL   = 'https://openapi.baidu.com/oauth/2.0/authorize';
-    protected $AccessTokenURL = 'https://openapi.baidu.com/';
-    protected $UserInfoURL = 'https://openapi.baidu.com/';
+    const API_BASE            = 'https://coding.net/api/';
+    protected $AuthorizeURL   = 'https://coding.net/oauth_authorize.html';
+    protected $AccessTokenURL = 'https://coding.net/api/oauth/access_token';
+    protected $UserInfoURL    = 'https://coding.net/api/account/current_user';
 
     /**
      * Description:  得到跳转地址
@@ -32,11 +32,11 @@ class Coding extends Gateway
         $this->saveState();
         //登录参数
         $params = [
-            'response_type' => $this->config['response_type'],
             'client_id'     => $this->config['app_id'],
             'redirect_uri'  => $this->config['callback'],
-            'state'         => $this->config['state'],
+            'response_type' => $this->config['response_type'],
             'scope'         => $this->config['scope'],
+            'state'         => $this->config['state'],
         ];
         return $this->AuthorizeURL . '?' . http_build_query($params);
     }
@@ -50,76 +50,69 @@ class Coding extends Gateway
      */
     public function userInfo()
     {
-        $result = $this->getUserInfo();
-        $userInfo = [
-            'open_id' => isset($result['uid']) ? $result['uid'] : '',
-            'union_id'=> isset($result['aid']) ? $result['aid'] : '',
-            'channel' => ConstCode::TYPE_CODING,
-            'nickname'=> $result['login_name'],
-            'gender'  => ConstCode::GENDER,
-            'avatar'  => '',
-            'birthday'=> '',
-            'access_token'=> $this->token['access_token'] ?? '',
-            'native'=> $result,
+        $response = $this->getUserInfo();
+        
+        return [
+            'openid'   => $response['id'] ?? '',
+            'username' => $response['name'] ?? '',
+            'avatar'   => $response['avatar'] ?? '',
+            'email'    => $response['email'] ?? '',
+            'name'     => $response['name'] ?? '',
         ];
-        return $userInfo;
     }
 
     /**
      * Description:  获取原始接口返回的用户信息
      * @return array
      * @throws \Exception
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
      */
     public function getUserInfo()
     {
-        /** 获取用户信息 */
         $this->openid();
-
-        $headers = ['Authorization: Bearer '.$this->token['access_token']];
-        $data = $this->get($this->UserInfoURL, [],$headers);
-        return json_decode($data, true);
+        $data = $this->get($this->UserInfoURL, [
+            'access_token' => $this->token['access_token']
+        ]);
+        $data = json_decode($data, true);
+        
+        if(!isset($data['id'])) {
+            throw new \Exception("获取Coding用户信息失败：" . ($data['error_description'] ?? '未知错误'));
+        }
+        return $data;
     }
 
     /**
      * Description:  获取当前授权用户的openid标识
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
-     * @return mixed
+     * @return string
      * @throws \Exception
      */
     public function openid()
     {
         $this->getToken();
+        return $this->token['uid'] ?? '';
     }
-
 
     /**
      * Description:  获取AccessToken
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
+     * @throws \Exception
      */
-    protected function getToken(){
+    protected function getToken()
+    {
         if (empty($this->token)) {
-            /** 验证state参数 */
-            $this->CheckState();
-
-            /** 获取参数 */
-            $params = $this->accessTokenParams();
-
-            /** 获取access_token */
-            $this->AccessTokenURL = $this->AccessTokenURL . '?' . http_build_query($params);
-            $token =  $this->post($this->AccessTokenURL);
-            /** 解析token值(子类实现此方法) */
-            $this->token = $this->parseToken($token);
+            $this->checkState();
+            $params = [
+                'grant_type'    => $this->config['grant_type'],
+                'client_id'     => $this->config['app_id'],
+                'client_secret' => $this->config['app_secret'],
+                'code'          => isset($_REQUEST['code']) ? $_REQUEST['code'] : '',
+                'redirect_uri'  => $this->config['callback'],
+            ];
+            $response = $this->post($this->AccessTokenURL, $params);
+            $this->token = $this->parseToken($response);
         }
     }
 
     /**
      * Description:  解析access_token方法请求后的返回值
-     * @author: JiaMeng <666@majiameng.com>
-     * Updater:
      * @param $token
      * @return mixed
      * @throws \Exception
@@ -129,9 +122,32 @@ class Coding extends Gateway
         $data = json_decode($token, true);
         if (isset($data['access_token'])) {
             return $data;
-        } else {
-            throw new \Exception("获取Coding ACCESS_TOKEN出错：{$data['error']}");
         }
+        throw new \Exception("获取Coding ACCESS_TOKEN出错：" . ($data['error_description'] ?? '未知错误'));
     }
 
+    /**
+     * 刷新AccessToken续期
+     * @param string $refreshToken
+     * @return bool
+     * @throws \Exception
+     */
+    public function refreshToken($refreshToken)
+    {
+        $params = [
+            'grant_type'    => 'refresh_token',
+            'refresh_token' => $refreshToken,
+            'client_id'     => $this->config['app_id'],
+            'client_secret' => $this->config['app_secret'],
+        ];
+        
+        $token = $this->post($this->AccessTokenURL, $params);
+        $token = $this->parseToken($token);
+        
+        if (isset($token['access_token'])) {
+            $this->token = $token;
+            return true;
+        }
+        return false;
+    }
 }

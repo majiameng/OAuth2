@@ -48,12 +48,12 @@ Integrating many third party login interfaces, including qq-login、wx-login、s
 | twitter  |             twitter              |               PC                |
 |   line   |               line               |               PC                |
 |  douyin  | 抖音 Douyin 、 头条 toutiao 、西瓜 xigua |             PC、APP              |
-|  baidu   |            百度(开发ing)             |               PC                |
-|  coding  |          Coding(开发ing)           |               PC                |
-|   csdn   |           CSDN(开发ing)            |               PC                |
+|  baidu   |            百度             |               PC                |
+|  coding  |          Coding           |               PC                |
+|   csdn   |           CSDN            |               PC                |
 |  gitee   |           Gitee           |               PC                |
-|  gitlab  |          GitLab(开发ing)           |               PC                |
-| oschina  |          OSChina(开发ing)          |               PC                |
+|  gitlab  |          GitLab           |               PC                |
+| oschina  |          OSChina          |               PC                |
 
 
 > Pay attention to ：Google、facebook、twitter These foreign platforms require overseas or HK servers to successfully callback
