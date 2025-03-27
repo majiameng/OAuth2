@@ -103,17 +103,3 @@ composer require tinymeng/oauth:^2.0.0 -vvv
 [![Star History Chart](https://api.star-history.com/svg?repos=majiameng/OAuth2&type=Date)](https://github.com/majiameng/OAuth2)
 
 
-
-### 如这些都懒得去申请资质以及想更简单的接入，下面会对你有帮助
-[微梦聚合快捷登录平台](https://oauth.bjwmsc.com/)
-
-
-[微梦登录demo](https://oauth.bjwmsc.com/demo/)
-
-> 1.微梦聚合快捷登录中转API 是一款社会化账号聚合登录系统，让网站的最终用户可以一站式选择使用包括微信、微博、QQ、百度等多种社会化帐号登录该站点。
-
-> 2.简化用户注册登录过程、改善用户浏览站点的体验、迅速提高网站注册量和用户数据量。有完善的开发文档与SDK，方便开发者快速接入。
-
-> 3.可快捷接入标有【彩虹聚合登录】、【Oauth聚合登录】、【聚合登录】等项目平台。
-
-> 4.不需要具备oauth开发资质和申请流程。
