@@ -1,15 +1,19 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use tinymeng\OAuth2\OAuth;
-/**
- * IntelligentParseTest
- */
-class OauthTest extends TestCase
+use tinymeng\OAuth2\Exception\OAuthException;
+
+class OAuthTest extends TestCase
 {
-    public function testAddress()
+    public function testInvalidPlatform()
     {
-        $name = 'wechat';
-        $oauth = OAuth::$name([]);
+        $this->expectException(OAuthException::class);
+        OAuth::invalid([]);
     }
 
+    public function testMissingConfig()
+    {
+        $this->expectException(OAuthException::class);
+        OAuth::wechat([]);
+    }
 }
