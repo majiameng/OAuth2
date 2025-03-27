@@ -69,32 +69,47 @@ composer require tinymeng/oauth:^2.0.0 -vvv
 
 ```
 .
-├── example                          代码源文件目录
-│   └── wx_proxy.php                微信多域名代理php代码版
-│   └── weixin-authorize-proxy.html 微信多域名代理html代码版,推荐使用html版
-├── src                              代码源文件目录
-│   ├── Connector
-│   │   ├── Gateway.php            必须继承的抽象类
-│   │   └── GatewayInterface.php   必须实现的接口
-│   ├── Gateways
-│   │   ├── Alipay.php
-│   │   ├── Douyin.php
-│   │   ├── Facebook.php
-│   │   ├── Github.php
-│   │   ├── Google.php
-│   │   ├── Line.php
-│   │   ├── Naver.php
-│   │   ├── Qq.php
-│   │   ├── Twitter.php
-│   │   ├── Sina.php
-│   │   └── Wechat.php
-│   ├── Helper
-│   │   ├── ConstCode.php          公共常量
-│   │   └── Str.php                字符串辅助类
-│   └── OAuth.php                   抽象实例类
-├── composer.json                    composer文件
-├── LICENSE                          MIT License
-└── README.md                        说明文件
+├── example                         示例代码目录
+│   ├── config                      配置示例
+│   │   └── params.php              参数配置示例
+│   ├── oauth2.php                  OAuth2 使用示例
+│   ├── proxy                       代理相关示例
+│   │   └── wx_proxy.php            微信多域名代理 PHP 版本
+│   └── weixin-authorize-proxy.html 微信多域名代理 HTML 版本(推荐)
+├── src                             源代码目录
+│   ├── Connector                   连接器基类目录
+│   │   ├── Gateway.php             必须继承的抽象基类
+│   │   └── GatewayInterface.php    必须实现的接口
+│   ├── Exception                   异常处理目录
+│   │   └── OAuthException.php      OAuth 异常类
+│   ├── Gateways                    各平台授权实现目录
+│   │   ├── Alipay.php              支付宝授权
+│   │   ├── Aliyun.php              阿里云授权
+│   │   ├── Baidu.php               百度授权
+│   │   ├── Coding.php              Coding 授权
+│   │   ├── Csdn.php                CSDN 授权
+│   │   ├── Douyin.php              抖音授权
+│   │   ├── Facebook.php            Facebook 授权
+│   │   ├── Gitee.php               Gitee 授权
+│   │   ├── Github.php              GitHub 授权
+│   │   ├── Gitlab.php              GitLab 授权
+│   │   ├── Google.php              Google 授权
+│   │   ├── Line.php                Line 授权
+│   │   ├── Naver.php               Naver 授权
+│   │   ├── Oschina.php             OSChina 授权
+│   │   ├── Qq.php                  QQ 授权
+│   │   ├── Sina.php                新浪微博授权
+│   │   ├── Twitter.php             Twitter 授权
+│   │   └── Wechat.php              微信授权
+│   ├── Helper                      辅助类目录
+│   │   ├── ConstCode.php           公共常量定义
+│   │   └── Str.php                 字符串辅助类
+│   └── OAuth.php                   OAuth 工厂类
+├── tests                           测试目录
+│   └── OAuthTest.php               OAuth 测试类
+├── composer.json                   Composer 配置文件
+├── LICENSE                         MIT 开源协议
+└── README.md                       说明文档
 ```
 
 
