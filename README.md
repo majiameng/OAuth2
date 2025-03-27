@@ -27,7 +27,7 @@ Integrating many third party login interfaces, including qq-login、wx-login、s
 * [Wiki Home](https://github.com/majiameng/OAuth2/wiki)
 * [Getting Started](https://github.com/majiameng/OAuth2/wiki/Getting-Started)
 * [Installation](https://github.com/majiameng/OAuth2/wiki/Installation)
-* [Configuration](https://github.com/majiameng/OAuth2/wiki/Configuration)
+* [Configuration](https://github.com/majiameng/OAuth2/blob/master/example/config/params.php)
 * [Contributing Guide](https://github.com/majiameng/OAuth2/wiki/Contributing-Guide)
 * [Update log](https://github.com/majiameng/OAuth2/wiki/Update-log)
 * [中文文档](https://github.com/majiameng/OAuth2/wiki/zh-cn-Home)
