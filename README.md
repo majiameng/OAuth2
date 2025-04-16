@@ -137,6 +137,17 @@ composer require tinymeng/oauth:^2.0.0 -vvv
 └── README.md                       说明文档
 ```
 
+
+## Contributors
+
+Thanks for your contribution to the project!
+
+[![Contributors Count](https://img.shields.io/github/contributors-anon/majiameng/OAuth2?style=for-the-badge&logo=vaultwarden&color=005AA4)](https://github.com/majiameng/OAuth2/graphs/contributors)<br>
+[![Contributors Avatars](https://contributors-img.web.app/image?repo=majiameng/OAuth2)](https://github.com/majiameng/OAuth2/graphs/contributors)
+
+<br>
+
+
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=majiameng/OAuth2&type=Date)](https://github.com/majiameng/OAuth2)
