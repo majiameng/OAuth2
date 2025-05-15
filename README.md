@@ -147,9 +147,8 @@ Thanks for your contribution to the project!
 
 <br>
 
-
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=majiameng/OAuth2&type=Date)](https://github.com/majiameng/OAuth2)
+[![Star History Chart](https://api.star-history.com/svg?repos=majiameng/OAuth2&type=Date)](https://www.star-history.com/#majiameng/OAuth2&Date)
 
 
