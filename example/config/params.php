@@ -4,7 +4,7 @@
  * 根据项目需求，以及配置到对应官方回调域名
  */
 $hostInfo = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
-$callback = $hostInfo."/example/login";
+$callback = $hostInfo."/connect.php";
 
 /**
  * 配置文件
@@ -20,7 +20,7 @@ $params = [
         'app_secret' => '8a2b322610d7a0d****',
         'scope'      => 'get_user_info',
         'callback'   => $callback,
-        'is_unioid'  => true //已申请unioid打通
+        'is_unioid'  => true //已申请unioid打通withUnionid
     ],
     'wechat' => [
         'pc' => [
@@ -118,12 +118,6 @@ $params = [
         'app_secret' => 'abcdefg******',
         'callback'   => $callback,
         'scope'      => 'openid profile',
-    ],
-    'huawei' => [
-        'app_id'        => '4487**********',
-        'app_secret'    => 'Bf0DnBKnwUc**********************************',
-        'scope'         => 'openid aliuid profile',
-        'callback' => 'http://majiameng.com/app/aliyun',
     ],
 
     // 开发平台

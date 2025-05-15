@@ -27,6 +27,7 @@
 * [开始](https://github.com/majiameng/OAuth2/wiki/zh-cn-Getting-Started)
 * [安装](https://github.com/majiameng/OAuth2/wiki/zh-cn-Installation)
 * [配置文件](https://github.com/majiameng/OAuth2/blob/master/example/config/params.php)
+* [完整demo事例](https://github.com/majiameng/OAuth2/wiki/demo)
 * [贡献指南](https://github.com/majiameng/OAuth2/wiki/zh-cn-Contributing-Guide)
 * [更新日志](https://github.com/majiameng/OAuth2/wiki/zh-cn-Update-log)
 

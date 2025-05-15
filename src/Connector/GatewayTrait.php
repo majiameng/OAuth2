@@ -1,6 +1,8 @@
 <?php
 namespace tinymeng\OAuth2\Connector;
 
+use tinymeng\tools\HttpRequest;
+
 trait GatewayTrait
 {
     /**
@@ -19,7 +21,7 @@ trait GatewayTrait
      */
     protected function get($url, $params = [], $headers = [])
     {
-        return \tinymeng\tools\HttpRequest::httpGet($url, $params,$headers);
+        return HttpRequest::httpGet($url, $params,$headers);
     }
 
     /**
@@ -34,7 +36,7 @@ trait GatewayTrait
     protected function post($url, $params = [], $headers = [])
     {
         $headers[] = 'Accept: application/json';//GitHub需要的header
-        return \tinymeng\tools\HttpRequest::httpPost($url, $params,$headers);
+        return HttpRequest::httpPost($url, $params,$headers);
     }
 
 

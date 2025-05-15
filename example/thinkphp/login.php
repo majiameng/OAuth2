@@ -4,11 +4,11 @@
  */
 @header('Content-Type: text/html; charset=UTF-8');
 // 引用vendor
-require __DIR__.'/../vendor/autoload.php';
-require 'oauth2.php';
+require __DIR__.'/../../vendor/autoload.php';
+require '../oauth2.php';
 
 //引入配置文件
-$params = require('config/params.php');
+$params = require('../config/params.php');
 
 try{
     $name="qq";//登录类型,例:qq / google

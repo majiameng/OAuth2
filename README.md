@@ -30,6 +30,7 @@ Integrating many third party login interfaces, including qq-login、wx-login、s
 * [Configuration](https://github.com/majiameng/OAuth2/blob/master/example/config/params.php)
 * [Contributing Guide](https://github.com/majiameng/OAuth2/wiki/Contributing-Guide)
 * [Update log](https://github.com/majiameng/OAuth2/wiki/Update-log)
+* [Complete demo example](https://github.com/majiameng/OAuth2/wiki/demo)
 * [中文文档](https://github.com/majiameng/OAuth2/wiki/zh-cn-Home)
 
 ## General third-party login instructions document
@@ -98,6 +99,7 @@ composer require tinymeng/oauth:^2.0.0 -vvv
 │   ├── config                      配置示例
 │   │   └── params.php              参数配置示例
 │   ├── oauth2.php                  OAuth2 使用示例
+│   ├── demo                        OAuth2 使用demo带html 示例
 │   ├── proxy                       代理相关示例
 │   │   └── wx_proxy.php            微信多域名代理 PHP 版本
 │   └── weixin-authorize-proxy.html 微信多域名代理 HTML 版本(推荐)

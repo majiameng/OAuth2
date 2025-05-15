@@ -113,8 +113,30 @@ class oauth2{
          * $userInfo = OAuth::$name($this->config)->setType($type)->userInfo();
          */
 
-        //获取登录类型
+        // 获取登录类型
         $userInfo['type'] = \tinymeng\OAuth2\Helper\ConstCode::getTypeConst($userInfo['channel']);
+
+        // 处理用户信息
+        $userInfo = $this->handleUserInfo($userInfo);
+        $result = [
+            'code'=>0,
+            'msg'=>'succ',
+            'type'=>$name,
+            'userInfo'=>$userInfo
+        ];
+        return $result;
+    }
+
+    /**
+     * 处理用户信息
+     * @param $userInfo
+     * @return mixed
+     */
+    public function handleUserInfo($userInfo)
+    {
+        /**
+         * TODO... 存储用户信息到数据库，请自行完善代码
+         */
         return $userInfo;
     }
 
