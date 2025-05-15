@@ -172,6 +172,12 @@ $params = [
         'app_secret' => '12345678******',
         'callback'   => $callback,
     ],
+    'line'=>[
+        'app_id'     => '20074****',
+        'app_secret' => '26db81744466b8d8b4*****',
+        'scope'      => 'profile',
+        'callback'   => $callback,
+    ],
     'apple' => [
         'app_id'      => 'com.example.service',
         'team_id'     => 'ABCDEF123456',

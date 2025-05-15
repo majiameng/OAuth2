@@ -23,6 +23,9 @@ class Github extends Gateway
     protected $AuthorizeURL   = 'https://github.com/login/oauth/authorize';
     protected $AccessTokenURL = 'https://github.com/login/oauth/access_token';
     protected $UserInfoURL = 'user';
+    protected $headers = [
+        'Accept: application/json'
+    ];
 
     /**
      * @param $config

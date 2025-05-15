@@ -9,6 +9,8 @@ use tinymeng\OAuth2\Helper\Str;
 
 /**
  * Class Line
+ * 开发平台： https://developers.line.biz/en/
+ * 接口文档： https://developers.line.biz/en/reference/line-login/#issue-access-token
  * @package tinymeng\OAuth2\Gateways
  * @Author: TinyMeng <666@majiameng.com>
  * @Created: 2018/11/9
@@ -18,6 +20,9 @@ class Line extends Gateway
     const API_BASE            = 'https://api.line.me/v2/';
     protected $AuthorizeURL   = 'https://access.line.me/oauth2/v2.1/authorize';
     protected $AccessTokenURL = 'https://api.line.me/oauth2/v2.1/token';
+    protected $headers = [
+        'application/x-www-form-urlencoded'
+    ];
 
     /**
      * 得到跳转地址

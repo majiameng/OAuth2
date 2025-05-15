@@ -5,6 +5,20 @@ use tinymeng\tools\HttpRequest;
 
 trait GatewayTrait
 {
+
+    /**
+     * headers
+     * @var array
+     */
+    protected $headers = [];
+
+    /**
+     * @return array
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
     /**
      * @var 缓存处理
      */
@@ -35,7 +49,6 @@ trait GatewayTrait
      */
     protected function post($url, $params = [], $headers = [])
     {
-        $headers[] = 'Accept: application/json';//GitHub需要的header
         return HttpRequest::httpPost($url, $params,$headers);
     }
 
