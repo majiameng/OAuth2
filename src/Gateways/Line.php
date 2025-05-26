@@ -102,11 +102,36 @@ class Line extends Gateway
             'uri'    => self::API_BASE . $api,
         ];
 
-        $headers = ['Authorization' => $this->token['token_type'] . ' ' . $this->token['access_token']];
+        $headers = ['Authorization: ' => $this->token['token_type'] . ' ' . $this->token['access_token']];
 
         $data = $this->$method($request['uri'], $params, $headers);
 
         return json_decode($data, true);
+    }
+
+
+    /**
+     * Description:  获取AccessToken
+     * @author: JiaMeng <666@majiameng.com>
+     * Updater:
+     */
+    protected function getToken(){
+        if (empty($this->token)) {
+            /** 验证state参数 */
+            $this->checkState();
+
+            /** 获取参数 */
+            $params = $this->accessTokenParams();
+            $params = http_build_query($params);
+
+            /** 获取access_token */
+            $token =  $this->post($this->AccessTokenURL, $params,$this->getHeaders());
+
+            /** 解析token值 */
+            $this->token = $this->parseToken($token);
+        }else{
+            return $this->token;
+        }
     }
 
     /**
