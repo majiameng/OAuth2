@@ -21,7 +21,7 @@ class Line extends Gateway
     protected $AuthorizeURL   = 'https://access.line.me/oauth2/v2.1/authorize';
     protected $AccessTokenURL = 'https://api.line.me/oauth2/v2.1/token';
     protected $headers = [
-        'application/x-www-form-urlencoded'
+        'Content-Type: application/x-www-form-urlencoded'
     ];
 
     /**
